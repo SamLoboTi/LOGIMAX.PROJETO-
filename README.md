@@ -1,66 +1,88 @@
-📊 Projeto de Dados Logísticos – Power BI
-📘 Contexto
-Este projeto foi desenvolvido com dados fictícios gerados em Python, com o objetivo de demonstrar habilidades em ETL, análise de dados e visualização em Power BI. O foco está em gestão logística, com indicadores de desempenho e relatório de inconsistências que simulam cenários reais de empresas de distribuição.
+[README_Logistico (3).pdf](https://github.com/user-attachments/files/23609300/README_Logistico.3.pdf)
+%PDF-1.4
+%���� ReportLab Generated PDF document http://www.reportlab.com
+1 0 obj
+<<
+/F1 2 0 R
+>>
+endobj
+2 0 obj
+<<
+/BaseFont /Helvetica /Encoding /WinAnsiEncoding /Name /F1 /Subtype /Type1 /Type /Font
+>>
+endobj
+3 0 obj
+<<
+/Contents 8 0 R /MediaBox [ 0 0 595.2756 841.8898 ] /Parent 7 0 R /Resources <<
+/Font 1 0 R /ProcSet [ /PDF /Text /ImageB /ImageC /ImageI ]
+>> /Rotate 0 /Trans <<
 
-🛠️ Processo
-Extração de Dados
+>> 
+  /Type /Page
+>>
+endobj
+4 0 obj
+<<
+/Contents 9 0 R /MediaBox [ 0 0 595.2756 841.8898 ] /Parent 7 0 R /Resources <<
+/Font 1 0 R /ProcSet [ /PDF /Text /ImageB /ImageC /ImageI ]
+>> /Rotate 0 /Trans <<
 
-Simulação de fontes: ERP (pedidos), WMS (estoque), TMS (transporte).
+>> 
+  /Type /Page
+>>
+endobj
+5 0 obj
+<<
+/PageMode /UseNone /Pages 7 0 R /Type /Catalog
+>>
+endobj
+6 0 obj
+<<
+/Author (\(anonymous\)) /CreationDate (D:20251118155539+00'00') /Creator (\(unspecified\)) /Keywords () /ModDate (D:20251118155539+00'00') /Producer (ReportLab PDF Library - www.reportlab.com) 
+  /Subject (\(unspecified\)) /Title (\(anonymous\)) /Trapped /False
+>>
+endobj
+7 0 obj
+<<
+/Count 2 /Kids [ 3 0 R 4 0 R ] /Type /Pages
+>>
+endobj
+8 0 obj
+<<
+/Filter [ /ASCII85Decode /FlateDecode ] /Length 892
+>>
+stream
+GatUq>u03/'Sc)J.uo90Z)Orehr,4!8P#s_+OY/;0o9+nOr/#EA,Q1o,R*ma4ChDK;W8tjPP76'QpHNm2BM/oi3\*^?Q$'RW\q$A3.YfFo."tjf`'1/J38aNMkVclM;[BSV3I*8n`s*a5r^L\9n8,f"Ti8I#p:2gU-\eJ!*3:Z$*0^2n:`gD^d;n@j"rVoep)?Y72`2VGG4!fr$,0b:jj7\0E,F:BKVTD9-O,E=crQ0e,c)=hMOh(>f9c?CFB-@PU6>DT,T<=IW+LT8Mo"SI](njC_YC!K4_K9/SdHC>Y@34#X)K.*NX_B>Lh'>3u+\5I#m%lnN;<D@3[h`)lpN(>CIf$M(]S'Zh%od"5[D*$#?@L6`-'7J=SN$hT@4+M`LcH22^dR4a-Z9PK@DKR;Bl6GLQ+'a^Vs7_AHpkBgHNIrn7T2Imi$u*-<C#1d^PeE!07JgU=k-L^DB\=#9W[]Y]c2jcqXD1np[1J#I(!4P0'tnpM)pOi0059\6h$>Ic%+$(2Jf\Wi;CR&'O>,-Nilc!'B"D7M##bn9bl*5RLk>4oY<n(?E]O3PpRV1ipD8e9mjoERa1/FPtkm3&^<EAU6C9X^n'-$M/a"jN;-1S*dte"-jV)TT*rE;5k>#\2E&<hO#IM"P(g/)5e,9ph1+;G>YUbfY,Dj&.b/jVuT-R6sk8.X]d-->bVBW0+p\>*RJ=WBW\fDbq=\:-Kp2NPpe#fF2YdKVjV(BeGMO2t)3q1]tnC%N?,JbY>ug)FeVOX<`^`(!M.d4ms=m,;W(*(Gs<Kq:&Ie"'(Yr_q\?g%=3UbKV9&)VElDUOSLRW2B7%uUGRHu-]j$(S/`]o;2uK=k/4G8]R^FU)O<?K=X0&^7C/(aZ#aPEH24Id&O>h!:YOP^~>endstream
+endobj
+9 0 obj
+<<
+/Filter [ /ASCII85Decode /FlateDecode ] /Length 495
+>>
+stream
+Gat=h>t`'h(kqGU.p`cqau5G1l,W5IggK&oc<focZuK]b:"Q0Cs1MRcU!,nQJ_lpX4\s@;MZMLbqe'49bVQb5@DF$sYCPl%6M:]./3!e-CM0/&bj[G\d_q`]!pYJ_(YH(h4O+G85"D;q<-T<<R_VO]-#C('1VdLTYAYQ<6[!hIGdcqI%nY)2(D:^[+a-J6$j=>VJu(Bjcj:e5PWGqAGc:9<mdmUC\L_u6;bL&-Al7VYTYh@"?"5F=[]MjEWhM;l90q>I+`g9.=Xm(tnE/;EY%fPrfb,(O\`DJbc4W')1mDGN&+V.&h3hXT1hBu%k/JO]0f!<b$1]8P>:`+^$P^1'E9rgNZYl5M_`M/&3\NS.-'WZ36lN]9l2NJIqBs'WX7jCYOG0oQ2SA.eRoX3")fCet*XbAYqGqX1[F1^:.?$A=4bc:&2LX'F\kl5%b*KhXg$bQ:6,6.F2!+W/X[\4-0'fM2P4$(.%@u$Gr%f5s4ogoM=O-~>endstream
+endobj
+xref
+0 10
+0000000000 65535 f 
+0000000073 00000 n 
+0000000104 00000 n 
+0000000211 00000 n 
+0000000414 00000 n 
+0000000617 00000 n 
+0000000685 00000 n 
+0000000968 00000 n 
+0000001033 00000 n 
+0000002015 00000 n 
+trailer
+<<
+/ID 
+[<2e7d3dfc26f84a8671a35524442bae13><2e7d3dfc26f84a8671a35524442bae13>]
+% ReportLab generated PDF document -- digest (http://www.reportlab.com)
 
-Dados gerados via Python e integrados no Power BI.
-
-Transformação
-
-Padronização de datas e valores.
-
-Tratamento de inconsistências (valores nulos, negativos, duplicados).
-
-Cruzamento entre pedidos, estoque e transporte.
-
-Carga e Modelagem
-
-Estrutura em modelo estrela.
-
-Criação de tabelas fato e dimensões.
-
-Relacionamentos otimizados para performance.
-
-🎯 Indicadores Monitorados
-Indicador	Resultado	Observação
-Total de Pedidos	1000	Base consolidada de pedidos
-Entrega no Prazo %	60%	Apenas 60% no prazo → oportunidade de otimização
-Tempo Médio Atrasos	0,05 dias	Atrasos pontuais, baixo impacto
-Lead Time Médio	12,01 dias	Dentro do esperado
-Fill Rate %	1,51%	Baixa eficiência no atendimento completo
-Receita Total	R$ 57.000 mil	Receita simulada
-🚚 Logística
-Métrica	Resultado	Observação
-Distância Total (km)	66.000 mil	Necessidade de avaliar eficiência das rotas
-Prazo Real (dias)	7.063	Variações pequenas, ajustáveis com planejamento estratégico
-Custo Médio Frete (R$)	16,98 mil	Avaliar custo-benefício por modal
-📦 Status dos Pedidos
-Status	Quantidade	% do Total	Observação
-Aprovado	6.000	34,64%	Processo consistente
-Emitido	6.000	33%	Equilíbrio entre etapas
-Cancelado	5.000	31,6%	Volume elevado → revisar causas
-📊 Estoque
-Métrica	Resultado	Observação
-Estoque Total	43.000 mil	Planejamento adequado
-Rupturas	1 produto	Baixo índice → monitorar críticos
-Acuracidade %	99%	Excelente confiabilidade do WMS
-⚠️ Inconsistências
-Tipo de Inconsistência	Resultado	Observação
-Produtos sem WMS	—	Falta de integração
-Divergência Quantidade	495	Impacto direto na operação
-Total Inconsistências	1000	Necessário padronizar processos ERP/WMS/TMS
-Pedidos sem TMS	—	Integração incompleta
-📈 Conclusão
-O projeto demonstra domínio em ETL, modelagem de dados e Power BI.
-
-Indicadores logísticos foram construídos para apoiar decisões estratégicas.
-
-As inconsistências simuladas reforçam a capacidade de auditar e corrigir dados.
-
-Material ideal para apresentação em entrevistas de emprego, evidenciando habilidades práticas em BI e Supply Chain.
-
-
+/Info 6 0 R
+/Root 5 0 R
+/Size 10
+>>
+startxref
+2600
+%%EOF
