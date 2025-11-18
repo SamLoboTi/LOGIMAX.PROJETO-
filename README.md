@@ -187,7 +187,6 @@ Notebook com:
 - Conclusão
 
 
-
 ## 🗄️ Uso de SQL no Projeto
 Além do Python e Power BI, o projeto utilizou **SQL** para garantir consistência, validação e análises intermediárias essenciais para os processos logísticos.
 
@@ -248,3 +247,4 @@ WHERE estoque_atual < 0;
 ```
 
 Essa camada SQL foi essencial para garantir a qualidade dos dados utilizados no ETL e para reforçar as validações que sustentam as métricas logísticas do projeto.
+
