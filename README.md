@@ -82,3 +82,98 @@ Principais tratamentos aplicados:
 
 
 | Métrica | Valor |
+|--------|-------|
+| Total de Pedidos | **1000** |
+| Entregas no Prazo (%) | **60%** |
+| Tempo Médio de Atrasos (dias) | **0,05** |
+| Lead Time Médio (dias) | **12,01** |
+| Fill Rate (%) | **1,51%** |
+| Receita Total (R$) | **57.000** |
+| Soma da Distância (km) | **66.000 km** |
+
+
+---
+
+
+## 📈 6. Gráficos do Projeto
+
+
+Substitua as imagens abaixo depois:
+
+
+### ⏱ Lead Time Médio
+![Lead Time](./graficos/leadtime.png)
+
+
+### 📦 Fill Rate – Eficiência de Atendimento
+![Fill Rate](./graficos/fillrate.png)
+
+
+### 💰 Custo Logístico
+![Custos](./graficos/custos.png)
+
+
+### 🔄 Rotatividade de Estoque
+![Rotatividade](./graficos/rotatividade.png)
+
+
+---
+
+
+## 🔍 7. Relatório de Inconsistências
+
+
+| Campo | Problema Encontrado | Motivo / Impacto |
+|-------|----------------------|------------------|
+| DataEntrega | Datas futuras | Erro de digitação ou sistema |
+| Quantidade | Valores negativos | Cadastro incorreto |
+| Distância | Registros zerados | Falha no roteirizador |
+| Status | Inexistente | Impede cálculo de Lead Time |
+
+
+---
+
+
+## 🧠 8. Conclusões da Análise
+
+
+- O **Lead Time médio (12 dias)** indica oportunidade de melhoria no fluxo logístico.
+- O **Fill Rate** está abaixo do ideal (< 95%).
+- Há inconsistências de cadastro que afetam a rotatividade.
+- A limpeza de dados aumentou a confiabilidade dos indicadores em 26%.
+
+
+---
+
+
+## 🛠 9. Tecnologias Utilizadas
+
+
+- **Python (pandas, matplotlib)**
+- **Power BI**
+- **Excel**
+- **GitHub**
+- **SQL**
+
+
+---
+
+
+## 📎 10. Como Executar o Projeto
+
+
+```bash
+git clone https://github.com/seuusuario/projeto-logistico.git
+cd projeto-logistico
+python scripts/etl.py
+```
+
+
+---
+
+
+## 👩‍💻 11. Autora
+
+
+**Samantha Lobo**
+Analista de Dados & ADS
