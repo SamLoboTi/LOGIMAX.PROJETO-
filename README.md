@@ -247,7 +247,7 @@ WHERE estoque_atual < 0;
 ```
 
 Essa camada SQL foi essencial para garantir a qualidade dos dados utilizados no ETL e para reforçar as validações que sustentam as métricas logísticas do projeto.
-
+Captura de tela_19-11-2025_134412_app.powerbi.com.jpeg
 
 https://github.com/SamLoboTi/LOGIMAX.PROJETO-/commit/6d56aa84e43db627939ee2c8908c7e2af933d35b
 
