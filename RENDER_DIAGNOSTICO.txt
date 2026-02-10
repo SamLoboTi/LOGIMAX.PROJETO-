@@ -1,0 +1,223 @@
+🔧 DIAGNÓSTICO E CORREÇÃO PASSO A PASSO
+ID do Serviço: srv-d65qq5er433s73ddh7o0
+
+═══════════════════════════════════════════════════════════════════════════════
+
+📋 PASSO 1: Verificar Status no Render (Imediatamente)
+
+1. Acesse: https://dashboard.render.com
+2. Selecione seu serviço: logimax-dashboard
+3. Vá para a aba: Logs
+4. PROCURE POR ESTES ERROS E SUAS SOLUÇÕES:
+
+═══════════════════════════════════════════════════════════════════════════════
+
+❌ ERRO 1: "ModuleNotFoundError: No module named 'flask'"
+
+SOLUÇÃO:
+1. No painel do Render, vá para: Settings
+2. Role até: Build & Deploy
+3. Procure por: Build Command
+4. Deve ser: pip install -r requirements.txt
+
+Se está em branco:
+→ Clique em: Edit
+→ Digite: pip install -r requirements.txt
+→ Salve
+
+Depois:
+1. Volte para: Service
+2. Clique em: Trigger deploy → Clear build cache & deploy
+
+═══════════════════════════════════════════════════════════════════════════════
+
+❌ ERRO 2: "ModuleNotFoundError: No module named 'app'"
+
+SOLUÇÃO:
+1. No Render, vá para: Settings
+2. Procure por: Start Command
+3. Deve ser EXATAMENTE: gunicorn app:app
+
+Se está diferente, corrija:
+1. Clique em: Edit
+2. Digite: gunicorn app:app
+3. Salve
+4. Trigger deploy → Clear build cache & deploy
+
+═══════════════════════════════════════════════════════════════════════════════
+
+❌ ERRO 3: "No such file or directory: 'app.py'"
+
+SOLUÇÃO - O Render não está vendo seu código!
+
+Isso significa que o GitHub push não funcionou corretamente.
+
+FAÇA ISSO:
+1. Abra PowerShell na pasta do projeto
+2. Execute: git status
+3. Procure pela resposta...
+
+SE VIR "fatal: not a git repository":
+→ Execute: git init
+→ Depois: git add .
+→ Depois: git commit -m "Dashboard LOGIMAX"
+
+SE VIR "Your branch is up to date":
+→ Execute: git push origin main (vai pedir GitHub login)
+
+═══════════════════════════════════════════════════════════════════════════════
+
+❌ ERRO 4: "Connection refused" ou "Port não está listening"
+
+SOLUÇÃO - App.py pode estar com problema:
+
+1. Teste LOCALMENTE primeiro:
+   python app.py
+
+2. Se der erro local, veja qual é
+3. Corrija localmente
+4. Faça push: git push origin main
+5. No Render: Trigger deploy
+
+═══════════════════════════════════════════════════════════════════════════════
+
+❌ ERRO 5: "Python version mismatch"
+
+SOLUÇÃO:
+1. No Render → Settings → Environment
+2. Procure por: PYTHON_VERSION
+3. Se não existir, clique: Add Environment Variable
+4. Key: PYTHON_VERSION
+5. Value: 3.11
+6. Save
+7. Trigger deploy → Clear build cache & deploy
+
+═══════════════════════════════════════════════════════════════════════════════
+
+✅ PASSO 2: Preparar Git Corretamente (Se acima não funcionou)
+
+Execute EXATAMENTE nesta ordem no PowerShell:
+
+1º comando:
+cd "C:\Users\samantha\Documents\LOGIMAX.PROJETO-"
+
+2º comando:
+git status
+
+VEJA o resultado. Se disser "not a git repository", execute:
+git init
+
+3º comando:
+git add .
+
+4º comando:
+git commit -m "Dashboard LOGIMAX v2.0 - Deploy"
+
+5º comando:
+git remote add origin https://github.com/SEU_USUARIO/logimax-dashboard.git
+
+IMPORTANTE: Substitua SEU_USUARIO pelo seu username do GitHub!
+
+6º comando:
+git branch -M main
+
+7º comando:
+git push -u origin main
+
+Ele vai pedir:
+- Username do GitHub (seu email ou username)
+- Password (coloque seu personal access token, não senha)
+
+═══════════════════════════════════════════════════════════════════════════════
+
+✅ PASSO 3: Gerar Personal Access Token (Se acima pediu senha)
+
+Se no git push pediu "password":
+
+1. Acesse: https://github.com/settings/tokens
+2. Clique: Generate new token (classic)
+3. Name: logimax-deploy
+4. Selecione: repo (cheque a caixa)
+5. Scroll down: Generate token
+6. COPIE O TOKEN (aparece uma vez só!)
+7. Cole na linha de comando quando pedir "password"
+
+═══════════════════════════════════════════════════════════════════════════════
+
+✅ PASSO 4: Verificar se o código foi pro GitHub
+
+1. Acesse: https://github.com/SEU_USUARIO/logimax-dashboard
+2. Você deve ver estes arquivos:
+   ✓ app.py
+   ✓ templates/
+   ✓ requirements.txt
+   ✓ Procfile
+   ✓ render.yaml
+   ✓ *.csv
+
+Se NÃO estão lá → push não funcionou → volte ao PASSO 2
+
+═══════════════════════════════════════════════════════════════════════════════
+
+✅ PASSO 5: Reconectar Render ao GitHub
+
+Se os arquivos estão no GitHub mas Render não vê:
+
+1. Acesse: https://dashboard.render.com
+2. Selecione: logimax-dashboard
+3. Vá para: Settings
+4. Procure: Source
+5. Veja qual repositório está conectado
+6. Se estiver errado, clique: Disconnect
+7. Depois: Connect a different repository
+8. Selecione: logimax-dashboard
+9. Branch: main
+
+Depois clique: Trigger deploy → Clear build cache & deploy
+
+═══════════════════════════════════════════════════════════════════════════════
+
+✅ PASSO 6: Confirmar Deploy
+
+Vá para: Logs
+
+Você deve ver linhas como:
+
+=== Build started
+=== Collecting pip packages
+=== Running build command: pip install -r requirements.txt
+Successfully installed Flask-3.0.0 Flask-CORS-4.0.0 ...
+=== Deploying
+=== Running start command: gunicorn app:app
+Application started
+Your service is live on: https://logimax-dashboard-xxxxx.onrender.com
+
+═══════════════════════════════════════════════════════════════════════════════
+
+⚠️  SE AINDA NÃO FUNCIONAR:
+
+Me envie EXATAMENTE qual mensagem de erro vê em:
+
+Render → Dashboard → Logs
+
+Cole aqui completo que ajusto o código!
+
+═══════════════════════════════════════════════════════════════════════════════
+
+🎯 RESUMO RÁPIDO DOS PASSOS CRÍTICOS:
+
+1. git init (se não for repositório)
+2. git add .
+3. git commit -m "Deploy"
+4. git remote add origin GITHUB_URL
+5. git branch -M main
+6. git push -u origin main
+7. Render → Settings → Verificar Build Command e Start Command
+8. Render → Trigger deploy → Clear build cache & deploy
+9. Render → Logs → Verificar se "live on" aparece
+
+═══════════════════════════════════════════════════════════════════════════════
+
+ID do Serviço para referência: srv-d65qq5er433s73ddh7o0
+
+Qual erro específico você vê no Render → Logs?
