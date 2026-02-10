@@ -1,7 +1,6 @@
-# 📊 Projeto de Análise de Dados – Dashboard Logístico
+# 📊 Dashboard LOGIMAX - Sistema Web Logístico
 
-Este projeto apresenta um processo completo de análise e visualização de indicadores logísticos, incluindo **Lead Time**, **Fill Rate**, **Custo Logístico**, **Rotatividade de Estoque**, **Análise de Pedidos** e **Qualidade dos Dados**.  
-Todos os gráficos e tabelas abaixo são gerados via Power BI / Python / Excel.
+> Dashboard interativo e responsivo para análise em tempo real de indicadores logísticos com acesso permanente via internet.
 
 ---
 

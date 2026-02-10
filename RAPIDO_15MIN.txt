@@ -1,0 +1,139 @@
+🚀 AÇÃO RÁPIDA: Dashboard Online em 15 Minutos!
+
+═══════════════════════════════════════════════════════════════
+
+⏱️  TEMPO TOTAL: ~15 minutos (5 min + 10 min esperando deploy)
+
+═══════════════════════════════════════════════════════════════
+
+✅ PASSO 1: Preparação Local (2 minutos)
+
+1. Abra PowerShell (Win+X → Windows PowerShell Admin)
+2. Navegue para pasta do projeto:
+   cd "C:\Users\samantha\Documents\LOGIMAX.PROJETO-"
+3. Execute:
+   python app.py
+4. Teste em http://localhost:5000
+5. Verifique gráficos carregando
+
+═══════════════════════════════════════════════════════════════
+
+✅ PASSO 2: GitHub Setup (3 minutos)
+
+1. Acesse: https://github.com/new
+2. Login (ou crie conta)
+3. Preencha:
+   - Name: logimax-dashboard
+   - Description: Dashboard Web Logístico
+   - Selecione: Public
+4. Clique: Create repository
+5. Copie a URL HTTPS mostrada
+
+═══════════════════════════════════════════════════════════════
+
+✅ PASSO 3: Push do Código (3 minutos)
+
+No PowerShell, execute EM SEQUÊNCIA:
+
+git init
+git add .
+git commit -m "Dashboard LOGIMAX v2.0 - Production Ready"
+git remote add origin [COLE_A_URL_AQUI]
+git branch -M main
+git push -u origin main
+
+(vai pedir login do GitHub - use suas credenciais)
+
+═══════════════════════════════════════════════════════════════
+
+✅ PASSO 4: Deploy no Render (5 minutos)
+
+1. Acesse: https://render.com
+2. Sign Up com GitHub (mais fácil)
+3. Autorize acesso ao GitHub
+4. No dashboard: New + → Web Service
+5. Selecione seu repositório: logimax-dashboard
+6. Clique: Connect
+
+Preencha:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Name:           logimax-dashboard
+Environment:    Python 3
+Region:         Ohio
+Branch:         main
+Build Command:  pip install -r requirements.txt
+Start Command:  gunicorn app:app
+Instance:       Free
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+7. Clique: Create Web Service
+8. ESPERE 2-3 minutos (não feche!)
+
+═══════════════════════════════════════════════════════════════
+
+✅ PASSO 5: Validação (2 minutos)
+
+1. Quando ver "Your service is live on..." → PRONTO!
+2. Copie a URL mostrada
+3. Abra em novo navegador
+4. Verifique:
+   ✓ Página carrega
+   ✓ KPIs aparecem
+   ✓ Gráficos OK
+   ✓ Tabelas funcionam
+
+═══════════════════════════════════════════════════════════════
+
+🎉 RESULTADO FINAL
+
+URL Permanente (compartilhe com equipe):
+https://seu-dashboard.onrender.com
+
+Funciona:
+✓ 24/7
+✓ De qualquer lugar
+✓ Em qualquer dispositivo
+✓ Sem limite de acessos
+✓ GRÁTIS!
+
+═══════════════════════════════════════════════════════════════
+
+📞 ERROS COMUNS
+
+Erro: "Git não encontrado"
+→ Instale: https://git-scm.com/
+
+Erro: "Build failed no Render"
+→ Verifique requirements.txt tem todas dependências
+
+Erro: "Gráficos em branco"
+→ Abra DevTools (F12) e veja Console para erros
+
+Erro: "Port already in use"
+→ Feche Python anterior: Ctrl+C no PowerShell
+
+═══════════════════════════════════════════════════════════════
+
+🔄 ATUALIZAR DADOS DEPOIS
+
+Quando precisar atualizar dados:
+
+1. Atualize CSVs localmente
+2. Execute no PowerShell:
+   git add *.csv
+   git commit -m "Dados atualizados"
+   git push origin main
+3. Render redeploy automático (~2 min)
+4. Dashboard online atualizado!
+
+═══════════════════════════════════════════════════════════════
+
+✨ PRONTO! Seu dashboard está online! 🎊
+
+Próxima etapa: Compartilhe a URL com sua equipe!
+
+═══════════════════════════════════════════════════════════════
+
+Dashboard LOGIMAX v2.0 | Online & Compartilhável | 10/02/2026
+
+═══════════════════════════════════════════════════════════════
