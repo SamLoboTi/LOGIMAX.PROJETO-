@@ -1070,60 +1070,75 @@
                 charts[chartId].destroy();
             }
 
+            // Calcular totais para cada categoria
+            const emitido = data.map(d => d * 0.3);
+            const aprovado = data.map(d => d * 0.5);
+            const cancelado = data.map(d => d * 0.2);
+            
+            const totalEmitido = emitido.reduce((a, b) => a + b, 0);
+            const totalAprovado = aprovado.reduce((a, b) => a + b, 0);
+            const totalCancelado = cancelado.reduce((a, b) => a + b, 0);
+            const somaTotal = totalEmitido + totalAprovado + totalCancelado;
+
             const ctx = canvas.getContext('2d');
             charts[chartId] = new Chart(ctx, {
-                type: 'bar',
+                type: 'doughnut',
                 data: {
-                    labels: labels,
-                    datasets: [
-                        {
-                            label: 'Emitido',
-                            data: data.map(d => d * 0.3),
-                            backgroundColor: '#4a7bff',
-                            borderRadius: 6,
-                            borderSkipped: false
-                        },
-                        {
-                            label: 'Aprovado',
-                            data: data.map(d => d * 0.5),
-                            backgroundColor: '#2dd4ac',
-                            borderRadius: 6,
-                            borderSkipped: false
-                        },
-                        {
-                            label: 'Cancelado',
-                            data: data.map(d => d * 0.2),
-                            backgroundColor: '#ff6b6b',
-                            borderRadius: 6,
-                            borderSkipped: false
-                        }
-                    ]
+                    labels: ['Emitido', 'Aprovado', 'Cancelado'],
+                    datasets: [{
+                        data: [totalEmitido, totalAprovado, totalCancelado],
+                        backgroundColor: [
+                            '#4a7bff',
+                            '#2dd4ac',
+                            '#ff6b6b'
+                        ],
+                        borderColor: '#1a1f3a',
+                        borderWidth: 3,
+                        hoverOffset: 10
+                    }]
                 },
                 options: {
-                    indexAxis: 'y',
                     responsive: true,
                     maintainAspectRatio: false,
                     plugins: {
                         legend: {
-                            display: true,
                             position: 'bottom',
                             labels: {
                                 color: '#f1f5f9',
                                 padding: 16,
-                                font: { size: 12, family: "'Inter', sans-serif" }
+                                font: { size: 12, weight: '500', family: "'Inter', sans-serif" },
+                                usePointStyle: true,
+                                pointStyle: 'circle'
                             }
-                        }
-                    },
-                    scales: {
-                        x: {
-                            stacked: true,
-                            grid: { color: 'rgba(58, 69, 86, 0.2)', drawBorder: false },
-                            ticks: { color: '#94a3b8', font: { size: 11 } }
                         },
-                        y: {
-                            stacked: true,
-                            grid: { display: false },
-                            ticks: { color: '#94a3b8', font: { size: 11 } }
+                        tooltip: {
+                            backgroundColor: 'rgba(0, 0, 0, 0.9)',
+                            padding: 12,
+                            titleFont: { size: 13, weight: 'bold' },
+                            bodyFont: { size: 12 },
+                            borderColor: '#4a7bff',
+                            borderWidth: 1.5,
+                            cornerRadius: 6,
+                            callbacks: {
+                                label: function(context) {
+                                    const value = context.parsed;
+                                    const percentage = ((value / somaTotal) * 100).toFixed(1);
+                                    return context.label + ': ' + value + ' (' + percentage + '%)';
+                                },
+                                afterLabel: function(context) {
+                                    if (context.dataIndex === 0) {
+                                        return 'Status: Aguardando aprovação';
+                                    } else if (context.dataIndex === 1) {
+                                        return 'Status: Pronto para expedição';
+                                    } else {
+                                        return 'Status: Transação encerrada';
+                                    }
+                                }
+                            }
+                        },
+                        datalabels: {
+                            color: '#fff',
+                            font: { weight: 'bold', size: 12 }
                         }
                     }
                 }
@@ -1138,20 +1153,53 @@
                 charts[chartId].destroy();
             }
 
+            // Ordenar dados do maior para o menor
             const sorted = labels.map((label, index) => ({ label, value: data[index] }))
                 .sort((a, b) => b.value - a.value);
 
+            const maxValue = sorted[0].value;
+            const sortedLabels = sorted.map(d => d.label);
+            const sortedValues = sorted.map(d => d.value);
+
+            // Criar gradientes dinâmicos para cada barra
             const ctx = canvas.getContext('2d');
+            
+            const gradients = sortedValues.map((val, idx) => {
+                const gradient = ctx.createLinearGradient(0, 0, 0, 400);
+                if (idx === 0) {
+                    // Primeira barra (maior custo) - Gradiente warmth (dourado/laranja)
+                    gradient.addColorStop(0, '#fbbf24');
+                    gradient.addColorStop(1, '#f59e0b');
+                } else if (idx === 1) {
+                    // Segunda barra - Gradiente azul
+                    gradient.addColorStop(0, '#4a7bff');
+                    gradient.addColorStop(1, '#3564e5');
+                } else if (idx === 2) {
+                    // Terceira barra - Gradiente verde
+                    gradient.addColorStop(0, '#2dd4ac');
+                    gradient.addColorStop(1, '#1aa179');
+                } else {
+                    // Demais barras - Gradiente neutro
+                    gradient.addColorStop(0, '#64748b');
+                    gradient.addColorStop(1, '#475569');
+                }
+                return gradient;
+            });
+
             charts[chartId] = new Chart(ctx, {
                 type: 'bar',
                 data: {
-                    labels: sorted.map(d => d.label),
+                    labels: sortedLabels,
                     datasets: [{
-                        label: 'Custo',
-                        data: sorted.map(d => d.value),
-                        backgroundColor: sorted.map((_, idx) => idx === 0 ? '#fbbf24' : '#4a7bff'),
-                        borderRadius: 6,
-                        borderSkipped: false
+                        label: 'Custo Logístico (R$)',
+                        data: sortedValues,
+                        backgroundColor: gradients,
+                        borderRadius: 8,
+                        borderSkipped: false,
+                        borderColor: 'rgba(255, 255, 255, 0.1)',
+                        borderWidth: 1,
+                        hoverBorderColor: '#fff',
+                        hoverBorderWidth: 2
                     }]
                 },
                 options: {
@@ -1159,13 +1207,36 @@
                     responsive: true,
                     maintainAspectRatio: false,
                     plugins: {
-                        legend: { display: false },
+                        legend: {
+                            display: true,
+                            position: 'bottom',
+                            labels: {
+                                color: '#f1f5f9',
+                                padding: 16,
+                                font: { size: 12, weight: '500', family: "'Inter', sans-serif" }
+                            }
+                        },
                         tooltip: {
+                            backgroundColor: 'rgba(0, 0, 0, 0.9)',
+                            padding: 12,
+                            titleFont: { size: 13, weight: 'bold' },
+                            bodyFont: { size: 12 },
+                            borderColor: '#4a7bff',
+                            borderWidth: 1.5,
+                            cornerRadius: 6,
                             callbacks: {
+                                label: function(context) {
+                                    const value = context.parsed.y;
+                                    const percentage = ((value / sortedValues.reduce((a, b) => a + b, 0)) * 100).toFixed(1);
+                                    return [
+                                        'R$ ' + value.toLocaleString('pt-BR', { minimumFractionDigits: 2 }),
+                                        percentage + '% do custo total'
+                                    ];
+                                },
                                 afterLabel: function(context) {
-                                    const total = context.dataset.data.reduce((a, b) => a + b, 0);
-                                    const percentage = ((context.parsed.y / total) * 100).toFixed(1);
-                                    return percentage + '% do total';
+                                    if (context.dataIndex === 0) {
+                                        return '⚠️ Maior custo logístico';
+                                    }
                                 }
                             }
                         }
@@ -1173,12 +1244,34 @@
                     scales: {
                         y: {
                             beginAtZero: true,
-                            grid: { color: 'rgba(58, 69, 86, 0.2)', drawBorder: false },
-                            ticks: { color: '#94a3b8', font: { size: 11 } }
+                            ticks: {
+                                color: '#94a3b8',
+                                font: { size: 11, weight: '500' },
+                                callback: function(value) {
+                                    return 'R$ ' + value.toLocaleString('pt-BR');
+                                }
+                            },
+                            grid: {
+                                color: 'rgba(58, 69, 86, 0.15)',
+                                drawBorder: false,
+                                lineWidth: 1
+                            },
+                            title: {
+                                display: true,
+                                text: 'Custo em Reais',
+                                color: '#94a3b8',
+                                font: { size: 11 }
+                            }
                         },
                         x: {
-                            grid: { display: false },
-                            ticks: { color: '#94a3b8', font: { size: 11 } }
+                            ticks: {
+                                color: '#94a3b8',
+                                font: { size: 11, weight: '500' }
+                            },
+                            grid: {
+                                display: false,
+                                drawBorder: false
+                            }
                         }
                     }
                 }
