@@ -828,13 +828,64 @@
                 const data = await response.json();
 
                 const kpis = [
-                    { class: 'kpi-1', icon: '⏱️', label: 'Lead Time Médio', value: data.lead_time_medio, unit: 'dias', change: '-5%' },
-                    { class: 'kpi-2', icon: '📦', label: 'Fill Rate', value: data.fill_rate, unit: '%', change: '+2%' },
-                    { class: 'kpi-3', icon: '💰', label: 'Receita Total', value: 'R$' + data.custo_total, unit: 'mil', change: '+12%' },
-                    { class: 'kpi-4', icon: '✅', label: 'Entregas Prazo', value: data.taxa_conformidade, unit: '%', change: '+3%' },
-                    { class: 'kpi-5', icon: '🔄', label: 'Rotatividade', value: data.rotatividade, unit: 'x', change: '+8%' },
-                    { class: 'kpi-6', icon: '🎯', label: 'Acuracidade', value: data.acuracia, unit: '%', change: '+1%' },
-                    { class: 'kpi-7', icon: '⚠️', label: 'Inconsistências', value: Math.floor(Math.random() * 50), unit: 'alertas', change: '-15%', changeClass: 'negative' }
+                    { 
+                        class: 'kpi-1', 
+                        icon: '⏱️', 
+                        label: 'Lead Time Médio', 
+                        value: data.lead_time_medio, 
+                        unit: 'dias', 
+                        change: (data.lead_time_variacao > 0 ? '+' : '') + data.lead_time_variacao + '%',
+                        changeClass: data.lead_time_variacao > 0 ? 'negative' : ''
+                    },
+                    { 
+                        class: 'kpi-2', 
+                        icon: '📦', 
+                        label: 'Fill Rate', 
+                        value: data.fill_rate, 
+                        unit: '%', 
+                        change: '+' + data.fill_rate_variacao + '%'
+                    },
+                    { 
+                        class: 'kpi-3', 
+                        icon: '💰', 
+                        label: 'Receita Total', 
+                        value: (data.receita_total / 1000).toFixed(1), 
+                        unit: 'mil', 
+                        change: '+' + data.receita_variacao + '%'
+                    },
+                    { 
+                        class: 'kpi-4', 
+                        icon: '✅', 
+                        label: 'Entregas Prazo', 
+                        value: data.entregas_prazo, 
+                        unit: '%', 
+                        change: '+' + data.entregas_prazo_variacao + '%'
+                    },
+                    { 
+                        class: 'kpi-5', 
+                        icon: '🔄', 
+                        label: 'Rotatividade', 
+                        value: data.rotatividade, 
+                        unit: 'x', 
+                        change: '+' + data.rotatividade_variacao + '%'
+                    },
+                    { 
+                        class: 'kpi-6', 
+                        icon: '🎯', 
+                        label: 'Acuracidade', 
+                        value: data.acuracia, 
+                        unit: '%', 
+                        change: '+' + data.acuracia_variacao + '%'
+                    },
+                    { 
+                        class: 'kpi-7', 
+                        icon: '⚠️', 
+                        label: 'Inconsistências', 
+                        value: data.inconsistencias, 
+                        unit: 'alertas', 
+                        change: data.inconsistencias_variacao + '%',
+                        changeClass: data.inconsistencias_variacao > 0 ? 'negative' : ''
+                    }
                 ];
 
                 const html = kpis.map(kpi => `
