@@ -963,38 +963,44 @@
 
         async function loadCharts() {
             try {
-                const [statusRes, pedidosRes, custosRes] = await Promise.all([
-                    fetch('/api/status-pedidos').catch(e => console.error('Erro status:', e)),
-                    fetch('/api/pedidos-por-dia').catch(e => console.error('Erro pedidos:', e)),
-                    fetch('/api/custo-por-modal').catch(e => console.error('Erro custos:', e))
-                ]);
-
                 // Dados padrão com valores realistas
                 let status = { labels: ['Aprovado', 'Emitido', 'Cancelado'], data: [5980, 5590, 1430] };
-                let pedidos = { labels: ['01/03', '02/03', '03/03', '04/03', '05/03', '06/03'], data: [8, 7.5, 9, 8.5, 10, 9.5], dias: [10] };
+                let pedidos = { labels: ['01/03', '02/03', '03/03', '04/03', '05/03', '06/03'], data: [8, 7.5, 9, 8.5, 10, 9.5] };
                 let custos = { labels: ['Rodoviário', 'Aéreo', 'Marítimo', 'Ferroviário'], data: [41200, 18500, 12300, 8900], distancia: [1500, 2800, 5200, 1200] };
 
-                if (statusRes && statusRes.ok) {
-                    status = await statusRes.json();
-                    console.log('Status Pedidos:', status);
-                }
-                if (pedidosRes && pedidosRes.ok) {
-                    pedidos = await pedidosRes.json();
-                    console.log('Pedidos por Dia:', pedidos);
-                }
-                if (custosRes && custosRes.ok) {
-                    custos = await custosRes.json();
-                    console.log('Custo por Modal:', custos);
-                }
+                try {
+                    const statusRes = await fetch('/api/status-pedidos');
+                    if (statusRes.ok) {
+                        status = await statusRes.json();
+                        console.log('✓ Status Pedidos carregado:', status);
+                    }
+                } catch (e) { console.error('Erro ao carregar status:', e); }
+
+                try {
+                    const pedidosRes = await fetch('/api/pedidos-por-dia');
+                    if (pedidosRes.ok) {
+                        pedidos = await pedidosRes.json();
+                        console.log('✓ Pedidos por Dia carregado:', pedidos);
+                    }
+                } catch (e) { console.error('Erro ao carregar pedidos:', e); }
+
+                try {
+                    const custosRes = await fetch('/api/custo-por-modal');
+                    if (custosRes.ok) {
+                        custos = await custosRes.json();
+                        console.log('✓ Custo por Modal carregado:', custos);
+                    }
+                } catch (e) { console.error('Erro ao carregar custos:', e); }
 
                 // Gerar dados de scatter (Custo x Distância x Modal)
                 const scatterData = [];
                 if (custos.labels && custos.data) {
                     const cores = ['#3b82f6', '#f59e0b', '#10b981', '#8b5cf6'];
                     custos.labels.forEach((label, idx) => {
+                        const distancia = Array.isArray(custos.distancia) ? custos.distancia[idx] : 0;
                         scatterData.push({
                             label: label,
-                            data: [{ x: custos.distancia?.[idx] || Math.random() * 5000, y: custos.data[idx] }],
+                            data: [{ x: distancia || Math.random() * 5000, y: custos.data[idx] }],
                             backgroundColor: cores[idx],
                             borderColor: cores[idx],
                             borderWidth: 2,
@@ -1004,25 +1010,32 @@
                     });
                 }
 
-                // Criar gráficos
-                setTimeout(() => {
-                    try {
-                        if (pedidos.labels && pedidos.data) {
-                            createLineChart('chart-pedidos', pedidos.labels, pedidos.data);
-                        }
-                        if (status.labels && status.data) {
-                            createStatusChart('chart-status', status.labels, status.data);
-                        }
-                        if (custos.labels && custos.data) {
-                            createBarChart('chart-custos', custos.labels, custos.data, custos.distancia);
-                        }
-                        if (scatterData.length > 0) {
-                            createScatterChart('chart-scatter', scatterData);
-                        }
-                    } catch (error) {
-                        console.error('Erro ao criar gráficos:', error);
-                    }
-                }, 100);
+                // Criar gráficos IMEDIATAMENTE com os dados carregados
+                console.log('Criando gráficos com dados:', { pedidos, status, custos, scatterData });
+                
+                if (pedidos.labels && pedidos.data && pedidos.data.length > 0) {
+                    createLineChart('chart-pedidos', pedidos.labels, pedidos.data);
+                } else {
+                    console.warn('Dados de pedidos incompletos:', pedidos);
+                }
+                
+                if (status.labels && status.data && status.data.length > 0) {
+                    createStatusChart('chart-status', status.labels, status.data);
+                } else {
+                    console.warn('Dados de status incompletos:', status);
+                }
+                
+                if (custos.labels && custos.data && custos.data.length > 0) {
+                    createBarChart('chart-custos', custos.labels, custos.data, custos.distancia || []);
+                } else {
+                    console.warn('Dados de custos incompletos:', custos);
+                }
+                
+                if (scatterData.length > 0) {
+                    createScatterChart('chart-scatter', scatterData);
+                } else {
+                    console.warn('Sem dados para scatter chart');
+                }
 
             } catch (error) {
                 console.error('Erro ao carregar gráficos:', error);
@@ -1030,24 +1043,32 @@
         }
 
         function createLineChart(chartId, labels, data) {
+            console.log(`Criando gráfico de linha: ${chartId}`);
             const canvas = document.getElementById(chartId);
             if (!canvas) {
-                console.error('Canvas não encontrado:', chartId);
+                console.error('❌ Canvas não encontrado:', chartId);
                 return;
             }
+
+            console.log(`✓ Canvas encontrado: ${chartId}`);
 
             if (charts[chartId]) {
                 charts[chartId].destroy();
             }
 
-            const ctx = canvas.getContext('2d');
-            
-            // Gradient para a área sob a linha
-            const gradient = ctx.createLinearGradient(0, 0, 0, 300);
-            gradient.addColorStop(0, 'rgba(74, 123, 255, 0.2)');
-            gradient.addColorStop(1, 'rgba(74, 123, 255, 0)');
+            try {
+                const ctx = canvas.getContext('2d');
+                if (!ctx) {
+                    console.error('❌ Contexto 2D não obtido:', chartId);
+                    return;
+                }
+                
+                // Gradient para a área sob a linha
+                const gradient = ctx.createLinearGradient(0, 0, 0, 300);
+                gradient.addColorStop(0, 'rgba(74, 123, 255, 0.2)');
+                gradient.addColorStop(1, 'rgba(74, 123, 255, 0)');
 
-            charts[chartId] = new Chart(ctx, {
+                charts[chartId] = new Chart(ctx, {
                 type: 'line',
                 data: {
                     labels: labels,
@@ -1137,19 +1158,26 @@
                             grid: { display: false, drawBorder: false }
                         }
                     }
-                }
-            });
+                });
+                console.log('✓ Gráfico de linha criado com sucesso:', chartId);
+            } catch (error) {
+                console.error('❌ Erro ao criar gráfico de linha:', error);
+            }
         }
 
         function createStatusChart(chartId, labels, data) {
+            console.log(`Criando gráfico de status: ${chartId}`);
             const canvas = document.getElementById(chartId);
-            if (!canvas) return;
+            if (!canvas) {
+                console.error('❌ Canvas não encontrado:', chartId);
+                return;
+            }
 
             if (charts[chartId]) {
                 charts[chartId].destroy();
             }
 
-            // Calcular percentuais e cores
+            try {            // Calcular percentuais e cores
             const total = data.reduce((a, b) => a + b, 0);
             const percentuais = data.map(d => ((d / total) * 100).toFixed(1));
             const cores = ['#2dd4ac', '#3b82f6', '#ef4444'];
@@ -1232,14 +1260,25 @@
                     }
                 }
             });
+            console.log('✓ Gráfico de status criado com sucesso:', chartId);
+            } catch (error) {
+                console.error('❌ Erro ao criar gráfico de status:', error);
+            }
         }
 
         function createBarChart(chartId, labels, data, distancia = []) {
+            console.log(`Criando gráfico de barras: ${chartId}`);
             const canvas = document.getElementById(chartId);
-            if (!canvas) return;
+            if (!canvas) {
+                console.error('❌ Canvas não encontrado:', chartId);
+                return;
+            }
 
             if (charts[chartId]) {
                 charts[chartId].destroy();
+            }
+
+            try {
             }
 
             // Ordenar dados do maior para o menor
@@ -1359,11 +1398,19 @@
                     }
                 }
             });
+            console.log('✓ Gráfico de barras criado com sucesso:', chartId);
+            } catch (error) {
+                console.error('❌ Erro ao criar gráfico de barras:', error);
+            }
         }
 
         function createScatterChart(chartId, datasets) {
+            console.log(`Criando scatter chart: ${chartId}`);
             const canvas = document.getElementById(chartId);
-            if (!canvas) return;
+            if (!canvas) {
+                console.error('❌ Canvas não encontrado:', chartId);
+                return;
+            }
 
             if (charts[chartId]) {
                 charts[chartId].destroy();
@@ -1456,6 +1503,10 @@
                     }
                 }
             });
+            console.log('✓ Scatter chart criado com sucesso:', chartId);
+            } catch (error) {
+                console.error('❌ Erro ao criar scatter chart:', error);
+            }
         }
 
         async function loadTabelas() {
