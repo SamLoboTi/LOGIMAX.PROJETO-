@@ -189,15 +189,15 @@
 
         .kpis-grid {
             display: grid;
-            grid-template-columns: repeat(6, 1fr);
-            gap: 12px;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 8px;
             margin-bottom: 24px;
         }
 
         .kpi-card {
-            border-radius: 12px;
-            padding: 16px;
-            height: 140px;
+            border-radius: 10px;
+            padding: 12px;
+            height: 110px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -229,92 +229,98 @@
             box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
         }
 
-        /* KPI Card 1 - Lead Time (Warning Yellow) */
+        /* KPI Card 1 - Lead Time (Amarelo Claro) */
         .kpi-card.kpi-1::before {
-            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
         }
-        .kpi-card.kpi-1 .kpi-label { color: #92400e; font-weight: 700; }
-        .kpi-card.kpi-1 .kpi-value { color: #78350f; }
+        .kpi-card.kpi-1 .kpi-label { color: #78350f; font-weight: 700; }
+        .kpi-card.kpi-1 .kpi-value { color: #451a03; }
         .kpi-card.kpi-1 .kpi-icon { color: #d97706; }
+        .kpi-card.kpi-1 .kpi-unit { color: #92400e; }
 
-        /* KPI Card 2 - Fill Rate (Teal/Success) */
+        /* KPI Card 2 - Fill Rate (Teal Claro) */
         .kpi-card.kpi-2::before {
-            background: linear-gradient(135deg, #14b8a6 0%, #0d9488 100%);
+            background: linear-gradient(135deg, #ccfbf1 0%, #a7f3d0 100%);
         }
         .kpi-card.kpi-2 .kpi-label { color: #134e4a; font-weight: 700; }
-        .kpi-card.kpi-2 .kpi-value { color: #0f3f3f; }
+        .kpi-card.kpi-2 .kpi-value { color: #0d3331; }
         .kpi-card.kpi-2 .kpi-icon { color: #0d9488; }
+        .kpi-card.kpi-2 .kpi-unit { color: #115e59; }
 
-        /* KPI Card 3 - Receita Total (Blue) */
+        /* KPI Card 3 - Receita Total (Azul Claro) */
         .kpi-card.kpi-3::before {
-            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
         }
-        .kpi-card.kpi-3 .kpi-label { color: #1e3a8a; font-weight: 700; }
-        .kpi-card.kpi-3 .kpi-value { color: #1e40af; }
-        .kpi-card.kpi-3 .kpi-icon { color: #1e3a8a; }
+        .kpi-card.kpi-3 .kpi-label { color: #1e40af; font-weight: 700; }
+        .kpi-card.kpi-3 .kpi-value { color: #0c2d6b; }
+        .kpi-card.kpi-3 .kpi-icon { color: #2563eb; }
+        .kpi-card.kpi-3 .kpi-unit { color: #1e3a8a; }
 
-        /* KPI Card 4 - Entregas Prazo (Green) */
+        /* KPI Card 4 - Entregas Prazo (Verde Claro) */
         .kpi-card.kpi-4::before {
-            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%);
         }
-        .kpi-card.kpi-4 .kpi-label { color: #064e3b; font-weight: 700; }
-        .kpi-card.kpi-4 .kpi-value { color: #065f46; }
-        .kpi-card.kpi-4 .kpi-icon { color: #059669; }
+        .kpi-card.kpi-4 .kpi-label { color: #15803d; font-weight: 700; }
+        .kpi-card.kpi-4 .kpi-value { color: #052e16; }
+        .kpi-card.kpi-4 .kpi-icon { color: #16a34a; }
+        .kpi-card.kpi-4 .kpi-unit { color: #166534; }
 
-        /* KPI Card 5 - Rotatividade (Purple) */
+        /* KPI Card 5 - Rotatividade (Roxo Claro) */
         .kpi-card.kpi-5::before {
-            background: linear-gradient(135deg, #a78bfa 0%, #9333ea 100%);
+            background: linear-gradient(135deg, #f3e8ff 0%, #e9d5ff 100%);
         }
-        .kpi-card.kpi-5 .kpi-label { color: #4c1d95; font-weight: 700; }
-        .kpi-card.kpi-5 .kpi-value { color: #5b21b6; }
-        .kpi-card.kpi-5 .kpi-icon { color: #7c3aed; }
+        .kpi-card.kpi-5 .kpi-label { color: #6b21a8; font-weight: 700; }
+        .kpi-card.kpi-5 .kpi-value { color: #3f0f5c; }
+        .kpi-card.kpi-5 .kpi-icon { color: #a855f7; }
+        .kpi-card.kpi-5 .kpi-unit { color: #7e22ce; }
 
-        /* KPI Card 6 - Acuracidade (Coral/Orange) */
+        /* KPI Card 6 - Acuracidade (Coral Claro) */
         .kpi-card.kpi-6::before {
-            background: linear-gradient(135deg, #ff6b6b 0%, #ff5252 100%);
+            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
         }
-        .kpi-card.kpi-6 .kpi-label { color: #7f1d1d; font-weight: 700; }
-        .kpi-card.kpi-6 .kpi-value { color: #991b1b; }
+        .kpi-card.kpi-6 .kpi-label { color: #991b1b; font-weight: 700; }
+        .kpi-card.kpi-6 .kpi-value { color: #5e1414; }
         .kpi-card.kpi-6 .kpi-icon { color: #dc2626; }
+        .kpi-card.kpi-6 .kpi-unit { color: #b42620; }
 
-        /* KPI Card 7 - Inconsistências (Red/Coral) */
+        /* KPI Card 7 - Inconsistências (Vermelho Claro) */
         .kpi-card.kpi-7::before {
-            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            background: linear-gradient(135deg, #fecaca 0%, #fca5a5 100%);
         }
-        .kpi-card.kpi-7 .kpi-label { color: #7f1d1d; font-weight: 700; }
-        .kpi-card.kpi-7 .kpi-value { color: #991b1b; }
-        .kpi-card.kpi-7 .kpi-icon { color: #dc2626; }
+        .kpi-card.kpi-7 .kpi-label { color: #991b1b; font-weight: 700; }
+        .kpi-card.kpi-7 .kpi-value { color: #5e1414; }
+        .kpi-card.kpi-7 .kpi-icon { color: #ef4444; }
+        .kpi-card.kpi-7 .kpi-unit { color: #b42620; }
 
         .kpi-icon {
-            font-size: 22px;
+            font-size: 24px;
             margin-bottom: 4px;
         }
 
         .kpi-label {
-            font-size: 9px;
+            font-size: 8px;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            font-weight: 600;
-            line-height: 1.2;
+            letter-spacing: 0.8px;
+            font-weight: 700;
+            line-height: 1.1;
         }
 
         .kpi-bottom {
             display: flex;
             justify-content: space-between;
             align-items: flex-end;
-            gap: 8px;
+            gap: 4px;
         }
 
         .kpi-value {
             font-family: 'Poppins', sans-serif;
-            font-size: 24px;
+            font-size: 28px;
             font-weight: 700;
             line-height: 1;
         }
 
         .kpi-unit {
-            font-size: 10px;
-            color: var(--text-secondary);
+            font-size: 9px;
             margin-left: 2px;
         }
 
@@ -331,10 +337,6 @@
         .kpi-change.negative {
             background: rgba(255, 107, 107, 0.2);
             color: var(--error);
-        }
-
-        .kpi-card.kpi-7 {
-            grid-column: 1;
         }
 
         /* CHARTS GRID */
