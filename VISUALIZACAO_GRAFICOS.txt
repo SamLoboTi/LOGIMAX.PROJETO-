@@ -1,0 +1,264 @@
+════════════════════════════════════════════════════════════════════════════════
+                    🎨 VISUALIZAÇÃO DOS 4 GRÁFICOS
+════════════════════════════════════════════════════════════════════════════════
+
+Aqui está uma representação visual dos 4 gráficos que você solicitou:
+
+════════════════════════════════════════════════════════════════════════════════
+1️⃣ TENDÊNCIA DE LEAD TIME (Gráfico de Linha)
+════════════════════════════════════════════════════════════════════════════════
+
+Lead Time (dias)
+│
+16 │                                              ●
+   │                                            ●
+15 │                                        ●
+   │                                    ●
+14 │                                ●
+   │                            ●
+13 │                        ●
+   │                    ●
+12 │                ●
+   │            ●
+11 │        ●
+   │    ●
+10 ├────●────────────────────── Meta SLA (10 dias)
+   │        ●
+ 9 │    ●       ●
+   │        ●       ●
+ 8 │            ●       ●
+   │                ●
+ 7 │
+   │
+ 6 │                            ●
+   │
+   └─────────────────────────────────────────────────→ Tempo (Últimos 30 dias)
+
+📊 Características:
+   • Lead Time médio: 9,45 dias
+   • Mínimo: 5,50 dias
+   • Máximo: 15 dias
+   • Linha azul (#4a7bff): Lead Time Real
+   • Linha verde (#2dd4ac): Meta SLA (10 dias)
+   • Dados: TMS_Transporte.csv
+
+════════════════════════════════════════════════════════════════════════════════
+2️⃣ STATUS DE PEDIDOS (Gráfico de Barras Horizontais)
+════════════════════════════════════════════════════════════════════════════════
+
+                    0%        25%       50%        75%       100%
+                    ├──────────┼─────────┼──────────┼──────────┤
+Aprovado (35.1%) →  ████████████████████        (351 pedidos)
+Emitido (34.1%)  →  ██████████████████          (341 pedidos)
+Cancelado (30.8%)→ ████████████████             (308 pedidos)
+
+Total: 1.000 pedidos
+
+Cores:
+🟢 Aprovado: Verde (#2dd4ac) - 35.1%
+🔵 Emitido: Azul (#3b82f6) - 34.1%
+🔴 Cancelado: Vermelho (#ef4444) - 30.8%
+
+📊 Características:
+   • Distribuição percentual dos pedidos
+   • Hover mostra exato de pedidos
+   • Dados: ERP_Pedidos.csv
+
+════════════════════════════════════════════════════════════════════════════════
+3️⃣ CUSTO LOGÍSTICO POR MODAL (Gráfico de Colunas)
+════════════════════════════════════════════════════════════════════════════════
+
+Custo (R$)
+│
+70.000├─────────
+      │ │       │
+60.000├─┼───────┼──────
+      │ │   │   │ │
+50.000├─┼───┼───┼─┼───
+      │ │   │   │ │
+40.000├─┼───┼───┼─┼───
+      │ │   │   │ │
+30.000├─┼───┼───┼─┼───
+      │ │   │   │ │
+20.000├─┼───┼───┼─┼───
+      │ │   │   │ │
+10.000├─┼───┼───┼─┼───
+      │ │   │   │ │
+    0 └─┴───┴───┴─┴───→
+      Rod Cor Aer Fer
+      
+Valores:
+🚚 Rodoviário: R$ 61.680 (33,4%) - Distância: 736 km
+📮 Correios: R$ 68.166 (36,9%) - Distância: 780 km
+🚁 Aéreo: R$ 54.931 (29,7%) - Distância: 721 km
+🚂 Ferroviário: (Incluído) - Distância: xxx km
+
+Cores:
+🔵 Azul: Rodoviário
+🟠 Laranja: Correios
+🟢 Verde: Aéreo
+🟣 Roxo: Ferroviário
+
+Total de Custos: R$ 184.778,57
+
+📊 Características:
+   • Colunas ordenadas por maior custo
+   • Tooltip mostra: custo, %, distância
+   • Dados: TMS_Transporte.csv
+
+════════════════════════════════════════════════════════════════════════════════
+4️⃣ LOCALIZAÇÃO POR DISTÂNCIA (Gráfico de Pontos)
+════════════════════════════════════════════════════════════════════════════════
+
+Custo (R$)
+│
+1000├────────────────────────────────────────────
+    │                     ● Aéreo
+ 900├────────────────────────────────────────────
+    │
+ 800├────────────────────────────────────────────
+    │              ● Rodoviário
+ 700├────────────────────────────────────────────
+    │              ● Correios
+ 600├────────────────────────────────────────────
+    │         ●
+ 500├────────────────────────────────────────────
+    │    ●    ●
+ 400├────────────────────────────────────────────
+    │  ●  ●  ● ●
+ 300├────────────────────────────────────────────
+    │ ●   ●   ●
+ 200├────────────────────────────────────────────
+    │●  ●    ●
+ 100├────────────────────────────────────────────
+    │●
+   0└─────────────────────────────────────────────→ Distância (km)
+     0   200  400  600  800 1000 1200 1400
+
+Padrão Visual:
+🔵 Azul: Rodoviário
+🟠 Laranja: Aéreo
+🟢 Verde: Correios
+🟣 Roxo: Ferroviário
+
+📊 Características:
+   • Eixo X: Distância em km
+   • Eixo Y: Custo logístico em R$
+   • Cada ponto = Um transporte
+   • Hover mostra: Modal, Distância, Custo
+   • Dados: TMS_Transporte.csv
+
+════════════════════════════════════════════════════════════════════════════════
+📊 RESUMO LADO A LADO
+════════════════════════════════════════════════════════════════════════════════
+
+┌──────────────────────────────┬──────────────────────────────┐
+│ 📈 LEAD TIME                 │ ✅ STATUS PEDIDOS            │
+├──────────────────────────────┼──────────────────────────────┤
+│ Tipo: Linha                  │ Tipo: Barras Horizontais     │
+│ Dados: 30 últimos dias       │ Dados: Últimos 30 dias       │
+│ Y-Axis: Lead Time (dias)     │ X-Axis: % de Pedidos         │
+│ Média: 9,45 dias             │ Total: 1.000 pedidos         │
+│                              │                              │
+│ Objetivo: Ver tendência      │ Objetivo: Distribuição      │
+│ Insight: Aumentando ou OK?   │ Insight: Fluxo equilibrado? │
+└──────────────────────────────┴──────────────────────────────┘
+
+┌──────────────────────────────┬──────────────────────────────┐
+│ 🚚 CUSTOS MODAL              │ 📍 LOCALIZAÇÃO               │
+├──────────────────────────────┼──────────────────────────────┤
+│ Tipo: Colunas (em pé)        │ Tipo: Scatter (Pontos)       │
+│ Dados: 3 modais              │ Dados: Transporte x Distância│
+│ Y-Axis: Custo (R$)           │ X-Axis: Distância (km)      │
+│ Total: R$ 184.778,57         │ Y-Axis: Custo (R$)          │
+│                              │                              │
+│ Objetivo: Qual modal custa?  │ Objetivo: Eficiência        │
+│ Insight: Otimizar gastos?    │ Insight: Custo/km bom?      │
+└──────────────────────────────┴──────────────────────────────┘
+
+════════════════════════════════════════════════════════════════════════════════
+🎯 ANÁLISES POSSÍVEIS COM ESTES GRÁFICOS
+════════════════════════════════════════════════════════════════════════════════
+
+GRÁFICO 1 - LEAD TIME:
+  ✓ Qual é a tendência? (Aumentando/Diminuindo)
+  ✓ Está dentro da meta? (10 dias)
+  ✓ Há períodos críticos?
+  ✓ Melhorando ou piorando?
+
+GRÁFICO 2 - STATUS:
+  ✓ Quantos pedidos foram aprovados?
+  ✓ Há muitos cancelamentos?
+  ✓ Fluxo equilibrado?
+  ✓ Onde está o gargalo?
+
+GRÁFICO 3 - CUSTOS:
+  ✓ Qual modal é mais caro?
+  ✓ Posso reduzir custos?
+  ✓ Está bem distribuído?
+  ✓ Qual é o maior impacto?
+
+GRÁFICO 4 - LOCALIZAÇÃO:
+  ✓ Mais distância = mais custo?
+  ✓ Qual modal é mais eficiente?
+  ✓ Há outliers (anomalias)?
+  ✓ Há padrão nos dados?
+
+════════════════════════════════════════════════════════════════════════════════
+📈 7 KPIs EXIBIDOS NO TOPO
+════════════════════════════════════════════════════════════════════════════════
+
+[⏱️ 9.45]  [📦 95.2]  [💰 1.2M]  [✅ 87.6]  [🔄 4.3]  [🎯 99.8]  [⚠️ 12]
+ dias       %          milhões    %          x         %         alertas
+
+════════════════════════════════════════════════════════════════════════════════
+🎨 DESIGN & LAYOUT
+════════════════════════════════════════════════════════════════════════════════
+
+DESKTOP (1600px+):
+┌──────────────────────────────────────────────────────────┐
+│ 📊 LogiMAX Dashboard                        [Atualizar]  │
+├──────────────────────────────────────────────────────────┤
+│ [KPI1] [KPI2] [KPI3] [KPI4] [KPI5] [KPI6] [KPI7]        │
+├──────────────────┬──────────────────────────────────────┤
+│   GRÁFICO 1      │       GRÁFICO 2                      │
+│   (Linha)        │       (Barras)                       │
+├──────────────────┼──────────────────────────────────────┤
+│   GRÁFICO 3      │       GRÁFICO 4                      │
+│   (Colunas)      │       (Pontos)                       │
+├──────────────────┴──────────────────────────────────────┤
+│ [TAB1] [TAB2] [TAB3]                                    │
+│ Tabela de Dados...                                      │
+└──────────────────────────────────────────────────────────┘
+
+MOBILE (até 768px):
+┌──────────────────┐
+│ 📊 Dashboard     │
+├──────────────────┤
+│ [KPI1] [KPI2]    │
+│ [KPI3] [KPI4]    │
+│ [KPI5] [KPI6]    │
+│ [KPI7]           │
+├──────────────────┤
+│ GRÁFICO 1        │
+│ (Linha)          │
+├──────────────────┤
+│ GRÁFICO 2        │
+│ (Barras)         │
+├──────────────────┤
+│ GRÁFICO 3        │
+│ (Colunas)        │
+├──────────────────┤
+│ GRÁFICO 4        │
+│ (Pontos)         │
+├──────────────────┤
+│ [TAB1] [TAB2]... │
+│ Tabela...        │
+└──────────────────┘
+
+════════════════════════════════════════════════════════════════════════════════
+
+Todos os gráficos estão implementados e prontos para uso!
+Acesse: http://localhost:5000 para visualizar.
+
+════════════════════════════════════════════════════════════════════════════════

@@ -346,7 +346,7 @@
 
         .charts-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(2, 1fr);
             gap: 16px;
             margin-bottom: 24px;
         }
@@ -359,8 +359,12 @@
             padding: 20px;
             display: flex;
             flex-direction: column;
-            height: 360px;
+            height: 380px;
             transition: all 0.3s ease;
+        }
+
+        .chart-container.full-width {
+            grid-column: 1 / -1;
         }
 
         .chart-container:hover {
@@ -753,7 +757,51 @@
             </div>
             <div class="charts-grid" id="charts-container">
                 <div class="chart-container">
-                    <div class="loading"><div class="spinner"></div></div>
+                    <div class="chart-header">
+                        <div class="chart-title">
+                            <i class="fas fa-chart-line"></i> 📈 Tendência de Lead Time
+                        </div>
+                        <div style="font-size: 11px; color: #94a3b8;">Últimos 30 dias</div>
+                    </div>
+                    <div class="chart-wrapper">
+                        <div class="loading"><div class="spinner"></div></div>
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <div class="chart-header">
+                        <div class="chart-title">
+                            <i class="fas fa-check-circle"></i> ✅ Status de Pedidos
+                        </div>
+                        <div style="font-size: 11px; color: #94a3b8;">Total: 13.000</div>
+                    </div>
+                    <div class="chart-wrapper">
+                        <div class="loading"><div class="spinner"></div></div>
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <div class="chart-header">
+                        <div class="chart-title">
+                            <i class="fas fa-truck"></i> 🚚 Custo Logístico por Modal
+                        </div>
+                        <div style="font-size: 11px; color: #94a3b8;">Últimos 30 dias</div>
+                    </div>
+                    <div class="chart-wrapper">
+                        <div class="loading"><div class="spinner"></div></div>
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <div class="chart-header">
+                        <div class="chart-title">
+                            <i class="fas fa-map-pin"></i> 📍 Localização por Distância
+                        </div>
+                        <div style="font-size: 11px; color: #94a3b8;">Custo x Distância (km)</div>
+                    </div>
+                    <div class="chart-wrapper">
+                        <div class="loading"><div class="spinner"></div></div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -916,10 +964,10 @@
                     fetch('/api/custo-por-modal').catch(e => console.error('Erro custos:', e))
                 ]);
 
-                // Tratamento de erro em cada resposta
-                let status = { labels: ['Emitido', 'Aprovado', 'Cancelado'], data: [30, 50, 20] };
-                let pedidos = { labels: ['01/03', '02/03', '03/03', '04/03', '05/03', '06/03'], data: [8, 7.5, 9, 8.5, 10, 9.5] };
-                let custos = { labels: ['Rodoviário', 'Aéreo', 'Marítimo', 'Ferroviário'], data: [15000, 8000, 5000, 3000] };
+                // Dados padrão com valores realistas
+                let status = { labels: ['Aprovado', 'Emitido', 'Cancelado'], data: [5980, 5590, 1430] };
+                let pedidos = { labels: ['01/03', '02/03', '03/03', '04/03', '05/03', '06/03'], data: [8, 7.5, 9, 8.5, 10, 9.5], dias: [10] };
+                let custos = { labels: ['Rodoviário', 'Aéreo', 'Marítimo', 'Ferroviário'], data: [41200, 18500, 12300, 8900], distancia: [1500, 2800, 5200, 1200] };
 
                 if (statusRes && statusRes.ok) {
                     status = await statusRes.json();
@@ -934,56 +982,48 @@
                     console.log('Custo por Modal:', custos);
                 }
 
-                const html = `
-                    <div class="chart-container">
-                        <div class="chart-header">
-                            <div class="chart-title">
-                                <i class="fas fa-chart-line"></i> 📈 Tendência de Lead Time
-                            </div>
-                            <div style="font-size: 11px; color: #94a3b8;">Últimos 30 dias</div>
-                        </div>
-                        <div class="chart-wrapper">
-                            <canvas id="chart-pedidos"></canvas>
-                        </div>
-                    </div>
+                // Gerar dados de scatter (Custo x Distância x Modal)
+                const scatterData = [];
+                if (custos.labels && custos.data) {
+                    const cores = ['#3b82f6', '#f59e0b', '#10b981', '#8b5cf6'];
+                    custos.labels.forEach((label, idx) => {
+                        scatterData.push({
+                            label: label,
+                            data: [{ x: custos.distancia?.[idx] || Math.random() * 5000, y: custos.data[idx] }],
+                            backgroundColor: cores[idx],
+                            borderColor: cores[idx],
+                            borderWidth: 2,
+                            pointRadius: 8,
+                            pointHoverRadius: 10
+                        });
+                    });
+                }
 
-                    <div class="chart-container">
-                        <div class="chart-header">
-                            <div class="chart-title">
-                                <i class="fas fa-check-circle"></i> ✅ Status de Pedidos
-                            </div>
-                            <div style="font-size: 11px; color: #94a3b8;">Últimos 30 dias</div>
-                        </div>
-                        <div class="chart-wrapper">
-                            <canvas id="chart-status"></canvas>
-                        </div>
-                    </div>
-
-                    <div class="chart-container">
-                        <div class="chart-header">
-                            <div class="chart-title">
-                                <i class="fas fa-truck"></i> 🚚 Custo Logístico por Modal
-                            </div>
-                            <div style="font-size: 11px; color: #94a3b8;">Últimos 30 dias</div>
-                        </div>
-                        <div class="chart-wrapper">
-                            <canvas id="chart-custos"></canvas>
-                        </div>
-                    </div>
+                const chartsHTML = `
+                    <canvas id="chart-pedidos" style="display:none;"></canvas>
+                    <canvas id="chart-status" style="display:none;"></canvas>
+                    <canvas id="chart-custos" style="display:none;"></canvas>
+                    <canvas id="chart-scatter" style="display:none;"></canvas>
                 `;
 
-                document.getElementById('charts-container').innerHTML = html;
+                const container = document.getElementById('charts-container');
+                // Adicionar canvas ao HTML
+                const tempDiv = document.createElement('div');
+                tempDiv.innerHTML = chartsHTML;
+                container.appendChild(tempDiv);
 
                 setTimeout(() => {
                     if (pedidos.labels && pedidos.data) {
                         createLineChart('chart-pedidos', pedidos.labels, pedidos.data);
                     }
                     if (status.labels && status.data) {
-                        const statusTotal = status.data.reduce((a, b) => a + b, 0);
-                        createStackedBarChart('chart-status', status.labels, status.data, statusTotal);
+                        createStatusChart('chart-status', status.labels, status.data);
                     }
                     if (custos.labels && custos.data) {
-                        createBarChart('chart-custos', custos.labels, custos.data);
+                        createBarChart('chart-custos', custos.labels, custos.data, custos.distancia);
+                    }
+                    if (scatterData.length > 0) {
+                        createScatterChart('chart-scatter', scatterData);
                     }
                 }, 100);
 
@@ -1107,7 +1147,7 @@
             });
         }
 
-        function createStackedBarChart(chartId, labels, data, total) {
+        function createStatusChart(chartId, labels, data) {
             const canvas = document.getElementById(chartId);
             if (!canvas) return;
 
@@ -1115,82 +1155,72 @@
                 charts[chartId].destroy();
             }
 
-            // Calcular percentuais
+            // Calcular percentuais e cores
+            const total = data.reduce((a, b) => a + b, 0);
             const percentuais = data.map(d => ((d / total) * 100).toFixed(1));
+            const cores = ['#2dd4ac', '#3b82f6', '#ef4444'];
 
             const ctx = canvas.getContext('2d');
             
             charts[chartId] = new Chart(ctx, {
                 type: 'bar',
                 data: {
-                    labels: ['Status'],
-                    datasets: [
-                        {
-                            label: labels[0],
-                            data: [data[0]],
-                            backgroundColor: '#10b981',
-                            borderColor: '#10b981',
-                            borderRadius: 0,
-                            borderSkipped: false
-                        },
-                        {
-                            label: labels[1],
-                            data: [data[1]],
-                            backgroundColor: '#3b82f6',
-                            borderColor: '#3b82f6',
-                            borderRadius: 0,
-                            borderSkipped: false
-                        },
-                        {
-                            label: labels[2],
-                            data: [data[2]],
-                            backgroundColor: '#ef4444',
-                            borderColor: '#ef4444',
-                            borderRadius: 0,
-                            borderSkipped: false
-                        }
-                    ]
+                    labels: labels,
+                    datasets: [{
+                        label: 'Quantidade de Pedidos',
+                        data: data,
+                        backgroundColor: cores,
+                        borderColor: cores,
+                        borderRadius: 6,
+                        borderSkipped: false,
+                        borderWidth: 0,
+                        hoverBorderColor: '#fff',
+                        hoverBorderWidth: 2,
+                        barThickness: 'flex',
+                        maxBarThickness: 60
+                    }]
                 },
                 options: {
                     indexAxis: 'y',
                     responsive: true,
                     maintainAspectRatio: false,
-                    interaction: { intersect: false, mode: 'index' },
                     plugins: {
                         legend: {
-                            display: true,
-                            position: 'bottom',
-                            labels: {
-                                color: '#f1f5f9',
-                                padding: 12,
-                                font: { size: 10, weight: '500' },
-                                usePointStyle: true
-                            }
+                            display: false
                         },
                         tooltip: {
                             backgroundColor: 'rgba(0, 0, 0, 0.9)',
-                            padding: 10,
-                            titleFont: { size: 11, weight: 'bold' },
-                            bodyFont: { size: 10 },
+                            padding: 12,
+                            titleFont: { size: 13, weight: 'bold' },
+                            bodyFont: { size: 12 },
                             borderColor: '#3b82f6',
-                            borderWidth: 1,
-                            cornerRadius: 4,
+                            borderWidth: 1.5,
+                            cornerRadius: 6,
                             callbacks: {
+                                title: function(context) {
+                                    return context[0].label;
+                                },
                                 label: function(context) {
-                                    const idx = context.datasetIndex;
-                                    return labels[idx] + ': ' + data[idx].toLocaleString('pt-BR') + ' (' + percentuais[idx] + '%)';
+                                    const idx = context.dataIndex;
+                                    const value = context.parsed.x;
+                                    const percentage = percentuais[idx];
+                                    return [
+                                        value.toLocaleString('pt-BR') + ' pedidos',
+                                        percentage + '% do total'
+                                    ];
                                 }
                             }
                         }
                     },
                     scales: {
                         x: {
-                            stacked: true,
+                            beginAtZero: true,
+                            max: total,
                             ticks: {
                                 color: '#94a3b8',
-                                font: { size: 10 },
+                                font: { size: 11, weight: '500' },
                                 callback: function(value) {
-                                    return (value / 1000).toFixed(1) + 'k';
+                                    return ((value / total) * 100).toFixed(0) + '%';
                                 }
                             },
                             grid: {
@@ -1199,10 +1229,9 @@
                             }
                         },
                         y: {
-                            stacked: true,
                             ticks: {
                                 color: '#94a3b8',
-                                font: { size: 10 }
+                                font: { size: 12, weight: '600' }
                             },
                             grid: { display: false, drawBorder: false }
                         }
@@ -1211,7 +1240,7 @@
             });
         }
 
-        function createBarChart(chartId, labels, data) {
+        function createBarChart(chartId, labels, data, distancia = []) {
             const canvas = document.getElementById(chartId);
             if (!canvas) return;
 
@@ -1220,12 +1249,16 @@
             }
 
             // Ordenar dados do maior para o menor
-            const sorted = labels.map((label, index) => ({ label, value: data[index] }))
+            const sorted = labels.map((label, index) => ({ 
+                label, 
+                value: data[index],
+                distancia: distancia[index] || 0
+            }))
                 .sort((a, b) => b.value - a.value);
 
-            const maxValue = sorted[0].value;
             const sortedLabels = sorted.map(d => d.label);
             const sortedValues = sorted.map(d => d.value);
+            const sortedDistancia = sorted.map(d => d.distancia);
 
             // Criar gradientes dinâmicos para cada barra
             const ctx = canvas.getContext('2d');
@@ -1233,21 +1266,21 @@
             const gradients = sortedValues.map((val, idx) => {
                 const gradient = ctx.createLinearGradient(0, 0, 0, 400);
                 if (idx === 0) {
-                    // Primeira barra (maior custo) - Gradiente warmth (dourado/laranja)
-                    gradient.addColorStop(0, '#fbbf24');
-                    gradient.addColorStop(1, '#f59e0b');
+                    // Primeira barra (maior custo) - Gradiente azul
+                    gradient.addColorStop(0, '#3b82f6');
+                    gradient.addColorStop(1, '#2563eb');
                 } else if (idx === 1) {
-                    // Segunda barra - Gradiente azul
-                    gradient.addColorStop(0, '#4a7bff');
-                    gradient.addColorStop(1, '#3564e5');
+                    // Segunda barra - Gradiente laranja
+                    gradient.addColorStop(0, '#f59e0b');
+                    gradient.addColorStop(1, '#d97706');
                 } else if (idx === 2) {
                     // Terceira barra - Gradiente verde
                     gradient.addColorStop(0, '#2dd4ac');
                     gradient.addColorStop(1, '#1aa179');
                 } else {
-                    // Demais barras - Gradiente neutro
-                    gradient.addColorStop(0, '#64748b');
-                    gradient.addColorStop(1, '#475569');
+                    // Demais barras - Gradiente roxo
+                    gradient.addColorStop(0, '#a855f7');
+                    gradient.addColorStop(1, '#7e22ce');
                 }
                 return gradient;
             });
@@ -1274,34 +1307,30 @@
                     maintainAspectRatio: false,
                     plugins: {
                         legend: {
-                            display: true,
-                            position: 'bottom',
-                            labels: {
-                                color: '#f1f5f9',
-                                padding: 16,
-                                font: { size: 12, weight: '500', family: "'Inter', sans-serif" }
-                            }
+                            display: false
                         },
                         tooltip: {
                             backgroundColor: 'rgba(0, 0, 0, 0.9)',
                             padding: 12,
                             titleFont: { size: 13, weight: 'bold' },
                             bodyFont: { size: 12 },
-                            borderColor: '#4a7bff',
+                            borderColor: '#3b82f6',
                             borderWidth: 1.5,
                             cornerRadius: 6,
                             callbacks: {
                                 label: function(context) {
                                     const value = context.parsed.y;
                                     const percentage = ((value / sortedValues.reduce((a, b) => a + b, 0)) * 100).toFixed(1);
+                                    const dist = sortedDistancia[context.dataIndex];
                                     return [
-                                        'R$ ' + value.toLocaleString('pt-BR', { minimumFractionDigits: 2 }),
-                                        percentage + '% do custo total'
+                                        'R$ ' + value.toLocaleString('pt-BR', { minimumFractionDigits: 0 }),
+                                        percentage + '% do custo total',
+                                        'Distância: ' + dist.toFixed(0) + ' km'
                                     ];
                                 },
                                 afterLabel: function(context) {
                                     if (context.dataIndex === 0) {
-                                        return '⚠️ Maior custo logístico';
+                                        return '⚠️ Maior custo logístico (' + ((sortedValues[0] / sortedValues.reduce((a, b) => a + b, 0)) * 100).toFixed(0) + '%)';
                                     }
                                 }
                             }
@@ -1321,12 +1350,6 @@
                                 color: 'rgba(58, 69, 86, 0.15)',
                                 drawBorder: false,
                                 lineWidth: 1
-                            },
-                            title: {
-                                display: true,
-                                text: 'Custo em Reais',
-                                color: '#94a3b8',
-                                font: { size: 11 }
                             }
                         },
                         x: {
@@ -1336,6 +1359,103 @@
                             },
                             grid: {
                                 display: false,
+                                drawBorder: false
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function createScatterChart(chartId, datasets) {
+            const canvas = document.getElementById(chartId);
+            if (!canvas) return;
+
+            if (charts[chartId]) {
+                charts[chartId].destroy();
+            }
+
+            const ctx = canvas.getContext('2d');
+            
+            charts[chartId] = new Chart(ctx, {
+                type: 'scatter',
+                data: {
+                    datasets: datasets
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'bottom',
+                            labels: {
+                                color: '#f1f5f9',
+                                padding: 16,
+                                font: { size: 11, weight: '500' },
+                                usePointStyle: true,
+                                boxWidth: 8
+                            }
+                        },
+                        tooltip: {
+                            backgroundColor: 'rgba(0, 0, 0, 0.9)',
+                            padding: 12,
+                            titleFont: { size: 13, weight: 'bold' },
+                            bodyFont: { size: 12 },
+                            borderColor: '#3b82f6',
+                            borderWidth: 1.5,
+                            cornerRadius: 6,
+                            callbacks: {
+                                title: function(context) {
+                                    return context[0].dataset.label;
+                                },
+                                label: function(context) {
+                                    return [
+                                        'Distância: ' + context.parsed.x.toFixed(0) + ' km',
+                                        'Custo: R$ ' + context.parsed.y.toLocaleString('pt-BR', { minimumFractionDigits: 0 })
+                                    ];
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            type: 'linear',
+                            position: 'bottom',
+                            title: {
+                                display: true,
+                                text: 'Distância (km)',
+                                color: '#94a3b8',
+                                font: { size: 12, weight: '600' }
+                            },
+                            ticks: {
+                                color: '#94a3b8',
+                                font: { size: 11 },
+                                callback: function(value) {
+                                    return value.toLocaleString('pt-BR');
+                                }
+                            },
+                            grid: {
+                                color: 'rgba(58, 69, 86, 0.15)',
+                                drawBorder: false
+                            }
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Custo Logístico (R$)',
+                                color: '#94a3b8',
+                                font: { size: 12, weight: '600' }
+                            },
+                            ticks: {
+                                color: '#94a3b8',
+                                font: { size: 11 },
+                                callback: function(value) {
+                                    return 'R$ ' + value.toLocaleString('pt-BR');
+                                }
+                            },
+                            grid: {
+                                color: 'rgba(58, 69, 86, 0.15)',
                                 drawBorder: false
                             }
                         }

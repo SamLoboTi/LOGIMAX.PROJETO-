@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LogiMAX Dashboard - Prévia de Design</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #1a1f3a 0%, #141829 100%);
+            color: #f1f5f9;
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .header h1 {
+            font-size: 48px;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #4a7bff, #6b92ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .header p {
+            font-size: 18px;
+            color: #94a3b8;
+            margin-bottom: 30px;
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+        
+        .feature-card {
+            background: linear-gradient(135deg, rgba(36, 45, 74, 0.6), rgba(45, 56, 85, 0.3));
+            backdrop-filter: blur(8px);
+            border: 1px solid #3a4556;
+            border-radius: 12px;
+            padding: 30px;
+            transition: all 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            border-color: #4a7bff;
+            transform: translateY(-5px);
+            box-shadow: 0 12px 32px rgba(74, 123, 255, 0.15);
+        }
+        
+        .feature-card h3 {
+            font-size: 24px;
+            margin-bottom: 15px;
+            color: #4a7bff;
+        }
+        
+        .feature-card p {
+            color: #94a3b8;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        
+        .feature-list {
+            list-style: none;
+        }
+        
+        .feature-list li {
+            color: #2dd4ac;
+            margin-bottom: 8px;
+            padding-left: 20px;
+            position: relative;
+        }
+        
+        .feature-list li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+        
+        .charts-preview {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+        
+        .chart-preview {
+            background: linear-gradient(135deg, rgba(36, 45, 74, 0.6), rgba(45, 56, 85, 0.3));
+            backdrop-filter: blur(8px);
+            border: 1px solid #3a4556;
+            border-radius: 12px;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .chart-preview h4 {
+            color: #4a7bff;
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+        
+        .chart-placeholder {
+            background: linear-gradient(135deg, rgba(74, 123, 255, 0.1), rgba(139, 92, 246, 0.1));
+            border: 2px dashed #3a4556;
+            border-radius: 8px;
+            padding: 80px 20px;
+            text-align: center;
+            color: #64748b;
+        }
+        
+        .chart-placeholder svg {
+            width: 100%;
+            max-width: 400px;
+            height: 300px;
+        }
+        
+        .kpis-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 15px;
+            margin-bottom: 60px;
+        }
+        
+        .kpi-item {
+            background: linear-gradient(135deg, rgba(45, 212, 172, 0.2), rgba(45, 212, 172, 0.1));
+            border: 1px solid rgba(45, 212, 172, 0.4);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .kpi-item.secondary {
+            background: linear-gradient(135deg, rgba(74, 123, 255, 0.2), rgba(74, 123, 255, 0.1));
+            border-color: rgba(74, 123, 255, 0.4);
+        }
+        
+        .kpi-value {
+            font-size: 32px;
+            font-weight: 700;
+            color: #2dd4ac;
+            margin-bottom: 8px;
+        }
+        
+        .kpi-item.secondary .kpi-value {
+            color: #4a7bff;
+        }
+        
+        .kpi-label {
+            font-size: 12px;
+            color: #94a3b8;
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+        
+        .stats {
+            background: linear-gradient(135deg, rgba(36, 45, 74, 0.6), rgba(45, 56, 85, 0.3));
+            backdrop-filter: blur(8px);
+            border: 1px solid #3a4556;
+            border-radius: 12px;
+            padding: 40px;
+            margin-bottom: 60px;
+        }
+        
+        .stats h3 {
+            font-size: 24px;
+            margin-bottom: 30px;
+            color: #4a7bff;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+        }
+        
+        .stat-item {
+            border-left: 4px solid #4a7bff;
+            padding-left: 20px;
+        }
+        
+        .stat-value {
+            font-size: 32px;
+            font-weight: 700;
+            color: #2dd4ac;
+            margin-bottom: 8px;
+        }
+        
+        .stat-label {
+            color: #94a3b8;
+            font-size: 14px;
+        }
+        
+        .cta-section {
+            text-align: center;
+            padding: 60px 40px;
+            background: linear-gradient(135deg, rgba(74, 123, 255, 0.1), rgba(139, 92, 246, 0.1));
+            border: 1px solid #3a4556;
+            border-radius: 12px;
+            margin-bottom: 40px;
+        }
+        
+        .cta-section h2 {
+            font-size: 32px;
+            margin-bottom: 20px;
+            color: #f1f5f9;
+        }
+        
+        .cta-section p {
+            color: #94a3b8;
+            font-size: 16px;
+            margin-bottom: 30px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #4a7bff, #6b92ff);
+            color: white;
+            border: none;
+            padding: 14px 40px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(74, 123, 255, 0.25);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(74, 123, 255, 0.35);
+        }
+        
+        .footer {
+            text-align: center;
+            color: #64748b;
+            padding: 40px 20px;
+            border-top: 1px solid #3a4556;
+        }
+        
+        @media (max-width: 1024px) {
+            .charts-preview {
+                grid-template-columns: 1fr;
+            }
+            
+            .kpis-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 32px;
+            }
+            
+            .kpis-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📊 LogiMAX Dashboard</h1>
+            <p>Plataforma Inteligente de Logística com Análise em Tempo Real</p>
+            <p style="font-size: 14px; color: #64748b;">Dashboard executivo com 4 gráficos interativos e 7 KPIs estratégicos</p>
+        </div>
+        
+        <div class="features">
+            <div class="feature-card">
+                <h3>📈 Tendência de Lead Time</h3>
+                <p>Monitore a evolução do tempo de entrega ao longo dos 30 últimos dias com linha de tendência e SLA.</p>
+                <ul class="feature-list">
+                    <li>Gráfico de linha interativo</li>
+                    <li>Meta SLA visualizada</li>
+                    <li>Últimos 30 dias de dados</li>
+                </ul>
+            </div>
+            
+            <div class="feature-card">
+                <h3>✅ Status de Pedidos</h3>
+                <p>Visualize a distribuição de pedidos por status com percentuais em tempo real.</p>
+                <ul class="feature-list">
+                    <li>Gráfico de barras horizontal</li>
+                    <li>Total de 13.000 pedidos</li>
+                    <li>3 status: Aprovado, Emitido, Cancelado</li>
+                </ul>
+            </div>
+            
+            <div class="feature-card">
+                <h3>🚚 Custo Logístico por Modal</h3>
+                <p>Analise custos de transporte por modal com informações de distância em km.</p>
+                <ul class="feature-list">
+                    <li>Gráfico de colunas em pé</li>
+                    <li>4 modais: Rodo, Aéreo, Marítimo, Ferrovia</li>
+                    <li>Custo total e percentual</li>
+                </ul>
+            </div>
+            
+            <div class="feature-card">
+                <h3>📍 Localização por Distância</h3>
+                <p>Correlação entre distância (km) e custo logístico em gráfico de pontos interativo.</p>
+                <ul class="feature-list">
+                    <li>Gráfico de scatter (pontos)</li>
+                    <li>Eixo X: Distância em km</li>
+                    <li>Eixo Y: Custo logístico (R$)</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div style="margin-bottom: 60px;">
+            <h2 style="font-size: 28px; color: #4a7bff; margin-bottom: 30px; text-align: center;">
+                7 Indicadores Estratégicos (KPIs)
+            </h2>
+            <div class="kpis-grid">
+                <div class="kpi-item">
+                    <div class="kpi-value">9.4</div>
+                    <div class="kpi-label">Lead Time</div>
+                </div>
+                <div class="kpi-item secondary">
+                    <div class="kpi-value">95.2</div>
+                    <div class="kpi-label">Fill Rate</div>
+                </div>
+                <div class="kpi-item">
+                    <div class="kpi-value">1.2M</div>
+                    <div class="kpi-label">Receita Total</div>
+                </div>
+                <div class="kpi-item secondary">
+                    <div class="kpi-value">87.6</div>
+                    <div class="kpi-label">Entregas Prazo</div>
+                </div>
+                <div class="kpi-item">
+                    <div class="kpi-value">4.3</div>
+                    <div class="kpi-label">Rotatividade</div>
+                </div>
+                <div class="kpi-item secondary">
+                    <div class="kpi-value">99.8</div>
+                    <div class="kpi-label">Acuracidade</div>
+                </div>
+                <div class="kpi-item">
+                    <div class="kpi-value">12</div>
+                    <div class="kpi-label">Alertas</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="charts-preview">
+            <div class="chart-preview">
+                <h4>📈 Tendência de Lead Time</h4>
+                <div class="chart-placeholder">
+                    <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+                        <polyline points="20,250 60,200 100,220 140,180 180,160 220,190 260,140 300,170 340,120 380,100" 
+                                  fill="none" stroke="#4a7bff" stroke-width="3" stroke-linecap="round"/>
+                        <line x1="20" y1="170" x2="380" y2="170" stroke="#2dd4ac" stroke-width="2" stroke-dasharray="5,5"/>
+                        <text x="200" y="280" text-anchor="middle" fill="#94a3b8" font-size="12">Gráfico de Linha</text>
+                    </svg>
+                </div>
+            </div>
+            
+            <div class="chart-preview">
+                <h4>✅ Status de Pedidos</h4>
+                <div class="chart-placeholder">
+                    <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="20" y="100" width="110" height="150" fill="#2dd4ac" opacity="0.8"/>
+                        <rect x="145" y="120" width="110" height="130" fill="#3b82f6" opacity="0.8"/>
+                        <rect x="270" y="170" width="110" height="80" fill="#ef4444" opacity="0.8"/>
+                        <text x="75" y="200" text-anchor="middle" fill="#1a1f3a" font-size="14" font-weight="bold">46%</text>
+                        <text x="200" y="200" text-anchor="middle" fill="#1a1f3a" font-size="14" font-weight="bold">43%</text>
+                        <text x="325" y="220" text-anchor="middle" fill="#fff" font-size="14" font-weight="bold">11%</text>
+                        <text x="200" y="280" text-anchor="middle" fill="#94a3b8" font-size="12">Gráfico de Barras</text>
+                    </svg>
+                </div>
+            </div>
+            
+            <div class="chart-preview">
+                <h4>🚚 Custo Logístico por Modal</h4>
+                <div class="chart-placeholder">
+                    <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="50" y="80" width="60" height="170" fill="#3b82f6" opacity="0.8"/>
+                        <rect x="125" y="120" width="60" height="130" fill="#f59e0b" opacity="0.8"/>
+                        <rect x="200" y="150" width="60" height="100" fill="#2dd4ac" opacity="0.8"/>
+                        <rect x="275" y="190" width="60" height="60" fill="#a855f7" opacity="0.8"/>
+                        <text x="200" y="280" text-anchor="middle" fill="#94a3b8" font-size="12">Gráfico de Colunas</text>
+                    </svg>
+                </div>
+            </div>
+            
+            <div class="chart-preview">
+                <h4>📍 Localização por Distância</h4>
+                <div class="chart-placeholder">
+                    <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="80" cy="200" r="6" fill="#3b82f6" opacity="0.8"/>
+                        <circle cx="150" cy="150" r="6" fill="#f59e0b" opacity="0.8"/>
+                        <circle cx="220" cy="180" r="6" fill="#2dd4ac" opacity="0.8"/>
+                        <circle cx="300" cy="120" r="6" fill="#a855f7" opacity="0.8"/>
+                        <circle cx="350" cy="160" r="6" fill="#3b82f6" opacity="0.8"/>
+                        <line x1="30" y1="250" x2="370" y2="250" stroke="#94a3b8" stroke-width="1"/>
+                        <line x1="30" y1="50" x2="30" y2="250" stroke="#94a3b8" stroke-width="1"/>
+                        <text x="200" y="280" text-anchor="middle" fill="#94a3b8" font-size="12">Gráfico de Pontos</text>
+                    </svg>
+                </div>
+            </div>
+        </div>
+        
+        <div class="stats">
+            <h3>📊 Estatísticas dos Dados</h3>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-value">1.000+</div>
+                    <div class="stat-label">Pedidos Analisados</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">3</div>
+                    <div class="stat-label">Modais de Transporte</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">30</div>
+                    <div class="stat-label">Dias de Histórico</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">184K</div>
+                    <div class="stat-label">Custo Logístico Total</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="cta-section">
+            <h2>🚀 Pronto para Começar?</h2>
+            <p>Acesse o dashboard completo com dados em tempo real, análises interativas e exportação de relatórios.</p>
+            <a href="http://localhost:5000" target="_blank" class="btn-primary">Abrir Dashboard</a>
+        </div>
+    </div>
+    
+    <div class="footer">
+        <p>📊 LogiMAX | Logistics Intelligence Platform | Enterprise Edition v1.0.0</p>
+        <p style="margin-top: 10px;">Última atualização: 11 de fevereiro de 2026</p>
+    </div>
+</body>
+</html>

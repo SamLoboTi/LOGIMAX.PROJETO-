@@ -288,35 +288,50 @@ def get_pedidos_por_dia():
 
 @app.route('/api/custo-por-modal')
 def get_custo_modal():
-    """API - Custo por modal de transporte com formatação"""
+    """API - Custo por modal de transporte com distância em km"""
     try:
         _, _, df_tms = carregar_dados()
         if df_tms is None or len(df_tms) == 0:
             # Dados padrão
             return jsonify({
                 'labels': ['Rodoviário', 'Aéreo', 'Marítimo', 'Ferroviário'],
-                'data': [31840, 6960, 4800, 2600],
-                'total': 46200
+                'data': [41200, 18500, 12300, 8900],
+                'distancia': [1500, 2800, 5200, 1200],
+                'total': 80900
             })
         
-        custo_modal = df_tms.groupby('modal')['custo_transporte'].sum().to_dict()
-        total_custo = sum(custo_modal.values())
+        # Agrupar por modal e calcular custo total e distância média
+        custo_modal_stats = df_tms.groupby('modal').agg({
+            'custo_transporte': 'sum',
+            'distancia_km': 'mean'
+        }).to_dict()
+        
+        custo_por_modal = custo_modal_stats['custo_transporte']
+        distancia_por_modal = custo_modal_stats['distancia_km']
+        
+        total_custo = sum(custo_por_modal.values())
         
         # Ordenar por valor descrescente
-        custo_modal_sorted = dict(sorted(custo_modal.items(), key=lambda x: x[1], reverse=True))
+        custo_modal_sorted = dict(sorted(custo_por_modal.items(), key=lambda x: x[1], reverse=True))
+        
+        # Pegar distâncias ordenadas
+        distancia_sorted = [distancia_por_modal.get(modal, 0) for modal in custo_modal_sorted.keys()]
         
         return jsonify({
             'labels': list(custo_modal_sorted.keys()),
             'data': [round(v, 2) for v in custo_modal_sorted.values()],
+            'distancia': [round(d, 2) for d in distancia_sorted],
             'total': round(total_custo, 2)
         })
     except Exception as e:
         print(f"Erro em /api/custo-por-modal: {e}")
+        traceback.print_exc()
         # Dados padrão
         return jsonify({
             'labels': ['Rodoviário', 'Aéreo', 'Marítimo', 'Ferroviário'],
-            'data': [31840, 6960, 4800, 2600],
-            'total': 46200
+            'data': [41200, 18500, 12300, 8900],
+            'distancia': [1500, 2800, 5200, 1200],
+            'total': 80900
         })
 
 @app.route('/api/top-produtos')
