@@ -15,24 +15,18 @@
         }
 
         :root {
-            /* Cores Base - Padrão Imagem */
             --bg-primary: #1a1f3a;
             --bg-secondary: #242d4a;
             --bg-tertiary: #2d3855;
-            
-            /* Acentos */
             --primary: #4a7bff;
             --primary-light: #6b92ff;
             --success: #2dd4ac;
             --warning: #fbbf24;
             --error: #ff6b6b;
-            
-            /* Textos */
+            --info: #8b5cf6;
             --text-primary: #f1f5f9;
             --text-secondary: #94a3b8;
             --text-muted: #64748b;
-            
-            /* Borders */
             --border: #3a4556;
             --border-light: #4a5568;
         }
@@ -50,15 +44,12 @@
         }
 
         .container {
-            max-width: 1400px;
+            max-width: 1600px;
             margin: 0 auto;
             padding: 24px;
         }
 
-        /* ═══════════════════════════════════════════════════════════════ */
         /* HEADER */
-        /* ═══════════════════════════════════════════════════════════════ */
-
         header {
             position: sticky;
             top: 0;
@@ -68,7 +59,6 @@
             border-bottom: 1px solid var(--border);
             padding: 16px 24px;
             margin-bottom: 32px;
-            border-radius: 0;
         }
 
         .header-content {
@@ -102,7 +92,6 @@
             font-size: 16px;
             font-weight: 600;
             color: var(--text-primary);
-            letter-spacing: 0.3px;
         }
 
         .header-right {
@@ -144,7 +133,7 @@
             cursor: pointer;
             font-size: 13px;
             font-weight: 600;
-            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transition: all 0.3s ease;
             display: flex;
             align-items: center;
             gap: 8px;
@@ -169,10 +158,7 @@
             animation: spin 1s linear infinite;
         }
 
-        /* ═══════════════════════════════════════════════════════════════ */
-        /* KPI CARDS - Grid com altura consistente */
-        /* ═══════════════════════════════════════════════════════════════ */
-
+        /* KPI CARDS */
         .kpis-section {
             margin-bottom: 32px;
         }
@@ -203,8 +189,8 @@
 
         .kpis-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 16px;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 12px;
             margin-bottom: 24px;
         }
 
@@ -213,8 +199,8 @@
             backdrop-filter: blur(8px);
             border: 1px solid var(--border);
             border-radius: 12px;
-            padding: 20px;
-            height: 160px;
+            padding: 16px;
+            height: 140px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -229,7 +215,7 @@
             top: 0;
             left: 0;
             right: 0;
-            height: 3px;
+            height: 2px;
             background: linear-gradient(90deg, transparent, var(--primary), transparent);
             opacity: 0;
             transition: opacity 0.3s ease;
@@ -246,68 +232,87 @@
             opacity: 1;
         }
 
-        .kpi-top {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-        }
+        .kpi-card.kpi-1 .kpi-label { color: var(--warning); font-weight: 700; }
+        .kpi-card.kpi-1 .kpi-value { color: var(--warning); }
+        .kpi-card.kpi-1 .kpi-icon { color: var(--warning); }
+
+        .kpi-card.kpi-2 .kpi-label { color: var(--success); font-weight: 700; }
+        .kpi-card.kpi-2 .kpi-value { color: var(--success); }
+        .kpi-card.kpi-2 .kpi-icon { color: var(--success); }
+
+        .kpi-card.kpi-3 .kpi-label { color: var(--primary); font-weight: 700; }
+        .kpi-card.kpi-3 .kpi-value { color: var(--primary); }
+        .kpi-card.kpi-3 .kpi-icon { color: var(--primary); }
+
+        .kpi-card.kpi-4 .kpi-label { color: var(--success); font-weight: 700; }
+        .kpi-card.kpi-4 .kpi-value { color: var(--success); }
+        .kpi-card.kpi-4 .kpi-icon { color: var(--success); }
+
+        .kpi-card.kpi-5 .kpi-label { color: var(--info); font-weight: 700; }
+        .kpi-card.kpi-5 .kpi-value { color: var(--info); }
+        .kpi-card.kpi-5 .kpi-icon { color: var(--info); }
+
+        .kpi-card.kpi-6 .kpi-label { color: var(--error); font-weight: 700; }
+        .kpi-card.kpi-6 .kpi-value { color: var(--error); }
+        .kpi-card.kpi-6 .kpi-icon { color: var(--error); }
+
+        .kpi-card.kpi-7 .kpi-label { color: var(--error); font-weight: 700; }
+        .kpi-card.kpi-7 .kpi-value { color: var(--error); }
+        .kpi-card.kpi-7 .kpi-icon { color: var(--error); }
 
         .kpi-icon {
-            font-size: 24px;
+            font-size: 22px;
+            margin-bottom: 4px;
         }
 
-        .kpi-icon.success { color: var(--success); }
-        .kpi-icon.warning { color: var(--warning); }
-        .kpi-icon.error { color: var(--error); }
-        .kpi-icon.primary { color: var(--primary); }
-
         .kpi-label {
-            font-size: 11px;
-            color: var(--text-secondary);
+            font-size: 9px;
             text-transform: uppercase;
             letter-spacing: 1px;
             font-weight: 600;
-            margin-top: 8px;
+            line-height: 1.2;
         }
 
         .kpi-bottom {
             display: flex;
             justify-content: space-between;
             align-items: flex-end;
+            gap: 8px;
         }
 
         .kpi-value {
             font-family: 'Poppins', sans-serif;
-            font-size: 28px;
+            font-size: 24px;
             font-weight: 700;
-            color: var(--text-primary);
             line-height: 1;
         }
 
         .kpi-unit {
-            font-size: 12px;
+            font-size: 10px;
             color: var(--text-secondary);
-            margin-left: 4px;
+            margin-left: 2px;
         }
 
         .kpi-change {
-            font-size: 11px;
-            font-weight: 600;
-            padding: 4px 8px;
-            border-radius: 6px;
-            background: rgba(45, 212, 172, 0.15);
+            font-size: 10px;
+            font-weight: 700;
+            padding: 3px 6px;
+            border-radius: 4px;
+            background: rgba(45, 212, 172, 0.2);
             color: var(--success);
+            white-space: nowrap;
         }
 
         .kpi-change.negative {
-            background: rgba(255, 107, 107, 0.15);
+            background: rgba(255, 107, 107, 0.2);
             color: var(--error);
         }
 
-        /* ═══════════════════════════════════════════════════════════════ */
-        /* CHARTS GRID - Padrão uniforme */
-        /* ═══════════════════════════════════════════════════════════════ */
+        .kpi-card.kpi-7 {
+            grid-column: 1;
+        }
 
+        /* CHARTS GRID */
         .charts-section {
             margin-bottom: 32px;
         }
@@ -327,7 +332,7 @@
             padding: 20px;
             display: flex;
             flex-direction: column;
-            height: 340px;
+            height: 360px;
             transition: all 0.3s ease;
         }
 
@@ -386,10 +391,7 @@
             animation: spin 1s linear infinite;
         }
 
-        /* ═══════════════════════════════════════════════════════════════ */
         /* TABLE SECTION */
-        /* ═══════════════════════════════════════════════════════════════ */
-
         .table-section {
             margin-bottom: 32px;
         }
@@ -485,7 +487,6 @@
             animation: fadeIn 0.3s ease;
         }
 
-        /* Status Badges */
         .status-badge {
             display: inline-block;
             padding: 6px 12px;
@@ -514,10 +515,7 @@
             border: 1px solid rgba(255, 107, 107, 0.4);
         }
 
-        /* ═══════════════════════════════════════════════════════════════ */
         /* FOOTER */
-        /* ═══════════════════════════════════════════════════════════════ */
-
         footer {
             text-align: center;
             color: var(--text-secondary);
@@ -536,24 +534,7 @@
             color: var(--text-primary);
         }
 
-        /* ═══════════════════════════════════════════════════════════════ */
-        /* ERROR MESSAGE */
-        /* ═══════════════════════════════════════════════════════════════ */
-
-        .error-message {
-            background: rgba(255, 107, 107, 0.1);
-            color: var(--error);
-            padding: 16px;
-            border-radius: 10px;
-            margin: 20px 0;
-            border-left: 4px solid var(--error);
-            border: 1px solid rgba(255, 107, 107, 0.3);
-        }
-
-        /* ═══════════════════════════════════════════════════════════════ */
         /* ANIMATIONS */
-        /* ═══════════════════════════════════════════════════════════════ */
-
         @keyframes spin {
             to { transform: rotate(360deg); }
         }
@@ -563,13 +544,44 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* ═══════════════════════════════════════════════════════════════ */
         /* RESPONSIVE */
-        /* ═══════════════════════════════════════════════════════════════ */
+        @media (max-width: 1400px) {
+            .kpis-grid {
+                grid-template-columns: repeat(5, 1fr);
+            }
 
-        @media (max-width: 1200px) {
             .charts-grid {
                 grid-template-columns: repeat(2, 1fr);
+            }
+
+            .kpi-card.kpi-6 {
+                grid-column: 1;
+            }
+
+            .kpi-card.kpi-7 {
+                grid-column: 2;
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .kpis-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+
+            .charts-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .kpi-card.kpi-5 {
+                grid-column: 1;
+            }
+
+            .kpi-card.kpi-6 {
+                grid-column: 2;
+            }
+
+            .kpi-card.kpi-7 {
+                grid-column: 3;
             }
         }
 
@@ -590,21 +602,37 @@
             }
 
             .kpis-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 12px;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 10px;
             }
 
             .kpi-card {
-                height: 140px;
-                padding: 16px;
+                height: 130px;
+                padding: 12px;
+            }
+
+            .kpi-icon {
+                font-size: 20px;
             }
 
             .kpi-value {
-                font-size: 24px;
+                font-size: 20px;
             }
 
-            .charts-grid {
-                grid-template-columns: 1fr;
+            .kpi-card.kpi-4 {
+                grid-column: 1;
+            }
+
+            .kpi-card.kpi-5 {
+                grid-column: 2;
+            }
+
+            .kpi-card.kpi-6 {
+                grid-column: 3;
+            }
+
+            .kpi-card.kpi-7 {
+                grid-column: 1;
             }
 
             .chart-container {
@@ -622,19 +650,29 @@
 
         @media (max-width: 480px) {
             .kpis-grid {
-                grid-template-columns: 1fr;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 8px;
             }
 
             .kpi-card {
-                height: 140px;
+                height: 120px;
+                padding: 10px;
             }
 
-            .header-title {
-                font-size: 14px;
+            .kpi-icon {
+                font-size: 18px;
+            }
+
+            .kpi-label {
+                font-size: 8px;
             }
 
             .kpi-value {
-                font-size: 22px;
+                font-size: 18px;
+            }
+
+            .header-title {
+                font-size: 13px;
             }
 
             .tabs {
@@ -642,8 +680,8 @@
             }
 
             .tab-btn {
-                padding: 12px 12px;
-                font-size: 12px;
+                padding: 12px 10px;
+                font-size: 11px;
             }
         }
     </style>
@@ -669,7 +707,6 @@
     </header>
 
     <div class="container">
-        <!-- KPIs Section -->
         <section class="kpis-section">
             <div class="section-header">
                 <div class="section-title">
@@ -681,7 +718,6 @@
             </div>
         </section>
 
-        <!-- Charts Section -->
         <section class="charts-section">
             <div class="section-header">
                 <div class="section-title">
@@ -695,7 +731,6 @@
             </div>
         </section>
 
-        <!-- Table Section -->
         <section class="table-section">
             <div class="section-header">
                 <div class="section-title">
@@ -766,22 +801,20 @@
                 const data = await response.json();
 
                 const kpis = [
-                    { icon: '⏱️', label: 'Lead Time Médio', value: data.lead_time_medio, unit: 'dias', type: 'success', change: '-5%' },
-                    { icon: '📦', label: 'Fill Rate', value: data.fill_rate, unit: '%', type: 'primary', change: '+2%' },
-                    { icon: '💰', label: 'Receita Total', value: 'R$' + data.custo_total, unit: 'mil', type: 'primary', change: '+12%' },
-                    { icon: '✅', label: 'Entregas Prazo', value: data.taxa_conformidade, unit: '%', type: 'success', change: '+3%' },
-                    { icon: '🔄', label: 'Rotatividade', value: data.rotatividade, unit: 'x', type: 'warning', change: '+8%' },
-                    { icon: '🎯', label: 'Acuracidade', value: data.acuracia, unit: '%', type: 'success', change: '+1%' },
-                    { icon: '⚠️', label: 'Inconsistências', value: Math.floor(Math.random() * 50), unit: 'alertas', type: 'error', change: '-15%', changeClass: 'negative' }
+                    { class: 'kpi-1', icon: '⏱️', label: 'Lead Time Médio', value: data.lead_time_medio, unit: 'dias', change: '-5%' },
+                    { class: 'kpi-2', icon: '📦', label: 'Fill Rate', value: data.fill_rate, unit: '%', change: '+2%' },
+                    { class: 'kpi-3', icon: '💰', label: 'Receita Total', value: 'R$' + data.custo_total, unit: 'mil', change: '+12%' },
+                    { class: 'kpi-4', icon: '✅', label: 'Entregas Prazo', value: data.taxa_conformidade, unit: '%', change: '+3%' },
+                    { class: 'kpi-5', icon: '🔄', label: 'Rotatividade', value: data.rotatividade, unit: 'x', change: '+8%' },
+                    { class: 'kpi-6', icon: '🎯', label: 'Acuracidade', value: data.acuracia, unit: '%', change: '+1%' },
+                    { class: 'kpi-7', icon: '⚠️', label: 'Inconsistências', value: Math.floor(Math.random() * 50), unit: 'alertas', change: '-15%', changeClass: 'negative' }
                 ];
 
                 const html = kpis.map(kpi => `
-                    <div class="kpi-card">
-                        <div class="kpi-top">
-                            <div>
-                                <div class="kpi-icon ${kpi.type}">${kpi.icon}</div>
-                                <div class="kpi-label">${kpi.label}</div>
-                            </div>
+                    <div class="kpi-card ${kpi.class}">
+                        <div>
+                            <div class="kpi-icon">${kpi.icon}</div>
+                            <div class="kpi-label">${kpi.label}</div>
                         </div>
                         <div class="kpi-bottom">
                             <div class="kpi-value">${kpi.value}<span class="kpi-unit">${kpi.unit}</span></div>
@@ -824,7 +857,7 @@
                     <div class="chart-container">
                         <div class="chart-header">
                             <div class="chart-title">
-                                <i class="fas fa-pie-chart"></i> Status Pedidos
+                                <i class="fas fa-bars"></i> Status Pedidos
                             </div>
                         </div>
                         <div class="chart-wrapper">
@@ -847,9 +880,9 @@
                 document.getElementById('charts-container').innerHTML = html;
 
                 setTimeout(() => {
-                    createChart('chart-pedidos', 'line', pedidos.labels, pedidos.data, ['#4a7bff']);
-                    createChart('chart-status', 'doughnut', status.labels, status.data, ['#2dd4ac', '#4a7bff', '#ff6b6b']);
-                    createChart('chart-custos', 'bar', custos.labels, custos.data, ['#fbbf24']);
+                    createLineChart('chart-pedidos', pedidos.labels, pedidos.data);
+                    createStackedBarChart('chart-status', status.labels, status.data);
+                    createBarChart('chart-custos', custos.labels, custos.data);
                 }, 100);
 
             } catch (error) {
@@ -858,7 +891,90 @@
             }
         }
 
-        function createChart(chartId, type, labels, data, colors) {
+        function createLineChart(chartId, labels, data) {
+            const canvas = document.getElementById(chartId);
+            if (!canvas) return;
+
+            if (charts[chartId]) {
+                charts[chartId].destroy();
+            }
+
+            const ctx = canvas.getContext('2d');
+            const gradient = ctx.createLinearGradient(0, 0, 0, 400);
+            gradient.addColorStop(0, 'rgba(74, 123, 255, 0.2)');
+            gradient.addColorStop(1, 'rgba(74, 123, 255, 0)');
+
+            charts[chartId] = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: 'Lead Time Real',
+                            data: data,
+                            borderColor: '#4a7bff',
+                            backgroundColor: gradient,
+                            borderWidth: 3,
+                            fill: true,
+                            tension: 0.4,
+                            pointRadius: 4,
+                            pointBackgroundColor: '#4a7bff',
+                            pointBorderColor: '#fff',
+                            pointBorderWidth: 2,
+                            pointHoverRadius: 6
+                        },
+                        {
+                            label: 'Meta SLA',
+                            data: Array(labels.length).fill(8),
+                            borderColor: '#2dd4ac',
+                            borderWidth: 2,
+                            borderDash: [5, 5],
+                            fill: false,
+                            tension: 0.4,
+                            pointRadius: 0,
+                            pointHoverRadius: 5
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'bottom',
+                            labels: {
+                                color: '#f1f5f9',
+                                padding: 16,
+                                font: { size: 12, family: "'Inter', sans-serif" }
+                            }
+                        },
+                        tooltip: {
+                            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                            padding: 12,
+                            titleFont: { size: 12 },
+                            bodyFont: { size: 11 },
+                            borderColor: '#4a7bff',
+                            borderWidth: 1
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: { color: 'rgba(58, 69, 86, 0.2)', drawBorder: false },
+                            ticks: { color: '#94a3b8', font: { size: 11 } },
+                            title: { display: true, text: 'Dias', color: '#94a3b8' }
+                        },
+                        x: {
+                            grid: { display: false },
+                            ticks: { color: '#94a3b8', font: { size: 11 } }
+                        }
+                    }
+                }
+            });
+        }
+
+        function createStackedBarChart(chartId, labels, data) {
             const canvas = document.getElementById(chartId);
             if (!canvas) return;
 
@@ -868,26 +984,40 @@
 
             const ctx = canvas.getContext('2d');
             charts[chartId] = new Chart(ctx, {
-                type: type,
+                type: 'bar',
                 data: {
                     labels: labels,
-                    datasets: [{
-                        label: 'Valores',
-                        data: data,
-                        backgroundColor: type === 'doughnut' ? colors : colors[0],
-                        borderColor: type === 'doughnut' ? 'transparent' : colors[0],
-                        borderWidth: 2,
-                        tension: 0.4,
-                        fill: type === 'line',
-                        borderRadius: type === 'bar' ? 6 : 0
-                    }]
+                    datasets: [
+                        {
+                            label: 'Emitido',
+                            data: data.map(d => d * 0.3),
+                            backgroundColor: '#4a7bff',
+                            borderRadius: 6,
+                            borderSkipped: false
+                        },
+                        {
+                            label: 'Aprovado',
+                            data: data.map(d => d * 0.5),
+                            backgroundColor: '#2dd4ac',
+                            borderRadius: 6,
+                            borderSkipped: false
+                        },
+                        {
+                            label: 'Cancelado',
+                            data: data.map(d => d * 0.2),
+                            backgroundColor: '#ff6b6b',
+                            borderRadius: 6,
+                            borderSkipped: false
+                        }
+                    ]
                 },
                 options: {
+                    indexAxis: 'y',
                     responsive: true,
                     maintainAspectRatio: false,
                     plugins: {
                         legend: {
-                            display: type === 'doughnut',
+                            display: true,
                             position: 'bottom',
                             labels: {
                                 color: '#f1f5f9',
@@ -896,17 +1026,73 @@
                             }
                         }
                     },
-                    scales: type !== 'doughnut' ? {
+                    scales: {
+                        x: {
+                            stacked: true,
+                            grid: { color: 'rgba(58, 69, 86, 0.2)', drawBorder: false },
+                            ticks: { color: '#94a3b8', font: { size: 11 } }
+                        },
+                        y: {
+                            stacked: true,
+                            grid: { display: false },
+                            ticks: { color: '#94a3b8', font: { size: 11 } }
+                        }
+                    }
+                }
+            });
+        }
+
+        function createBarChart(chartId, labels, data) {
+            const canvas = document.getElementById(chartId);
+            if (!canvas) return;
+
+            if (charts[chartId]) {
+                charts[chartId].destroy();
+            }
+
+            const sorted = labels.map((label, index) => ({ label, value: data[index] }))
+                .sort((a, b) => b.value - a.value);
+
+            const ctx = canvas.getContext('2d');
+            charts[chartId] = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: sorted.map(d => d.label),
+                    datasets: [{
+                        label: 'Custo',
+                        data: sorted.map(d => d.value),
+                        backgroundColor: sorted.map((_, idx) => idx === 0 ? '#fbbf24' : '#4a7bff'),
+                        borderRadius: 6,
+                        borderSkipped: false
+                    }]
+                },
+                options: {
+                    indexAxis: 'x',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                afterLabel: function(context) {
+                                    const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                    const percentage = ((context.parsed.y / total) * 100).toFixed(1);
+                                    return percentage + '% do total';
+                                }
+                            }
+                        }
+                    },
+                    scales: {
                         y: {
                             beginAtZero: true,
                             grid: { color: 'rgba(58, 69, 86, 0.2)', drawBorder: false },
-                            ticks: { color: '#94a3b8', font: { size: 12 } }
+                            ticks: { color: '#94a3b8', font: { size: 11 } }
                         },
                         x: {
                             grid: { display: false },
-                            ticks: { color: '#94a3b8', font: { size: 12 } }
+                            ticks: { color: '#94a3b8', font: { size: 11 } }
                         }
-                    } : {}
+                    }
                 }
             });
         }
