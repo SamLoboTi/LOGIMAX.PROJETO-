@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Teste Chart.js</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.min.js"></script>
+    <style>
+        body { font-family: Arial; padding: 20px; background: #f5f5f5; }
+        h1 { color: #333; }
+        canvas { background: white; border: 1px solid #ccc; }
+        p { font-size: 18px; margin: 20px 0; }
+    </style>
+</head>
+<body>
+    <h1>Teste de Disponibilidade Chart.js</h1>
+    <canvas id="testChart" width="400" height="100"></canvas>
+    
+    <div id="result"></div>
+    
+    <script>
+        console.log("Checking Chart.js availability...");
+        console.log("typeof Chart:", typeof Chart);
+        
+        const resultDiv = document.getElementById('result');
+        
+        if (typeof Chart === 'undefined') {
+            resultDiv.innerHTML = '<p style="color: red;">ERROR: Chart.js was NOT loaded!</p>';
+        } else {
+            resultDiv.innerHTML = '<p style="color: green;">SUCCESS: Chart.js loaded!</p>';
+            
+            try {
+                const ctx = document.getElementById('testChart').getContext('2d');
+                new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: ['A', 'B', 'C'],
+                        datasets: [{
+                            label: 'Test Data',
+                            data: [10, 20, 30],
+                            borderColor: 'blue',
+                            backgroundColor: 'rgba(0,0,255,0.1)'
+                        }]
+                    }
+                });
+                resultDiv.innerHTML += '<p style="color: green;">SUCCESS: Chart created!</p>';
+            } catch(e) {
+                resultDiv.innerHTML += '<p style="color: red;">ERROR: ' + e.message + '</p>';
+            }
+        }
+    </script>
+</body>
+</html>
