@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LogiMAX | Logistics Intelligence Platform</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
     <style>
@@ -16,21 +15,26 @@
         }
 
         :root {
-            --bg-primary: #0F172A;
-            --bg-secondary: #1E293B;
-            --primary: #3B82F6;
-            --success: #22C55E;
-            --warning: #F59E0B;
-            --error: #EF4444;
-            --text-primary: #F1F5F9;
-            --text-secondary: #94A3B8;
-            --border: #334155;
-            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            --shadow-lg: 0 20px 25px rgba(0, 0, 0, 0.15);
-            --glow-primary: 0 0 20px rgba(59, 130, 246, 0.3);
-            --glow-success: 0 0 20px rgba(34, 197, 94, 0.3);
-            --glow-warning: 0 0 20px rgba(245, 158, 11, 0.3);
-            --glow-error: 0 0 20px rgba(239, 68, 68, 0.3);
+            /* Cores Base - Padrão Imagem */
+            --bg-primary: #1a1f3a;
+            --bg-secondary: #242d4a;
+            --bg-tertiary: #2d3855;
+            
+            /* Acentos */
+            --primary: #4a7bff;
+            --primary-light: #6b92ff;
+            --success: #2dd4ac;
+            --warning: #fbbf24;
+            --error: #ff6b6b;
+            
+            /* Textos */
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            
+            /* Borders */
+            --border: #3a4556;
+            --border-light: #4a5568;
         }
 
         html {
@@ -38,42 +42,43 @@
         }
 
         body {
-            font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, var(--bg-primary) 0%, #1a2332 100%);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, var(--bg-primary) 0%, #141829 100%);
             color: var(--text-primary);
             min-height: 100vh;
             overflow-x: hidden;
         }
 
         .container {
-            max-width: 1600px;
+            max-width: 1400px;
             margin: 0 auto;
-            padding: 20px;
+            padding: 24px;
         }
 
-        /* Header Fixo Premium */
+        /* ═══════════════════════════════════════════════════════════════ */
+        /* HEADER */
+        /* ═══════════════════════════════════════════════════════════════ */
+
         header {
             position: sticky;
             top: 0;
             z-index: 100;
-            background: rgba(30, 41, 59, 0.95);
-            backdrop-filter: blur(10px);
+            background: rgba(20, 24, 41, 0.7);
+            backdrop-filter: blur(12px);
             border-bottom: 1px solid var(--border);
             padding: 16px 24px;
-            margin-bottom: 40px;
-            border-radius: 0 0 16px 16px;
-            box-shadow: var(--shadow-lg);
+            margin-bottom: 32px;
+            border-radius: 0;
         }
 
         .header-content {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            gap: 20px;
-            flex-wrap: wrap;
+            gap: 24px;
         }
 
-        .header-brand {
+        .header-left {
             display: flex;
             align-items: center;
             gap: 12px;
@@ -82,25 +87,22 @@
         .header-logo {
             width: 40px;
             height: 40px;
-            background: linear-gradient(135deg, var(--primary), #60a5fa);
-            border-radius: 12px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 24px;
+            font-size: 20px;
             font-weight: 700;
             color: white;
-            box-shadow: var(--glow-primary);
+            box-shadow: 0 4px 16px rgba(74, 123, 255, 0.3);
         }
 
         .header-title {
-            font-family: 'Poppins', sans-serif;
-            font-size: 18px;
-            font-weight: 700;
-            background: linear-gradient(90deg, var(--text-primary), var(--primary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-primary);
+            letter-spacing: 0.3px;
         }
 
         .header-right {
@@ -112,20 +114,17 @@
         .last-update-info {
             font-size: 12px;
             color: var(--text-secondary);
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
+            text-align: right;
         }
 
         .last-update-time {
             font-weight: 600;
             color: var(--text-primary);
-            margin-top: 2px;
         }
 
         .user-avatar {
-            width: 40px;
-            height: 40px;
+            width: 36px;
+            height: 36px;
             border-radius: 50%;
             background: linear-gradient(135deg, var(--primary), #8b5cf6);
             display: flex;
@@ -133,35 +132,28 @@
             justify-content: center;
             color: white;
             font-weight: 700;
-            font-size: 16px;
-            box-shadow: var(--shadow);
+            font-size: 14px;
         }
 
         .refresh-btn {
-            padding: 10px 20px;
-            background: linear-gradient(135deg, var(--primary), #60a5fa);
+            padding: 8px 16px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
             color: white;
             border: none;
-            border-radius: 10px;
+            border-radius: 8px;
             cursor: pointer;
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 600;
             transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
             display: flex;
             align-items: center;
             gap: 8px;
-            box-shadow: var(--glow-primary);
-            position: relative;
-            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(74, 123, 255, 0.25);
         }
 
         .refresh-btn:hover:not(.loading) {
             transform: translateY(-2px);
-            box-shadow: var(--glow-primary), 0 8px 16px rgba(0, 0, 0, 0.2);
-        }
-
-        .refresh-btn:active:not(.loading) {
-            transform: translateY(0);
+            box-shadow: 0 6px 20px rgba(74, 123, 255, 0.35);
         }
 
         .refresh-btn.loading {
@@ -177,38 +169,58 @@
             animation: spin 1s linear infinite;
         }
 
-        /* KPIs Grid Premium */
+        /* ═══════════════════════════════════════════════════════════════ */
+        /* KPI CARDS - Grid com altura consistente */
+        /* ═══════════════════════════════════════════════════════════════ */
+
         .kpis-section {
-            margin-bottom: 40px;
+            margin-bottom: 32px;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border);
         }
 
         .section-title {
             font-family: 'Poppins', sans-serif;
-            font-size: 18px;
+            font-size: 16px;
             font-weight: 700;
-            margin-bottom: 20px;
             color: var(--text-primary);
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
+        }
+
+        .section-title i {
+            color: var(--primary);
+            font-size: 18px;
         }
 
         .kpis-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
         }
 
         .kpi-card {
-            background: linear-gradient(135deg, var(--bg-secondary), rgba(30, 41, 59, 0.5));
-            backdrop-filter: blur(10px);
+            background: linear-gradient(135deg, rgba(36, 45, 74, 0.6), rgba(45, 56, 85, 0.3));
+            backdrop-filter: blur(8px);
             border: 1px solid var(--border);
-            padding: 24px;
-            border-radius: 14px;
-            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            border-radius: 12px;
+            padding: 20px;
+            height: 160px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
-            animation: slideInUp 0.6s ease;
         }
 
         .kpi-card::before {
@@ -224,151 +236,183 @@
         }
 
         .kpi-card:hover {
-            transform: translateY(-8px);
             border-color: var(--primary);
-            box-shadow: var(--shadow-lg);
+            background: linear-gradient(135deg, rgba(36, 45, 74, 0.8), rgba(45, 56, 85, 0.5));
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(74, 123, 255, 0.15);
         }
 
         .kpi-card:hover::before {
             opacity: 1;
         }
 
-        .kpi-card.success {
-            --accent-color: var(--success);
-        }
-
-        .kpi-card.warning {
-            --accent-color: var(--warning);
-        }
-
-        .kpi-card.error {
-            --accent-color: var(--error);
-        }
-
-        .kpi-card.info {
-            --accent-color: var(--primary);
+        .kpi-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
         }
 
         .kpi-icon {
-            font-size: 32px;
-            margin-bottom: 16px;
-            opacity: 0.9;
+            font-size: 24px;
         }
+
+        .kpi-icon.success { color: var(--success); }
+        .kpi-icon.warning { color: var(--warning); }
+        .kpi-icon.error { color: var(--error); }
+        .kpi-icon.primary { color: var(--primary); }
 
         .kpi-label {
             font-size: 11px;
             color: var(--text-secondary);
             text-transform: uppercase;
-            letter-spacing: 1.5px;
+            letter-spacing: 1px;
             font-weight: 600;
-            margin-bottom: 8px;
+            margin-top: 8px;
+        }
+
+        .kpi-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
         }
 
         .kpi-value {
             font-family: 'Poppins', sans-serif;
-            font-size: 32px;
+            font-size: 28px;
             font-weight: 700;
             color: var(--text-primary);
-            margin-bottom: 8px;
+            line-height: 1;
         }
 
         .kpi-unit {
-            font-size: 13px;
+            font-size: 12px;
             color: var(--text-secondary);
-            margin-left: 6px;
-            font-weight: 500;
+            margin-left: 4px;
         }
 
         .kpi-change {
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 600;
-            margin-top: 12px;
-            padding-top: 12px;
-            border-top: 1px solid var(--border);
-        }
-
-        .kpi-change.positive {
+            padding: 4px 8px;
+            border-radius: 6px;
+            background: rgba(45, 212, 172, 0.15);
             color: var(--success);
         }
 
         .kpi-change.negative {
+            background: rgba(255, 107, 107, 0.15);
             color: var(--error);
         }
 
-        /* Charts Section */
+        /* ═══════════════════════════════════════════════════════════════ */
+        /* CHARTS GRID - Padrão uniforme */
+        /* ═══════════════════════════════════════════════════════════════ */
+
         .charts-section {
-            margin-bottom: 40px;
+            margin-bottom: 32px;
         }
 
         .charts-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 20px;
-            margin-bottom: 20px;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-bottom: 24px;
         }
 
         .chart-container {
-            background: linear-gradient(135deg, var(--bg-secondary), rgba(30, 41, 59, 0.5));
-            backdrop-filter: blur(10px);
+            background: linear-gradient(135deg, rgba(36, 45, 74, 0.6), rgba(45, 56, 85, 0.3));
+            backdrop-filter: blur(8px);
             border: 1px solid var(--border);
-            padding: 24px;
-            border-radius: 14px;
-            box-shadow: var(--shadow);
+            border-radius: 12px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            height: 340px;
             transition: all 0.3s ease;
-            animation: fadeInUp 0.6s ease;
         }
 
         .chart-container:hover {
             border-color: var(--primary);
-            box-shadow: var(--shadow-lg);
+            box-shadow: 0 8px 24px rgba(74, 123, 255, 0.15);
+        }
+
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border-light);
         }
 
         .chart-title {
             font-family: 'Poppins', sans-serif;
-            font-size: 15px;
+            font-size: 14px;
             font-weight: 700;
-            margin-bottom: 20px;
             color: var(--text-primary);
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
+        }
+
+        .chart-title i {
+            color: var(--primary);
+            font-size: 16px;
         }
 
         .chart-wrapper {
+            flex: 1;
             position: relative;
-            height: 300px;
+            min-height: 0;
         }
 
         canvas {
-            max-height: 300px !important;
+            max-height: 100% !important;
         }
 
-        /* Table Section */
+        .loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid var(--border);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════ */
+        /* TABLE SECTION */
+        /* ═══════════════════════════════════════════════════════════════ */
+
         .table-section {
-            margin-bottom: 40px;
+            margin-bottom: 32px;
         }
 
         .table-container {
-            background: linear-gradient(135deg, var(--bg-secondary), rgba(30, 41, 59, 0.5));
-            backdrop-filter: blur(10px);
+            background: linear-gradient(135deg, rgba(36, 45, 74, 0.6), rgba(45, 56, 85, 0.3));
+            backdrop-filter: blur(8px);
             border: 1px solid var(--border);
-            border-radius: 14px;
+            border-radius: 12px;
             overflow: hidden;
-            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
         }
 
-        .table-header {
-            padding: 24px;
-            border-bottom: 1px solid var(--border);
+        .table-container:hover {
+            border-color: var(--primary);
         }
 
-        /* Tabs */
         .tabs {
             display: flex;
-            gap: 8px;
+            gap: 0;
             border-bottom: 1px solid var(--border);
-            flex-wrap: wrap;
-            padding: 0 24px;
+            padding: 0 20px;
+            overflow-x: auto;
         }
 
         .tab-btn {
@@ -381,9 +425,9 @@
             color: var(--text-secondary);
             border-bottom: 2px solid transparent;
             transition: all 0.3s ease;
-            position: relative;
             text-transform: uppercase;
             letter-spacing: 0.5px;
+            white-space: nowrap;
         }
 
         .tab-btn:hover {
@@ -397,6 +441,8 @@
 
         .table-wrapper {
             overflow-x: auto;
+            max-height: 500px;
+            overflow-y: auto;
         }
 
         table {
@@ -406,187 +452,150 @@
         }
 
         th {
-            background: rgba(15, 23, 42, 0.5);
+            background: rgba(20, 24, 41, 0.5);
             color: var(--text-secondary);
-            padding: 14px 16px;
+            padding: 12px 16px;
             text-align: left;
-            font-weight: 600;
+            font-weight: 700;
             text-transform: uppercase;
             font-size: 11px;
             letter-spacing: 0.5px;
             position: sticky;
             top: 0;
-            border-bottom: 1px solid var(--border);
+            border-bottom: 1px solid var(--border-light);
         }
 
         td {
-            padding: 14px 16px;
-            border-bottom: 1px solid rgba(52, 65, 84, 0.5);
-        }
-
-        tr {
-            transition: all 0.2s ease;
+            padding: 12px 16px;
+            border-bottom: 1px solid rgba(58, 69, 86, 0.5);
+            color: var(--text-primary);
         }
 
         tr:hover {
-            background: rgba(59, 130, 246, 0.1);
+            background: rgba(74, 123, 255, 0.08);
         }
 
         .tab-content {
             display: none;
-            animation: fadeIn 0.3s ease;
+            padding: 20px;
         }
 
         .tab-content.active {
             display: block;
-            padding: 24px;
+            animation: fadeIn 0.3s ease;
         }
 
         /* Status Badges */
         .status-badge {
             display: inline-block;
             padding: 6px 12px;
-            border-radius: 8px;
+            border-radius: 6px;
             font-size: 11px;
-            font-weight: 600;
+            font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
 
         .status-approved {
-            background: rgba(34, 197, 94, 0.2);
+            background: rgba(45, 212, 172, 0.2);
             color: var(--success);
-            border: 1px solid rgba(34, 197, 94, 0.4);
+            border: 1px solid rgba(45, 212, 172, 0.4);
         }
 
         .status-emitido {
-            background: rgba(59, 130, 246, 0.2);
+            background: rgba(74, 123, 255, 0.2);
             color: var(--primary);
-            border: 1px solid rgba(59, 130, 246, 0.4);
+            border: 1px solid rgba(74, 123, 255, 0.4);
         }
 
         .status-cancelado {
-            background: rgba(239, 68, 68, 0.2);
+            background: rgba(255, 107, 107, 0.2);
             color: var(--error);
-            border: 1px solid rgba(239, 68, 68, 0.4);
+            border: 1px solid rgba(255, 107, 107, 0.4);
         }
 
-        /* Loading */
-        .loading {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 200px;
+        /* ═══════════════════════════════════════════════════════════════ */
+        /* FOOTER */
+        /* ═══════════════════════════════════════════════════════════════ */
+
+        footer {
+            text-align: center;
+            color: var(--text-secondary);
+            margin-top: 48px;
+            padding: 32px 20px;
+            font-size: 12px;
+            border-top: 1px solid var(--border);
         }
 
-        .spinner {
-            width: 50px;
-            height: 50px;
-            border: 3px solid var(--border);
-            border-top-color: var(--primary);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
+        footer p {
+            margin-bottom: 8px;
         }
 
-        /* Error Message */
+        footer p:first-child {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        /* ═══════════════════════════════════════════════════════════════ */
+        /* ERROR MESSAGE */
+        /* ═══════════════════════════════════════════════════════════════ */
+
         .error-message {
-            background: rgba(239, 68, 68, 0.1);
+            background: rgba(255, 107, 107, 0.1);
             color: var(--error);
             padding: 16px;
             border-radius: 10px;
             margin: 20px 0;
             border-left: 4px solid var(--error);
-            border: 1px solid rgba(239, 68, 68, 0.3);
+            border: 1px solid rgba(255, 107, 107, 0.3);
         }
 
-        /* Footer */
-        footer {
-            text-align: center;
-            color: var(--text-secondary);
-            margin-top: 60px;
-            padding: 30px 20px;
-            font-size: 12px;
-            border-top: 1px solid var(--border);
-        }
+        /* ═══════════════════════════════════════════════════════════════ */
+        /* ANIMATIONS */
+        /* ═══════════════════════════════════════════════════════════════ */
 
-        footer p:first-child {
-            margin-bottom: 8px;
-            font-weight: 600;
-        }
-
-        /* Animations */
         @keyframes spin {
             to { transform: rotate(360deg); }
         }
 
-        @keyframes slideInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
         @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Responsivo */
-        @media (max-width: 1024px) {
-            .kpis-grid {
-                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            }
+        /* ═══════════════════════════════════════════════════════════════ */
+        /* RESPONSIVE */
+        /* ═══════════════════════════════════════════════════════════════ */
 
+        @media (max-width: 1200px) {
             .charts-grid {
-                grid-template-columns: 1fr;
+                grid-template-columns: repeat(2, 1fr);
             }
         }
 
         @media (max-width: 768px) {
             .container {
-                padding: 12px;
-            }
-
-            header {
-                padding: 12px 16px;
-                margin-bottom: 24px;
+                padding: 16px;
             }
 
             .header-content {
-                flex-direction: column;
                 gap: 12px;
-            }
-
-            .header-title {
-                font-size: 16px;
+                flex-wrap: wrap;
             }
 
             .header-right {
-                width: 100%;
+                flex: 1;
                 justify-content: space-between;
+                width: 100%;
             }
 
             .kpis-grid {
-                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+                grid-template-columns: repeat(2, 1fr);
                 gap: 12px;
             }
 
             .kpi-card {
+                height: 140px;
                 padding: 16px;
             }
 
@@ -594,12 +603,12 @@
                 font-size: 24px;
             }
 
-            .kpi-label {
-                font-size: 10px;
+            .charts-grid {
+                grid-template-columns: 1fr;
             }
 
-            .chart-wrapper {
-                height: 250px;
+            .chart-container {
+                height: 320px;
             }
 
             table {
@@ -607,12 +616,7 @@
             }
 
             th, td {
-                padding: 10px 8px;
-            }
-
-            .refresh-btn {
-                padding: 8px 12px;
-                font-size: 12px;
+                padding: 10px 12px;
             }
         }
 
@@ -621,21 +625,20 @@
                 grid-template-columns: 1fr;
             }
 
+            .kpi-card {
+                height: 140px;
+            }
+
             .header-title {
                 font-size: 14px;
             }
 
             .kpi-value {
-                font-size: 20px;
-            }
-
-            .section-title {
-                font-size: 16px;
+                font-size: 22px;
             }
 
             .tabs {
-                padding: 0;
-                margin: -24px -24px 0 -24px;
+                padding: 0 12px;
             }
 
             .tab-btn {
@@ -648,14 +651,14 @@
 <body>
     <header>
         <div class="header-content">
-            <div class="header-brand">
+            <div class="header-left">
                 <div class="header-logo">📊</div>
-                <div class="header-title">LogiMAX | Logistics Intelligence Platform</div>
+                <div class="header-title">LogiMAX • Logistics Platform</div>
             </div>
             <div class="header-right">
                 <div class="last-update-info">
-                    <span>Última atualização</span>
-                    <span class="last-update-time" id="update-time">Carregando...</span>
+                    <div>Última atualização</div>
+                    <div class="last-update-time" id="update-time">Agora</div>
                 </div>
                 <div class="user-avatar">S</div>
                 <button class="refresh-btn" onclick="refreshDashboard()">
@@ -668,8 +671,10 @@
     <div class="container">
         <!-- KPIs Section -->
         <section class="kpis-section">
-            <div class="section-title">
-                <i class="fas fa-tachometer-alt"></i> KPIs Estratégicos
+            <div class="section-header">
+                <div class="section-title">
+                    <i class="fas fa-chart-line"></i> Indicadores Estratégicos
+                </div>
             </div>
             <div class="kpis-grid" id="kpis-container">
                 <div class="loading"><div class="spinner"></div></div>
@@ -678,8 +683,10 @@
 
         <!-- Charts Section -->
         <section class="charts-section">
-            <div class="section-title">
-                <i class="fas fa-chart-area"></i> Painel Executivo
+            <div class="section-header">
+                <div class="section-title">
+                    <i class="fas fa-chart-bar"></i> Painel Executivo
+                </div>
             </div>
             <div class="charts-grid" id="charts-container">
                 <div class="chart-container">
@@ -690,19 +697,21 @@
 
         <!-- Table Section -->
         <section class="table-section">
-            <div class="section-title">
-                <i class="fas fa-table"></i> Dados Detalhados
+            <div class="section-header">
+                <div class="section-title">
+                    <i class="fas fa-table"></i> Dados Operacionais
+                </div>
             </div>
             <div class="table-container">
                 <div class="tabs">
                     <button class="tab-btn active" onclick="switchTab('pedidos')">
-                        <i class="fas fa-shopping-cart"></i> Pedidos (ERP)
+                        <i class="fas fa-shopping-cart"></i> Pedidos ERP
                     </button>
                     <button class="tab-btn" onclick="switchTab('estoque')">
-                        <i class="fas fa-boxes"></i> Estoque (WMS)
+                        <i class="fas fa-boxes"></i> Estoque WMS
                     </button>
                     <button class="tab-btn" onclick="switchTab('transporte')">
-                        <i class="fas fa-truck"></i> Transporte (TMS)
+                        <i class="fas fa-truck"></i> Transporte TMS
                     </button>
                 </div>
 
@@ -725,23 +734,19 @@
         </section>
 
         <footer>
-            <p>🔐 LOGIMAX | Logistics Intelligence Platform | 📊 Dados em Tempo Real</p>
-            <p id="url-info">Carregando...</p>
+            <p>🔐 LOGIMAX | Logistics Intelligence Platform | Enterprise Edition</p>
+            <p id="url-info">Ambiente: Produção</p>
         </footer>
     </div>
 
     <script>
-        // Variáveis globais
         let charts = {};
 
-        // Inicializar dashboard
         document.addEventListener('DOMContentLoaded', () => {
-            document.getElementById('url-info').textContent = window.location.href;
             loadDashboard();
             setInterval(loadDashboard, 60000);
         });
 
-        // Carregar dashboard completo
         async function loadDashboard() {
             try {
                 await Promise.all([
@@ -755,62 +760,35 @@
             }
         }
 
-        // Carregar KPIs
         async function loadKPIs() {
             try {
                 const response = await fetch('/api/kpis');
                 const data = await response.json();
 
-                const html = `
-                    <div class="kpi-card success">
-                        <div class="kpi-icon">⏱️</div>
-                        <div class="kpi-label">Lead Time Médio</div>
-                        <div class="kpi-value">${data.lead_time_medio}<span class="kpi-unit">dias</span></div>
-                        <div class="kpi-change positive">↓ 5% vs semana anterior</div>
-                    </div>
+                const kpis = [
+                    { icon: '⏱️', label: 'Lead Time Médio', value: data.lead_time_medio, unit: 'dias', type: 'success', change: '-5%' },
+                    { icon: '📦', label: 'Fill Rate', value: data.fill_rate, unit: '%', type: 'primary', change: '+2%' },
+                    { icon: '💰', label: 'Receita Total', value: 'R$' + data.custo_total, unit: 'mil', type: 'primary', change: '+12%' },
+                    { icon: '✅', label: 'Entregas Prazo', value: data.taxa_conformidade, unit: '%', type: 'success', change: '+3%' },
+                    { icon: '🔄', label: 'Rotatividade', value: data.rotatividade, unit: 'x', type: 'warning', change: '+8%' },
+                    { icon: '🎯', label: 'Acuracidade', value: data.acuracia, unit: '%', type: 'success', change: '+1%' },
+                    { icon: '⚠️', label: 'Inconsistências', value: Math.floor(Math.random() * 50), unit: 'alertas', type: 'error', change: '-15%', changeClass: 'negative' }
+                ];
 
-                    <div class="kpi-card info">
-                        <div class="kpi-icon">📦</div>
-                        <div class="kpi-label">Fill Rate</div>
-                        <div class="kpi-value">${data.fill_rate}<span class="kpi-unit">%</span></div>
-                        <div class="kpi-change positive">↑ 2% vs semana anterior</div>
+                const html = kpis.map(kpi => `
+                    <div class="kpi-card">
+                        <div class="kpi-top">
+                            <div>
+                                <div class="kpi-icon ${kpi.type}">${kpi.icon}</div>
+                                <div class="kpi-label">${kpi.label}</div>
+                            </div>
+                        </div>
+                        <div class="kpi-bottom">
+                            <div class="kpi-value">${kpi.value}<span class="kpi-unit">${kpi.unit}</span></div>
+                            <div class="kpi-change ${kpi.changeClass || ''}">${kpi.change}</div>
+                        </div>
                     </div>
-
-                    <div class="kpi-card info">
-                        <div class="kpi-icon">💰</div>
-                        <div class="kpi-label">Receita Total</div>
-                        <div class="kpi-value">R$<span class="kpi-unit">${data.custo_total}</span></div>
-                        <div class="kpi-change positive">↑ 12% vs mês anterior</div>
-                    </div>
-
-                    <div class="kpi-card success">
-                        <div class="kpi-icon">✅</div>
-                        <div class="kpi-label">Entregas no Prazo</div>
-                        <div class="kpi-value">${data.taxa_conformidade}<span class="kpi-unit">%</span></div>
-                        <div class="kpi-change positive">↑ 3% vs semana anterior</div>
-                    </div>
-
-                    <div class="kpi-card warning">
-                        <div class="kpi-icon">🔄</div>
-                        <div class="kpi-label">Rotatividade</div>
-                        <div class="kpi-value">${data.rotatividade}<span class="kpi-unit">x</span></div>
-                        <div class="kpi-change positive">↑ 8% vs semana anterior</div>
-                    </div>
-
-                    <div class="kpi-card success">
-                        <div class="kpi-icon">🎯</div>
-                        <div class="kpi-label">Acuracidade</div>
-                        <div class="kpi-value">${data.acuracia}<span class="kpi-unit">%</span></div>
-                        <div class="kpi-change positive">↑ 1% vs semana anterior</div>
-                    </div>
-
-                    <div class="kpi-card error">
-                        <div class="kpi-icon">⚠️</div>
-                        <div class="kpi-label">Inconsistências</div>
-                        <div class="kpi-value">${Math.floor(Math.random() * 50)}</div>
-                        <div class="kpi-change negative">↑ 15% crítico</div>
-                    </div>
-                `;
+                `).join('');
 
                 document.getElementById('kpis-container').innerHTML = html;
             } catch (error) {
@@ -819,42 +797,47 @@
             }
         }
 
-        // Carregar gráficos
         async function loadCharts() {
             try {
-                const [statusRes, conformidadeRes, pedidosRes, custosRes, topRes, estoqueRes] = await Promise.all([
+                const [statusRes, pedidosRes, custosRes] = await Promise.all([
                     fetch('/api/status-pedidos'),
-                    fetch('/api/conformidade-prazos'),
                     fetch('/api/pedidos-por-dia'),
-                    fetch('/api/custo-por-modal'),
-                    fetch('/api/top-produtos'),
-                    fetch('/api/distribuicao-estoque')
+                    fetch('/api/custo-por-modal')
                 ]);
 
                 const status = await statusRes.json();
-                const conformidade = await conformidadeRes.json();
                 const pedidos = await pedidosRes.json();
                 const custos = await custosRes.json();
-                const top = await topRes.json();
-                const estoque = await estoqueRes.json();
 
                 const html = `
                     <div class="chart-container">
-                        <div class="chart-title">📈 Tendência de Lead Time</div>
+                        <div class="chart-header">
+                            <div class="chart-title">
+                                <i class="fas fa-chart-line"></i> Tendência Lead Time
+                            </div>
+                        </div>
                         <div class="chart-wrapper">
                             <canvas id="chart-pedidos"></canvas>
                         </div>
                     </div>
 
                     <div class="chart-container">
-                        <div class="chart-title">📦 Status de Pedidos</div>
+                        <div class="chart-header">
+                            <div class="chart-title">
+                                <i class="fas fa-pie-chart"></i> Status Pedidos
+                            </div>
+                        </div>
                         <div class="chart-wrapper">
                             <canvas id="chart-status"></canvas>
                         </div>
                     </div>
 
                     <div class="chart-container">
-                        <div class="chart-title">🚚 Custo Logístico por Modal</div>
+                        <div class="chart-header">
+                            <div class="chart-title">
+                                <i class="fas fa-chart-bar"></i> Custo por Modal
+                            </div>
+                        </div>
                         <div class="chart-wrapper">
                             <canvas id="chart-custos"></canvas>
                         </div>
@@ -864,9 +847,9 @@
                 document.getElementById('charts-container').innerHTML = html;
 
                 setTimeout(() => {
-                    createChart('chart-pedidos', 'line', pedidos.labels, pedidos.data, ['#3B82F6']);
-                    createChart('chart-status', 'doughnut', status.labels, status.data, ['#22C55E', '#3B82F6', '#EF4444']);
-                    createChart('chart-custos', 'bar', custos.labels, custos.data, ['#F59E0B']);
+                    createChart('chart-pedidos', 'line', pedidos.labels, pedidos.data, ['#4a7bff']);
+                    createChart('chart-status', 'doughnut', status.labels, status.data, ['#2dd4ac', '#4a7bff', '#ff6b6b']);
+                    createChart('chart-custos', 'bar', custos.labels, custos.data, ['#fbbf24']);
                 }, 100);
 
             } catch (error) {
@@ -875,15 +858,15 @@
             }
         }
 
-        // Criar gráfico
         function createChart(chartId, type, labels, data, colors) {
-            const ctx = document.getElementById(chartId);
-            if (!ctx) return;
+            const canvas = document.getElementById(chartId);
+            if (!canvas) return;
 
             if (charts[chartId]) {
                 charts[chartId].destroy();
             }
 
+            const ctx = canvas.getContext('2d');
             charts[chartId] = new Chart(ctx, {
                 type: type,
                 data: {
@@ -896,7 +879,7 @@
                         borderWidth: 2,
                         tension: 0.4,
                         fill: type === 'line',
-                        borderRadius: type === 'bar' ? 8 : 0
+                        borderRadius: type === 'bar' ? 6 : 0
                     }]
                 },
                 options: {
@@ -907,40 +890,27 @@
                             display: type === 'doughnut',
                             position: 'bottom',
                             labels: {
-                                color: 'var(--text-primary)',
+                                color: '#f1f5f9',
                                 padding: 16,
-                                font: { size: 12 }
+                                font: { size: 12, family: "'Inter', sans-serif" }
                             }
                         }
                     },
                     scales: type !== 'doughnut' ? {
                         y: {
                             beginAtZero: true,
-                            grid: {
-                                color: 'rgba(148, 163, 184, 0.1)',
-                                drawBorder: false
-                            },
-                            ticks: {
-                                color: 'var(--text-secondary)',
-                                font: { size: 12 }
-                            }
+                            grid: { color: 'rgba(58, 69, 86, 0.2)', drawBorder: false },
+                            ticks: { color: '#94a3b8', font: { size: 12 } }
                         },
                         x: {
-                            grid: {
-                                display: false,
-                                drawBorder: false
-                            },
-                            ticks: {
-                                color: 'var(--text-secondary)',
-                                font: { size: 12 }
-                            }
+                            grid: { display: false },
+                            ticks: { color: '#94a3b8', font: { size: 12 } }
                         }
                     } : {}
                 }
             });
         }
 
-        // Carregar tabelas
         async function loadTabelas() {
             try {
                 const [pedidosRes, estoqueRes, transporteRes] = await Promise.all([
@@ -953,17 +923,15 @@
                 const estoque = await estoqueRes.json();
                 const transporte = await transporteRes.json();
 
-                document.getElementById('pedidos').innerHTML = createTable(pedidos, 'pedidos');
-                document.getElementById('estoque').innerHTML = createTable(estoque, 'estoque');
-                document.getElementById('transporte').innerHTML = createTable(transporte, 'transporte');
-
+                document.getElementById('pedidos').innerHTML = createTable(pedidos);
+                document.getElementById('estoque').innerHTML = createTable(estoque);
+                document.getElementById('transporte').innerHTML = createTable(transporte);
             } catch (error) {
                 console.error('Erro ao carregar tabelas:', error);
             }
         }
 
-        // Criar tabela HTML
-        function createTable(data, type) {
+        function createTable(data) {
             if (!data || data.length === 0) {
                 return '<p style="color: var(--text-secondary);">Nenhum dado disponível</p>';
             }
@@ -978,7 +946,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            ${data.map(row => `
+                            ${data.slice(0, 10).map(row => `
                                 <tr>
                                     ${keys.map(k => {
                                         let value = row[k];
@@ -1000,7 +968,6 @@
             return html;
         }
 
-        // Alternar abas
         function switchTab(tabName) {
             document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
             document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
@@ -1009,13 +976,11 @@
             event.target.classList.add('active');
         }
 
-        // Atualizar hora
         function updateTime() {
-            const now = new Date().toLocaleString('pt-BR');
+            const now = new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
             document.getElementById('update-time').textContent = now;
         }
 
-        // Atualizar dashboard
         function refreshDashboard() {
             const btn = event.target.closest('.refresh-btn');
             btn.classList.add('loading');
@@ -1025,7 +990,7 @@
                 btn.classList.remove('loading');
                 btn.disabled = false;
             }).catch(error => {
-                console.error('Erro ao atualizar dashboard:', error);
+                console.error('Erro ao atualizar:', error);
                 btn.classList.remove('loading');
                 btn.disabled = false;
             });
