@@ -979,7 +979,8 @@
                         createLineChart('chart-pedidos', pedidos.labels, pedidos.data);
                     }
                     if (status.labels && status.data) {
-                        createStackedBarChart('chart-status', status.labels, status.data);
+                        const statusTotal = status.data.reduce((a, b) => a + b, 0);
+                        createStackedBarChart('chart-status', status.labels, status.data, statusTotal);
                     }
                     if (custos.labels && custos.data) {
                         createBarChart('chart-custos', custos.labels, custos.data);
@@ -1004,13 +1005,8 @@
             
             // Gradient para a área sob a linha
             const gradient = ctx.createLinearGradient(0, 0, 0, 300);
-            gradient.addColorStop(0, 'rgba(74, 123, 255, 0.15)');
+            gradient.addColorStop(0, 'rgba(74, 123, 255, 0.2)');
             gradient.addColorStop(1, 'rgba(74, 123, 255, 0)');
-
-            // Cores dinâmicas: Vermelho se acima da meta, Azul se abaixo
-            const pointColors = data.map((value, idx) => {
-                return value > 8 ? '#ff6b6b' : '#4a7bff';
-            });
 
             charts[chartId] = new Chart(ctx, {
                 type: 'line',
@@ -1025,40 +1021,30 @@
                             borderWidth: 3,
                             fill: true,
                             tension: 0.45,
-                            pointRadius: 5,
-                            pointBackgroundColor: pointColors,
+                            pointRadius: 6,
+                            pointBackgroundColor: '#4a7bff',
                             pointBorderColor: '#fff',
                             pointBorderWidth: 2,
-                            pointHoverRadius: 7,
-                            pointHoverBorderWidth: 3,
-                            segment: {
-                                borderColor: ctx => {
-                                    const value = ctx.p1DataIndex >= 0 ? data[ctx.p1DataIndex] : 0;
-                                    return value > 8 ? '#ff6b6b' : '#4a7bff';
-                                }
-                            }
+                            pointHoverRadius: 8,
+                            pointHoverBorderWidth: 3
                         },
                         {
-                            label: 'Meta SLA (8 dias)',
-                            data: Array(labels.length).fill(8),
+                            label: 'Meta SLA',
+                            data: Array(labels.length).fill(10),
                             borderColor: '#2dd4ac',
                             borderWidth: 2,
                             borderDash: [5, 5],
                             fill: false,
                             tension: 0.45,
                             pointRadius: 0,
-                            pointHoverRadius: 0,
-                            spanGaps: true
+                            pointHoverRadius: 0
                         }
                     ]
                 },
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
-                    interaction: {
-                        intersect: false,
-                        mode: 'index'
-                    },
+                    interaction: { intersect: false, mode: 'index' },
                     plugins: {
                         legend: {
                             display: true,
@@ -1066,29 +1052,24 @@
                             labels: {
                                 color: '#f1f5f9',
                                 padding: 16,
-                                font: { size: 12, weight: '500', family: "'Inter', sans-serif" },
-                                usePointStyle: true,
-                                pointStyle: 'circle'
+                                font: { size: 11, weight: '500' },
+                                usePointStyle: true
                             }
                         },
                         tooltip: {
                             backgroundColor: 'rgba(0, 0, 0, 0.9)',
                             padding: 12,
-                            titleFont: { size: 13, weight: 'bold' },
-                            bodyFont: { size: 12 },
+                            titleFont: { size: 12, weight: 'bold' },
+                            bodyFont: { size: 11 },
                             borderColor: '#4a7bff',
                             borderWidth: 1.5,
                             cornerRadius: 6,
-                            displayColors: true,
                             callbacks: {
                                 label: function(context) {
                                     if (context.datasetIndex === 0) {
-                                        const value = context.parsed.y;
-                                        const prevValue = context.dataIndex > 0 ? data[context.dataIndex - 1] : value;
-                                        const change = ((value - prevValue) / prevValue * 100).toFixed(1);
-                                        return context.dataset.label + ': ' + value.toFixed(2) + ' dias (Δ ' + (change > 0 ? '+' : '') + change + '%)';
+                                        return 'Lead Time: ' + context.parsed.y.toFixed(1) + ' dias';
                                     } else {
-                                        return context.dataset.label + ': ' + context.parsed.y.toFixed(2) + ' dias';
+                                        return context.dataset.label + ': ' + context.parsed.y.toFixed(1) + ' dias';
                                     }
                                 }
                             }
@@ -1096,47 +1077,37 @@
                     },
                     scales: {
                         y: {
-                            beginAtZero: true,
-                            max: 15,
+                            beginAtZero: false,
+                            min: 6,
+                            max: 16,
                             ticks: {
                                 color: '#94a3b8',
-                                font: { size: 11, weight: '500' },
+                                font: { size: 10, weight: '500' },
                                 stepSize: 2,
                                 callback: function(value) {
-                                    return value + ' d';
+                                    return value;
                                 }
                             },
                             grid: {
-                                color: 'rgba(58, 69, 86, 0.15)',
-                                drawBorder: false,
-                                lineWidth: 1
-                            },
-                            title: {
-                                display: true,
-                                text: 'Lead Time (dias)',
-                                color: '#94a3b8',
-                                font: { size: 11 }
+                                color: 'rgba(58, 69, 86, 0.1)',
+                                drawBorder: false
                             }
                         },
                         x: {
                             ticks: {
                                 color: '#94a3b8',
-                                font: { size: 11, weight: '500' },
-                                maxRotation: 0,
-                                autoSkip: true,
-                                maxTicksLimit: 8
+                                font: { size: 10, weight: '500' },
+                                maxRotation: 45,
+                                minRotation: 45
                             },
-                            grid: {
-                                display: false,
-                                drawBorder: false
-                            }
+                            grid: { display: false, drawBorder: false }
                         }
                     }
                 }
             });
         }
 
-        function createStackedBarChart(chartId, labels, data) {
+        function createStackedBarChart(chartId, labels, data, total) {
             const canvas = document.getElementById(chartId);
             if (!canvas) return;
 
@@ -1144,75 +1115,96 @@
                 charts[chartId].destroy();
             }
 
-            // Calcular totais para cada categoria
-            const emitido = data.map(d => d * 0.3);
-            const aprovado = data.map(d => d * 0.5);
-            const cancelado = data.map(d => d * 0.2);
-            
-            const totalEmitido = emitido.reduce((a, b) => a + b, 0);
-            const totalAprovado = aprovado.reduce((a, b) => a + b, 0);
-            const totalCancelado = cancelado.reduce((a, b) => a + b, 0);
-            const somaTotal = totalEmitido + totalAprovado + totalCancelado;
+            // Calcular percentuais
+            const percentuais = data.map(d => ((d / total) * 100).toFixed(1));
 
             const ctx = canvas.getContext('2d');
+            
             charts[chartId] = new Chart(ctx, {
-                type: 'doughnut',
+                type: 'bar',
                 data: {
-                    labels: ['Emitido', 'Aprovado', 'Cancelado'],
-                    datasets: [{
-                        data: [totalEmitido, totalAprovado, totalCancelado],
-                        backgroundColor: [
-                            '#4a7bff',
-                            '#2dd4ac',
-                            '#ff6b6b'
-                        ],
-                        borderColor: '#1a1f3a',
-                        borderWidth: 3,
-                        hoverOffset: 10
-                    }]
+                    labels: ['Status'],
+                    datasets: [
+                        {
+                            label: labels[0],
+                            data: [data[0]],
+                            backgroundColor: '#10b981',
+                            borderColor: '#10b981',
+                            borderRadius: 0,
+                            borderSkipped: false
+                        },
+                        {
+                            label: labels[1],
+                            data: [data[1]],
+                            backgroundColor: '#3b82f6',
+                            borderColor: '#3b82f6',
+                            borderRadius: 0,
+                            borderSkipped: false
+                        },
+                        {
+                            label: labels[2],
+                            data: [data[2]],
+                            backgroundColor: '#ef4444',
+                            borderColor: '#ef4444',
+                            borderRadius: 0,
+                            borderSkipped: false
+                        }
+                    ]
                 },
                 options: {
+                    indexAxis: 'y',
                     responsive: true,
                     maintainAspectRatio: false,
+                    interaction: { intersect: false, mode: 'index' },
                     plugins: {
                         legend: {
+                            display: true,
                             position: 'bottom',
                             labels: {
                                 color: '#f1f5f9',
-                                padding: 16,
-                                font: { size: 12, weight: '500', family: "'Inter', sans-serif" },
-                                usePointStyle: true,
-                                pointStyle: 'circle'
+                                padding: 12,
+                                font: { size: 10, weight: '500' },
+                                usePointStyle: true
                             }
                         },
                         tooltip: {
                             backgroundColor: 'rgba(0, 0, 0, 0.9)',
-                            padding: 12,
-                            titleFont: { size: 13, weight: 'bold' },
-                            bodyFont: { size: 12 },
-                            borderColor: '#4a7bff',
-                            borderWidth: 1.5,
-                            cornerRadius: 6,
+                            padding: 10,
+                            titleFont: { size: 11, weight: 'bold' },
+                            bodyFont: { size: 10 },
+                            borderColor: '#3b82f6',
+                            borderWidth: 1,
+                            cornerRadius: 4,
                             callbacks: {
                                 label: function(context) {
-                                    const value = context.parsed;
-                                    const percentage = ((value / somaTotal) * 100).toFixed(1);
-                                    return context.label + ': ' + value + ' (' + percentage + '%)';
-                                },
-                                afterLabel: function(context) {
-                                    if (context.dataIndex === 0) {
-                                        return 'Status: Aguardando aprovação';
-                                    } else if (context.dataIndex === 1) {
-                                        return 'Status: Pronto para expedição';
-                                    } else {
-                                        return 'Status: Transação encerrada';
-                                    }
+                                    const idx = context.datasetIndex;
+                                    return labels[idx] + ': ' + data[idx].toLocaleString('pt-BR') + ' (' + percentuais[idx] + '%)';
                                 }
                             }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            stacked: true,
+                            ticks: {
+                                color: '#94a3b8',
+                                font: { size: 10 },
+                                callback: function(value) {
+                                    return (value / 1000).toFixed(1) + 'k';
+                                }
+                            },
+                            grid: {
+                                color: 'rgba(58, 69, 86, 0.1)',
+                                drawBorder: false
+                            }
                         },
-                        datalabels: {
-                            color: '#fff',
-                            font: { weight: 'bold', size: 12 }
+                        y: {
+                            stacked: true,
+                            ticks: {
+                                color: '#94a3b8',
+                                font: { size: 10 }
+                            },
+                            grid: { display: false, drawBorder: false }
                         }
                     }
                 }
