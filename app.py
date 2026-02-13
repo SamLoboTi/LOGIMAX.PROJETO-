@@ -2,12 +2,26 @@ from flask import Flask, render_template, jsonify, request
 from flask_cors import CORS
 import pandas as pd
 import json
+import numpy as np
 from datetime import datetime, timedelta
 import os
 import traceback
 
 app = Flask(__name__, template_folder='templates')
 CORS(app)
+
+# ==================== FUNÇÕES AUXILIARES ====================
+def sanitize_for_json(data):
+    """Recursively convert NaN/Inf to None for valid JSON"""
+    if isinstance(data, dict):
+        return {k: sanitize_for_json(v) for k, v in data.items()}
+    elif isinstance(data, list):
+        return [sanitize_for_json(v) for v in data]
+    elif isinstance(data, float):
+        if np.isnan(data) or np.isinf(data):
+            return None
+        return data
+    return data
 
 # ==================== CARREGAMENTO DE DADOS ====================
 def carregar_dados():
@@ -185,7 +199,7 @@ def get_kpis():
     
     kpis['receita_total'] = round(receita_total, 2)
     
-    return jsonify(kpis)
+    return jsonify(sanitize_for_json(kpis))
 
 @app.route('/api/status-pedidos')
 def get_status_pedidos():
@@ -207,11 +221,11 @@ def get_status_pedidos():
         
         total = aprovado + emitido + cancelado
         
-        return jsonify({
+        return jsonify(sanitize_for_json({
             'labels': ['Aprovado', 'Emitido', 'Cancelado'],
             'data': [aprovado, emitido, cancelado],
             'total': total
-        })
+        }))
     except Exception as e:
         print(f"Erro em /api/status-pedidos: {e}")
         # Dados padrão
@@ -232,10 +246,10 @@ def get_conformidade_prazos():
         cumprido = len(df_tms[df_tms['prazo_real'] <= df_tms['prazo_estimado']])
         atrasado = len(df_tms[df_tms['prazo_real'] > df_tms['prazo_estimado']])
         
-        return jsonify({
+        return jsonify(sanitize_for_json({
             'labels': ['Cumprido', 'Atrasado'],
             'data': [cumprido, atrasado]
-        })
+        }))
     except Exception as e:
         print(f"Erro em /api/conformidade-prazos: {e}")
         return jsonify({'labels': ['Cumprido', 'Atrasado'], 'data': [0, 0]})
@@ -273,10 +287,10 @@ def get_pedidos_por_dia():
         labels = [d.strftime('%d/%m') for d in lead_time_diario.index.tolist()]
         data = [round(v, 2) for v in lead_time_diario.values.tolist()]
         
-        return jsonify({
+        return jsonify(sanitize_for_json({
             'labels': labels,
             'data': data
-        })
+        }))
     except Exception as e:
         print(f"Erro em /api/pedidos-por-dia: {e}")
         traceback.print_exc()
@@ -317,12 +331,12 @@ def get_custo_modal():
         # Pegar distâncias ordenadas
         distancia_sorted = [distancia_por_modal.get(modal, 0) for modal in custo_modal_sorted.keys()]
         
-        return jsonify({
+        return jsonify(sanitize_for_json({
             'labels': list(custo_modal_sorted.keys()),
             'data': [round(v, 2) for v in custo_modal_sorted.values()],
             'distancia': [round(d, 2) for d in distancia_sorted],
             'total': round(total_custo, 2)
-        })
+        }))
     except Exception as e:
         print(f"Erro em /api/custo-por-modal: {e}")
         traceback.print_exc()
@@ -343,11 +357,11 @@ def get_top_produtos():
             return jsonify({'labels': [], 'saidas': [], 'estoque': []})
         
         top = df_wms.nlargest(10, 'saidas')[['product_id', 'saidas', 'estoque_final']]
-        return jsonify({
+        return jsonify(sanitize_for_json({
             'labels': [f'P{int(pid)}' for pid in top['product_id'].tolist()],
             'saidas': top['saidas'].tolist(),
             'estoque': top['estoque_final'].tolist()
-        })
+        }))
     except Exception as e:
         print(f"Erro em /api/top-produtos: {e}")
         return jsonify({'labels': [], 'saidas': [], 'estoque': []})
@@ -363,10 +377,10 @@ def get_distribuicao_estoque():
         hist, _ = pd.cut(df_wms['estoque_final'], bins=6, retbins=True)
         counts = hist.value_counts().sort_index()
         
-        return jsonify({
+        return jsonify(sanitize_for_json({
             'labels': [str(interval) for interval in counts.index],
             'data': counts.values.tolist()
-        })
+        }))
     except Exception as e:
         print(f"Erro em /api/distribuicao-estoque: {e}")
         return jsonify({'labels': [], 'data': []})
@@ -382,7 +396,7 @@ def get_pedidos_tabela():
     df_display = df_erp.head(100).copy()
     df_display['data_pedido'] = df_display['data_pedido'].astype(str)
     
-    return jsonify(df_display.to_dict('records'))
+    return jsonify(sanitize_for_json(df_display.to_dict('records')))
 
 @app.route('/api/estoque-tabela')
 def get_estoque_tabela():
@@ -394,7 +408,7 @@ def get_estoque_tabela():
     df_display = df_wms.head(100).copy()
     df_display['data_separacao'] = df_display['data_separacao'].astype(str)
     
-    return jsonify(df_display.to_dict('records'))
+    return jsonify(sanitize_for_json(df_display.to_dict('records')))
 
 @app.route('/api/transporte-tabela')
 def get_transporte_tabela():
@@ -407,7 +421,7 @@ def get_transporte_tabela():
     df_display['data_envio'] = df_display['data_envio'].astype(str)
     df_display['data_entrega'] = df_display['data_entrega'].astype(str)
     
-    return jsonify(df_display.to_dict('records'))
+    return jsonify(sanitize_for_json(df_display.to_dict('records')))
 
 @app.route('/api/health')
 def health():

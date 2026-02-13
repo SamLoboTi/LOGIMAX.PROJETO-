@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LogiMAX | Logistics Intelligence Platform</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700&display=swap"
+        rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -219,7 +222,7 @@
             transition: all 0.3s ease;
         }
 
-        .kpi-card > * {
+        .kpi-card>* {
             position: relative;
             z-index: 1;
         }
@@ -233,64 +236,155 @@
         .kpi-card.kpi-1::before {
             background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
         }
-        .kpi-card.kpi-1 .kpi-label { color: #78350f; font-weight: 700; }
-        .kpi-card.kpi-1 .kpi-value { color: #451a03; }
-        .kpi-card.kpi-1 .kpi-icon { color: #d97706; }
-        .kpi-card.kpi-1 .kpi-unit { color: #92400e; }
+
+        .kpi-card.kpi-1 .kpi-label {
+            color: #78350f;
+            font-weight: 700;
+        }
+
+        .kpi-card.kpi-1 .kpi-value {
+            color: #451a03;
+        }
+
+        .kpi-card.kpi-1 .kpi-icon {
+            color: #d97706;
+        }
+
+        .kpi-card.kpi-1 .kpi-unit {
+            color: #92400e;
+        }
 
         /* KPI Card 2 - Fill Rate (Teal Claro) */
         .kpi-card.kpi-2::before {
             background: linear-gradient(135deg, #ccfbf1 0%, #a7f3d0 100%);
         }
-        .kpi-card.kpi-2 .kpi-label { color: #134e4a; font-weight: 700; }
-        .kpi-card.kpi-2 .kpi-value { color: #0d3331; }
-        .kpi-card.kpi-2 .kpi-icon { color: #0d9488; }
-        .kpi-card.kpi-2 .kpi-unit { color: #115e59; }
+
+        .kpi-card.kpi-2 .kpi-label {
+            color: #134e4a;
+            font-weight: 700;
+        }
+
+        .kpi-card.kpi-2 .kpi-value {
+            color: #0d3331;
+        }
+
+        .kpi-card.kpi-2 .kpi-icon {
+            color: #0d9488;
+        }
+
+        .kpi-card.kpi-2 .kpi-unit {
+            color: #115e59;
+        }
 
         /* KPI Card 3 - Receita Total (Azul Claro) */
         .kpi-card.kpi-3::before {
             background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
         }
-        .kpi-card.kpi-3 .kpi-label { color: #1e40af; font-weight: 700; }
-        .kpi-card.kpi-3 .kpi-value { color: #0c2d6b; }
-        .kpi-card.kpi-3 .kpi-icon { color: #2563eb; }
-        .kpi-card.kpi-3 .kpi-unit { color: #1e3a8a; }
+
+        .kpi-card.kpi-3 .kpi-label {
+            color: #1e40af;
+            font-weight: 700;
+        }
+
+        .kpi-card.kpi-3 .kpi-value {
+            color: #0c2d6b;
+        }
+
+        .kpi-card.kpi-3 .kpi-icon {
+            color: #2563eb;
+        }
+
+        .kpi-card.kpi-3 .kpi-unit {
+            color: #1e3a8a;
+        }
 
         /* KPI Card 4 - Entregas Prazo (Verde Claro) */
         .kpi-card.kpi-4::before {
             background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%);
         }
-        .kpi-card.kpi-4 .kpi-label { color: #15803d; font-weight: 700; }
-        .kpi-card.kpi-4 .kpi-value { color: #052e16; }
-        .kpi-card.kpi-4 .kpi-icon { color: #16a34a; }
-        .kpi-card.kpi-4 .kpi-unit { color: #166534; }
+
+        .kpi-card.kpi-4 .kpi-label {
+            color: #15803d;
+            font-weight: 700;
+        }
+
+        .kpi-card.kpi-4 .kpi-value {
+            color: #052e16;
+        }
+
+        .kpi-card.kpi-4 .kpi-icon {
+            color: #16a34a;
+        }
+
+        .kpi-card.kpi-4 .kpi-unit {
+            color: #166534;
+        }
 
         /* KPI Card 5 - Rotatividade (Roxo Claro) */
         .kpi-card.kpi-5::before {
             background: linear-gradient(135deg, #f3e8ff 0%, #e9d5ff 100%);
         }
-        .kpi-card.kpi-5 .kpi-label { color: #6b21a8; font-weight: 700; }
-        .kpi-card.kpi-5 .kpi-value { color: #3f0f5c; }
-        .kpi-card.kpi-5 .kpi-icon { color: #a855f7; }
-        .kpi-card.kpi-5 .kpi-unit { color: #7e22ce; }
+
+        .kpi-card.kpi-5 .kpi-label {
+            color: #6b21a8;
+            font-weight: 700;
+        }
+
+        .kpi-card.kpi-5 .kpi-value {
+            color: #3f0f5c;
+        }
+
+        .kpi-card.kpi-5 .kpi-icon {
+            color: #a855f7;
+        }
+
+        .kpi-card.kpi-5 .kpi-unit {
+            color: #7e22ce;
+        }
 
         /* KPI Card 6 - Acuracidade (Coral Claro) */
         .kpi-card.kpi-6::before {
             background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
         }
-        .kpi-card.kpi-6 .kpi-label { color: #991b1b; font-weight: 700; }
-        .kpi-card.kpi-6 .kpi-value { color: #5e1414; }
-        .kpi-card.kpi-6 .kpi-icon { color: #dc2626; }
-        .kpi-card.kpi-6 .kpi-unit { color: #b42620; }
+
+        .kpi-card.kpi-6 .kpi-label {
+            color: #991b1b;
+            font-weight: 700;
+        }
+
+        .kpi-card.kpi-6 .kpi-value {
+            color: #5e1414;
+        }
+
+        .kpi-card.kpi-6 .kpi-icon {
+            color: #dc2626;
+        }
+
+        .kpi-card.kpi-6 .kpi-unit {
+            color: #b42620;
+        }
 
         /* KPI Card 7 - Inconsistências (Vermelho Claro) */
         .kpi-card.kpi-7::before {
             background: linear-gradient(135deg, #fecaca 0%, #fca5a5 100%);
         }
-        .kpi-card.kpi-7 .kpi-label { color: #991b1b; font-weight: 700; }
-        .kpi-card.kpi-7 .kpi-value { color: #5e1414; }
-        .kpi-card.kpi-7 .kpi-icon { color: #ef4444; }
-        .kpi-card.kpi-7 .kpi-unit { color: #b42620; }
+
+        .kpi-card.kpi-7 .kpi-label {
+            color: #991b1b;
+            font-weight: 700;
+        }
+
+        .kpi-card.kpi-7 .kpi-value {
+            color: #5e1414;
+        }
+
+        .kpi-card.kpi-7 .kpi-icon {
+            color: #ef4444;
+        }
+
+        .kpi-card.kpi-7 .kpi-unit {
+            color: #b42620;
+        }
 
         .kpi-icon {
             font-size: 24px;
@@ -414,7 +508,8 @@
             width: 100% !important;
             height: 100% !important;
         }
-            max-width: 100% !important;
+
+        max-width: 100% !important;
         }
 
         .loading {
@@ -578,12 +673,21 @@
 
         /* ANIMATIONS */
         @keyframes spin {
-            to { transform: rotate(360deg); }
+            to {
+                transform: rotate(360deg);
+            }
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(5px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(5px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         /* RESPONSIVE */
@@ -685,7 +789,8 @@
                 font-size: 12px;
             }
 
-            th, td {
+            th,
+            td {
                 padding: 10px 12px;
             }
         }
@@ -726,8 +831,20 @@
                 font-size: 11px;
             }
         }
+
+        .error-message {
+            color: var(--error);
+            padding: 20px;
+            text-align: center;
+            background: rgba(255, 107, 107, 0.1);
+            border: 1px solid var(--error);
+            border-radius: 8px;
+            font-weight: 500;
+            margin: 10px;
+        }
     </style>
 </head>
+
 <body>
     <header>
         <div class="header-content">
@@ -756,7 +873,9 @@
                 </div>
             </div>
             <div class="kpis-grid" id="kpis-container">
-                <div class="loading"><div class="spinner"></div></div>
+                <div class="loading">
+                    <div class="spinner"></div>
+                </div>
             </div>
         </section>
 
@@ -838,17 +957,23 @@
 
                 <div id="pedidos" class="tab-content active">
                     <div class="table-wrapper">
-                        <div class="loading"><div class="spinner"></div></div>
+                        <div class="loading">
+                            <div class="spinner"></div>
+                        </div>
                     </div>
                 </div>
                 <div id="estoque" class="tab-content">
                     <div class="table-wrapper">
-                        <div class="loading"><div class="spinner"></div></div>
+                        <div class="loading">
+                            <div class="spinner"></div>
+                        </div>
                     </div>
                 </div>
                 <div id="transporte" class="tab-content">
                     <div class="table-wrapper">
-                        <div class="loading"><div class="spinner"></div></div>
+                        <div class="loading">
+                            <div class="spinner"></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -887,61 +1012,61 @@
                 const data = await response.json();
 
                 const kpis = [
-                    { 
-                        class: 'kpi-1', 
-                        icon: '⏱️', 
-                        label: 'Lead Time Médio', 
-                        value: data.lead_time_medio, 
-                        unit: 'dias', 
+                    {
+                        class: 'kpi-1',
+                        icon: '⏱️',
+                        label: 'Lead Time Médio',
+                        value: data.lead_time_medio,
+                        unit: 'dias',
                         change: (data.lead_time_variacao > 0 ? '+' : '') + data.lead_time_variacao + '%',
                         changeClass: data.lead_time_variacao > 0 ? 'negative' : ''
                     },
-                    { 
-                        class: 'kpi-2', 
-                        icon: '📦', 
-                        label: 'Fill Rate', 
-                        value: data.fill_rate, 
-                        unit: '%', 
+                    {
+                        class: 'kpi-2',
+                        icon: '📦',
+                        label: 'Fill Rate',
+                        value: data.fill_rate,
+                        unit: '%',
                         change: '+' + data.fill_rate_variacao + '%'
                     },
-                    { 
-                        class: 'kpi-3', 
-                        icon: '💰', 
-                        label: 'Receita Total', 
-                        value: (data.receita_total / 1000).toFixed(1), 
-                        unit: 'mil', 
+                    {
+                        class: 'kpi-3',
+                        icon: '💰',
+                        label: 'Receita Total',
+                        value: (data.receita_total / 1000).toFixed(1),
+                        unit: 'mil',
                         change: '+' + data.receita_variacao + '%'
                     },
-                    { 
-                        class: 'kpi-4', 
-                        icon: '✅', 
-                        label: 'Entregas Prazo', 
-                        value: data.entregas_prazo, 
-                        unit: '%', 
+                    {
+                        class: 'kpi-4',
+                        icon: '✅',
+                        label: 'Entregas Prazo',
+                        value: data.entregas_prazo,
+                        unit: '%',
                         change: '+' + data.entregas_prazo_variacao + '%'
                     },
-                    { 
-                        class: 'kpi-5', 
-                        icon: '🔄', 
-                        label: 'Rotatividade', 
-                        value: data.rotatividade, 
-                        unit: 'x', 
+                    {
+                        class: 'kpi-5',
+                        icon: '🔄',
+                        label: 'Rotatividade',
+                        value: data.rotatividade,
+                        unit: 'x',
                         change: '+' + data.rotatividade_variacao + '%'
                     },
-                    { 
-                        class: 'kpi-6', 
-                        icon: '🎯', 
-                        label: 'Acuracidade', 
-                        value: data.acuracia, 
-                        unit: '%', 
+                    {
+                        class: 'kpi-6',
+                        icon: '🎯',
+                        label: 'Acuracidade',
+                        value: data.acuracia,
+                        unit: '%',
                         change: '+' + data.acuracia_variacao + '%'
                     },
-                    { 
-                        class: 'kpi-7', 
-                        icon: '⚠️', 
-                        label: 'Inconsistências', 
-                        value: data.inconsistencias, 
-                        unit: 'alertas', 
+                    {
+                        class: 'kpi-7',
+                        icon: '⚠️',
+                        label: 'Inconsistências',
+                        value: data.inconsistencias,
+                        unit: 'alertas',
                         change: data.inconsistencias_variacao + '%',
                         changeClass: data.inconsistencias_variacao > 0 ? 'negative' : ''
                     }
@@ -963,7 +1088,7 @@
                 document.getElementById('kpis-container').innerHTML = html;
             } catch (error) {
                 console.error('Erro ao carregar KPIs:', error);
-                document.getElementById('kpis-container').innerHTML = '<div class="error-message">Erro ao carregar KPIs</div>';
+                document.getElementById('kpis-container').innerHTML = `<div class="error-message" style="grid-column: 1 / -1">Erro ao carregar KPIs: ${error.message}</div>`;
             }
         }
 
@@ -1018,25 +1143,25 @@
 
                 // Criar gráficos IMEDIATAMENTE com os dados carregados
                 console.log('Criando gráficos com dados:', { pedidos, status, custos, scatterData });
-                
+
                 if (pedidos.labels && pedidos.data && pedidos.data.length > 0) {
                     createLineChart('chart-pedidos', pedidos.labels, pedidos.data);
                 } else {
                     console.warn('Dados de pedidos incompletos:', pedidos);
                 }
-                
+
                 if (status.labels && status.data && status.data.length > 0) {
                     createStatusChart('chart-status', status.labels, status.data);
                 } else {
                     console.warn('Dados de status incompletos:', status);
                 }
-                
+
                 if (custos.labels && custos.data && custos.data.length > 0) {
                     createBarChart('chart-custos', custos.labels, custos.data, custos.distancia || []);
                 } else {
                     console.warn('Dados de custos incompletos:', custos);
                 }
-                
+
                 if (scatterData.length > 0) {
                     createScatterChart('chart-scatter', scatterData);
                 } else {
@@ -1045,10 +1170,16 @@
 
             } catch (error) {
                 console.error('Erro ao carregar gráficos:', error);
+                document.getElementById('charts-container').innerHTML = `<div class="error-message" style="grid-column: 1 / -1">Erro ao carregar gráficos: ${error.message}</div>`;
             }
         }
 
         function createLineChart(chartId, labels, data) {
+            if (typeof Chart === 'undefined') {
+                console.error('Chart.js não carregado');
+                document.getElementById(chartId).parentNode.innerHTML = '<div class="error-message">Erro: Chart.js não carregou. Verifique sua conexão.</div>';
+                return;
+            }
             console.log(`Criando gráfico de linha: ${chartId}`);
             const canvas = document.getElementById(chartId);
             if (!canvas) {
@@ -1068,103 +1199,103 @@
                     console.error('❌ Contexto 2D não obtido:', chartId);
                     return;
                 }
-                
+
                 // Gradient para a área sob a linha
                 const gradient = ctx.createLinearGradient(0, 0, 0, 300);
                 gradient.addColorStop(0, 'rgba(74, 123, 255, 0.2)');
                 gradient.addColorStop(1, 'rgba(74, 123, 255, 0)');
 
                 charts[chartId] = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: labels,
-                    datasets: [
-                        {
-                            label: 'Lead Time Real',
-                            data: data,
-                            borderColor: '#4a7bff',
-                            backgroundColor: gradient,
-                            borderWidth: 3,
-                            fill: true,
-                            tension: 0.45,
-                            pointRadius: 5,
-                            pointBackgroundColor: '#4a7bff',
-                            pointBorderColor: '#fff',
-                            pointBorderWidth: 2,
-                            pointHoverRadius: 7,
-                            pointHoverBorderWidth: 3
-                        },
-                        {
-                            label: 'Meta SLA',
-                            data: Array(labels.length).fill(10),
-                            borderColor: '#2dd4ac',
-                            borderWidth: 2,
-                            borderDash: [5, 5],
-                            fill: false,
-                            tension: 0.45,
-                            pointRadius: 0,
-                            pointHoverRadius: 0
-                        }
-                    ]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    interaction: { intersect: false, mode: 'index' },
-                    plugins: {
-                        legend: {
-                            display: true,
-                            position: 'bottom',
-                            labels: {
-                                color: '#f1f5f9',
-                                padding: 12,
-                                font: { size: 11, weight: '500' },
-                                usePointStyle: true
+                    type: 'line',
+                    data: {
+                        labels: labels,
+                        datasets: [
+                            {
+                                label: 'Lead Time Real',
+                                data: data,
+                                borderColor: '#4a7bff',
+                                backgroundColor: gradient,
+                                borderWidth: 3,
+                                fill: true,
+                                tension: 0.45,
+                                pointRadius: 5,
+                                pointBackgroundColor: '#4a7bff',
+                                pointBorderColor: '#fff',
+                                pointBorderWidth: 2,
+                                pointHoverRadius: 7,
+                                pointHoverBorderWidth: 3
+                            },
+                            {
+                                label: 'Meta SLA',
+                                data: Array(labels.length).fill(10),
+                                borderColor: '#2dd4ac',
+                                borderWidth: 2,
+                                borderDash: [5, 5],
+                                fill: false,
+                                tension: 0.45,
+                                pointRadius: 0,
+                                pointHoverRadius: 0
                             }
-                        },
-                        tooltip: {
-                            backgroundColor: 'rgba(0, 0, 0, 0.9)',
-                            padding: 10,
-                            titleFont: { size: 12, weight: 'bold' },
-                            bodyFont: { size: 11 },
-                            borderColor: '#4a7bff',
-                            borderWidth: 1,
-                            cornerRadius: 4,
-                            callbacks: {
-                                label: function(context) {
-                                    if (context.datasetIndex === 0) {
-                                        return 'Lead Time: ' + context.parsed.y.toFixed(1) + ' dias';
-                                    } else {
-                                        return context.dataset.label + ': ' + context.parsed.y.toFixed(1) + ' dias';
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        interaction: { intersect: false, mode: 'index' },
+                        plugins: {
+                            legend: {
+                                display: true,
+                                position: 'bottom',
+                                labels: {
+                                    color: '#f1f5f9',
+                                    padding: 12,
+                                    font: { size: 11, weight: '500' },
+                                    usePointStyle: true
+                                }
+                            },
+                            tooltip: {
+                                backgroundColor: 'rgba(0, 0, 0, 0.9)',
+                                padding: 10,
+                                titleFont: { size: 12, weight: 'bold' },
+                                bodyFont: { size: 11 },
+                                borderColor: '#4a7bff',
+                                borderWidth: 1,
+                                cornerRadius: 4,
+                                callbacks: {
+                                    label: function (context) {
+                                        if (context.datasetIndex === 0) {
+                                            return 'Lead Time: ' + context.parsed.y.toFixed(1) + ' dias';
+                                        } else {
+                                            return context.dataset.label + ': ' + context.parsed.y.toFixed(1) + ' dias';
+                                        }
                                     }
                                 }
                             }
-                        }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: false,
-                            min: 6,
-                            max: 16,
-                            ticks: {
-                                color: '#94a3b8',
-                                font: { size: 10, weight: '500' },
-                                stepSize: 2,
-                            },
-                            grid: {
-                                color: 'rgba(58, 69, 86, 0.1)',
-                                drawBorder: false
-                            }
                         },
-                        x: {
-                            ticks: {
-                                color: '#94a3b8',
-                                font: { size: 10, weight: '500' },
+                        scales: {
+                            y: {
+                                beginAtZero: false,
+                                min: 6,
+                                max: 16,
+                                ticks: {
+                                    color: '#94a3b8',
+                                    font: { size: 10, weight: '500' },
+                                    stepSize: 2,
+                                },
+                                grid: {
+                                    color: 'rgba(58, 69, 86, 0.1)',
+                                    drawBorder: false
+                                }
                             },
-                            grid: { display: false, drawBorder: false }
+                            x: {
+                                ticks: {
+                                    color: '#94a3b8',
+                                    font: { size: 10, weight: '500' },
+                                },
+                                grid: { display: false, drawBorder: false }
+                            }
                         }
-                    }
-                });
+                    });
                 console.log('✓ Gráfico de linha criado com sucesso:', chartId);
             } catch (error) {
                 console.error('❌ Erro ao criar gráfico de linha:', error);
@@ -1172,6 +1303,7 @@
         }
 
         function createStatusChart(chartId, labels, data) {
+            if (typeof Chart === 'undefined') { return; }
             console.log(`Criando gráfico de status: ${chartId}`);
             const canvas = document.getElementById(chartId);
             if (!canvas) {
@@ -1184,95 +1316,96 @@
             }
 
             try {            // Calcular percentuais e cores
-            const total = data.reduce((a, b) => a + b, 0);
-            const percentuais = data.map(d => ((d / total) * 100).toFixed(1));
-            const cores = ['#2dd4ac', '#3b82f6', '#ef4444'];
+                const total = data.reduce((a, b) => a + b, 0);
+                const percentuais = data.map(d => ((d / total) * 100).toFixed(1));
+                const cores = ['#2dd4ac', '#3b82f6', '#ef4444'];
 
-            const ctx = canvas.getContext('2d');
-            
-            charts[chartId] = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        label: 'Quantidade de Pedidos',
-                        data: data,
-                        backgroundColor: cores,
-                        borderColor: cores,
-                        borderRadius: 6,
-                        borderSkipped: false,
-                        borderWidth: 0,
-                        hoverBorderColor: '#fff',
-                        hoverBorderWidth: 2,
-                        barThickness: 'flex',
-                        maxBarThickness: 60
-                    }]
-                },
-                options: {
-                    indexAxis: 'y',
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            display: false
-                        },
-                        tooltip: {
-                            backgroundColor: 'rgba(0, 0, 0, 0.9)',
-                            padding: 12,
-                            titleFont: { size: 13, weight: 'bold' },
-                            bodyFont: { size: 12 },
-                            borderColor: '#3b82f6',
-                            borderWidth: 1.5,
-                            cornerRadius: 6,
-                            callbacks: {
-                                title: function(context) {
-                                    return context[0].label;
-                                },
-                                label: function(context) {
-                                    const idx = context.dataIndex;
-                                    const value = context.parsed.x;
-                                    const percentage = percentuais[idx];
-                                    return [
-                                        value.toLocaleString('pt-BR') + ' pedidos',
-                                        percentage + '% do total'
-                                    ];
-                                }
-                            }
-                        }
+                const ctx = canvas.getContext('2d');
+
+                charts[chartId] = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Quantidade de Pedidos',
+                            data: data,
+                            backgroundColor: cores,
+                            borderColor: cores,
+                            borderRadius: 6,
+                            borderSkipped: false,
+                            borderWidth: 0,
+                            hoverBorderColor: '#fff',
+                            hoverBorderWidth: 2,
+                            barThickness: 'flex',
+                            maxBarThickness: 60
+                        }]
                     },
-                    scales: {
-                        x: {
-                            beginAtZero: true,
-                            max: total,
-                            ticks: {
-                                color: '#94a3b8',
-                                font: { size: 11, weight: '500' },
-                                callback: function(value) {
-                                    return ((value / total) * 100).toFixed(0) + '%';
-                                }
+                    options: {
+                        indexAxis: 'y',
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                display: false
                             },
-                            grid: {
-                                color: 'rgba(58, 69, 86, 0.1)',
-                                drawBorder: false
+                            tooltip: {
+                                backgroundColor: 'rgba(0, 0, 0, 0.9)',
+                                padding: 12,
+                                titleFont: { size: 13, weight: 'bold' },
+                                bodyFont: { size: 12 },
+                                borderColor: '#3b82f6',
+                                borderWidth: 1.5,
+                                cornerRadius: 6,
+                                callbacks: {
+                                    title: function (context) {
+                                        return context[0].label;
+                                    },
+                                    label: function (context) {
+                                        const idx = context.dataIndex;
+                                        const value = context.parsed.x;
+                                        const percentage = percentuais[idx];
+                                        return [
+                                            value.toLocaleString('pt-BR') + ' pedidos',
+                                            percentage + '% do total'
+                                        ];
+                                    }
+                                }
                             }
                         },
-                        y: {
-                            ticks: {
-                                color: '#94a3b8',
-                                font: { size: 12, weight: '600' }
+                        scales: {
+                            x: {
+                                beginAtZero: true,
+                                max: total,
+                                ticks: {
+                                    color: '#94a3b8',
+                                    font: { size: 11, weight: '500' },
+                                    callback: function (value) {
+                                        return ((value / total) * 100).toFixed(0) + '%';
+                                    }
+                                },
+                                grid: {
+                                    color: 'rgba(58, 69, 86, 0.1)',
+                                    drawBorder: false
+                                }
                             },
-                            grid: { display: false, drawBorder: false }
+                            y: {
+                                ticks: {
+                                    color: '#94a3b8',
+                                    font: { size: 12, weight: '600' }
+                                },
+                                grid: { display: false, drawBorder: false }
+                            }
                         }
                     }
-                }
-            });
-            console.log('✓ Gráfico de status criado com sucesso:', chartId);
+                });
+                console.log('✓ Gráfico de status criado com sucesso:', chartId);
             } catch (error) {
                 console.error('❌ Erro ao criar gráfico de status:', error);
             }
         }
 
         function createBarChart(chartId, labels, data, distancia = []) {
+            if (typeof Chart === 'undefined') { return; }
             console.log(`Criando gráfico de barras: ${chartId}`);
             const canvas = document.getElementById(chartId);
             if (!canvas) {
@@ -1288,8 +1421,8 @@
             }
 
             // Ordenar dados do maior para o menor
-            const sorted = labels.map((label, index) => ({ 
-                label, 
+            const sorted = labels.map((label, index) => ({
+                label,
                 value: data[index],
                 distancia: distancia[index] || 0
             }))
@@ -1301,7 +1434,7 @@
 
             // Criar gradientes dinâmicos para cada barra
             const ctx = canvas.getContext('2d');
-            
+
             const gradients = sortedValues.map((val, idx) => {
                 const gradient = ctx.createLinearGradient(0, 0, 0, 400);
                 if (idx === 0) {
@@ -1357,7 +1490,7 @@
                             borderWidth: 1.5,
                             cornerRadius: 6,
                             callbacks: {
-                                label: function(context) {
+                                label: function (context) {
                                     const value = context.parsed.y;
                                     const percentage = ((value / sortedValues.reduce((a, b) => a + b, 0)) * 100).toFixed(1);
                                     const dist = sortedDistancia[context.dataIndex];
@@ -1367,7 +1500,7 @@
                                         'Distância: ' + dist.toFixed(0) + ' km'
                                     ];
                                 },
-                                afterLabel: function(context) {
+                                afterLabel: function (context) {
                                     if (context.dataIndex === 0) {
                                         return '⚠️ Maior custo logístico (' + ((sortedValues[0] / sortedValues.reduce((a, b) => a + b, 0)) * 100).toFixed(0) + '%)';
                                     }
@@ -1381,7 +1514,7 @@
                             ticks: {
                                 color: '#94a3b8',
                                 font: { size: 11, weight: '500' },
-                                callback: function(value) {
+                                callback: function (value) {
                                     return 'R$ ' + value.toLocaleString('pt-BR');
                                 }
                             },
@@ -1405,12 +1538,13 @@
                 }
             });
             console.log('✓ Gráfico de barras criado com sucesso:', chartId);
-            } catch (error) {
-                console.error('❌ Erro ao criar gráfico de barras:', error);
-            }
+        } catch (error) {
+            console.error('❌ Erro ao criar gráfico de barras:', error);
+        }
         }
 
         function createScatterChart(chartId, datasets) {
+            if (typeof Chart === 'undefined') { return; }
             console.log(`Criando scatter chart: ${chartId}`);
             const canvas = document.getElementById(chartId);
             if (!canvas) {
@@ -1423,7 +1557,7 @@
             }
 
             const ctx = canvas.getContext('2d');
-            
+
             charts[chartId] = new Chart(ctx, {
                 type: 'scatter',
                 data: {
@@ -1453,10 +1587,10 @@
                             borderWidth: 1.5,
                             cornerRadius: 6,
                             callbacks: {
-                                title: function(context) {
+                                title: function (context) {
                                     return context[0].dataset.label;
                                 },
-                                label: function(context) {
+                                label: function (context) {
                                     return [
                                         'Distância: ' + context.parsed.x.toFixed(0) + ' km',
                                         'Custo: R$ ' + context.parsed.y.toLocaleString('pt-BR', { minimumFractionDigits: 0 })
@@ -1478,7 +1612,7 @@
                             ticks: {
                                 color: '#94a3b8',
                                 font: { size: 11 },
-                                callback: function(value) {
+                                callback: function (value) {
                                     return value.toLocaleString('pt-BR');
                                 }
                             },
@@ -1497,7 +1631,7 @@
                             ticks: {
                                 color: '#94a3b8',
                                 font: { size: 11 },
-                                callback: function(value) {
+                                callback: function (value) {
                                     return 'R$ ' + value.toLocaleString('pt-BR');
                                 }
                             },
@@ -1510,9 +1644,9 @@
                 }
             });
             console.log('✓ Scatter chart criado com sucesso:', chartId);
-            } catch (error) {
-                console.error('❌ Erro ao criar scatter chart:', error);
-            }
+        } catch (error) {
+            console.error('❌ Erro ao criar scatter chart:', error);
+        }
         }
 
         async function loadTabelas() {
@@ -1553,16 +1687,16 @@
                             ${data.slice(0, 10).map(row => `
                                 <tr>
                                     ${keys.map(k => {
-                                        let value = row[k];
-                                        if (k === 'status_pedido' || k === 'status') {
-                                            const status = String(value).toLowerCase();
-                                            let statusClass = 'status-emitido';
-                                            if (status.includes('aprovado')) statusClass = 'status-approved';
-                                            else if (status.includes('cancelado')) statusClass = 'status-cancelado';
-                                            return `<td><span class="status-badge ${statusClass}">${value}</span></td>`;
-                                        }
-                                        return `<td>${value}</td>`;
-                                    }).join('')}
+                let value = row[k];
+                if (k === 'status_pedido' || k === 'status') {
+                    const status = String(value).toLowerCase();
+                    let statusClass = 'status-emitido';
+                    if (status.includes('aprovado')) statusClass = 'status-approved';
+                    else if (status.includes('cancelado')) statusClass = 'status-cancelado';
+                    return `<td><span class="status-badge ${statusClass}">${value}</span></td>`;
+                }
+                return `<td>${value}</td>`;
+            }).join('')}
                                 </tr>
                             `).join('')}
                         </tbody>
@@ -1575,7 +1709,7 @@
         function switchTab(tabName) {
             document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
             document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
-            
+
             document.getElementById(tabName).classList.add('active');
             event.target.classList.add('active');
         }
@@ -1601,4 +1735,5 @@
         }
     </script>
 </body>
+
 </html>
