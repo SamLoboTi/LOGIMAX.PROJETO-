@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Console de Diagnóstico</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Courier New', monospace;
+            background: #0f0f0f;
+            color: #00ff00;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .console {
+            background: #1a1a1a;
+            border: 2px solid #00ff00;
+            border-radius: 8px;
+            padding: 20px;
+            font-size: 12px;
+            max-height: 600px;
+            overflow-y: auto;
+        }
+        .log-line {
+            margin: 5px 0;
+            padding: 3px 0;
+        }
+        .success { color: #00ff00; }
+        .error { color: #ff0000; }
+        .warning { color: #ffaa00; }
+        .info { color: #00aaff; }
+        h1 { color: #00ff00; margin-bottom: 20px; text-align: center; }
+        .button-group {
+            margin: 20px 0;
+            text-align: center;
+        }
+        button {
+            background: #00ff00;
+            color: #000;
+            border: none;
+            padding: 10px 20px;
+            margin: 5px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        button:hover { background: #00cc00; }
+    </style>
+</head>
+<body>
+    <h1>🔍 Console de Diagnóstico do Dashboard</h1>
+    
+    <div class="button-group">
+        <button onclick="location.href='/'">← Voltar ao Dashboard</button>
+        <button onclick="clearConsole()">Limpar Console</button>
+        <button onclick="checkAPIs()">Testar APIs</button>
+    </div>
+
+    <div class="console" id="console"></div>
+
+    <script>
+        const logs = [];
+
+        function log(message, type = 'info') {
+            const timestamp = new Date().toLocaleTimeString();
+            const entry = { timestamp, message, type };
+            logs.push(entry);
+            updateConsole();
+            console.log(`[${type.toUpperCase()}] ${message}`);
+        }
+
+        function updateConsole() {
+            const consoleDiv = document.getElementById('console');
+            consoleDiv.innerHTML = logs.map(entry => {
+                let colorClass = entry.type;
+                return `<div class="log-line ${colorClass}">[${entry.timestamp}] ${entry.message}</div>`;
+            }).join('');
+            consoleDiv.scrollTop = consoleDiv.scrollHeight;
+        }
+
+        function clearConsole() {
+            logs.length = 0;
+            updateConsole();
+        }
+
+        async function checkAPIs() {
+            logs.length = 0;
+            log('=== INICIANDO VERIFICAÇÃO DE APIs ===', 'info');
+
+            const endpoints = [
+                { name: 'KPIs', url: '/api/kpis' },
+                { name: 'Status Pedidos', url: '/api/status-pedidos' },
+                { name: 'Pedidos por Dia', url: '/api/pedidos-por-dia' },
+                { name: 'Custo por Modal', url: '/api/custo-por-modal' }
+            ];
+
+            for (const endpoint of endpoints) {
+                try {
+                    log(`Testando ${endpoint.name}...`, 'info');
+                    const response = await fetch(endpoint.url);
+                    const data = await response.json();
+                    
+                    if (response.ok) {
+                        log(`✓ ${endpoint.name}: 200 OK`, 'success');
+                        if (data.labels) log(`  Labels: ${data.labels.slice(0, 3).join(', ')}...`, 'info');
+                        if (data.data) log(`  Dados: ${Array.isArray(data.data) ? data.data.length + ' itens' : typeof data.data}`, 'info');
+                    } else {
+                        log(`✗ ${endpoint.name}: HTTP ${response.status}`, 'error');
+                    }
+                } catch (error) {
+                    log(`✗ ${endpoint.name}: ${error.message}`, 'error');
+                }
+            }
+
+            log('=== FIM DA VERIFICAÇÃO ===', 'info');
+        }
+
+        // Capturar logs do console
+        const originalLog = console.log;
+        const originalError = console.error;
+        const originalWarn = console.warn;
+
+        console.log = function(...args) {
+            originalLog(...args);
+            const message = args.map(arg => typeof arg === 'object' ? JSON.stringify(arg) : arg).join(' ');
+            log(message, 'info');
+        };
+
+        console.error = function(...args) {
+            originalError(...args);
+            const message = args.map(arg => typeof arg === 'object' ? JSON.stringify(arg) : arg).join(' ');
+            log(message, 'error');
+        };
+
+        console.warn = function(...args) {
+            originalWarn(...args);
+            const message = args.map(arg => typeof arg === 'object' ? JSON.stringify(arg) : arg).join(' ');
+            log(message, 'warning');
+        };
+
+        // Carregar o dashboard no background
+        log('Iniciando carregamento do dashboard...', 'info');
+        
+        // Criar um iframe invisível para carregar o dashboard
+        const iframe = document.createElement('iframe');
+        iframe.style.display = 'none';
+        iframe.src = '/';
+        iframe.onload = function() {
+            log('Dashboard carregado no background', 'success');
+        };
+        document.body.appendChild(iframe);
+
+        // Atualizar console a cada segundo
+        setInterval(updateConsole, 500);
+    </script>
+</body>
+</html>
