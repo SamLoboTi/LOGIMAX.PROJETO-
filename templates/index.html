@@ -509,8 +509,7 @@
             height: 100% !important;
         }
 
-        max-width: 100% !important;
-        }
+
 
         .loading {
             display: flex;
@@ -1418,129 +1417,128 @@
             }
 
             try {
-            }
 
-            // Ordenar dados do maior para o menor
-            const sorted = labels.map((label, index) => ({
-                label,
-                value: data[index],
-                distancia: distancia[index] || 0
-            }))
-                .sort((a, b) => b.value - a.value);
+                // Ordenar dados do maior para o menor
+                const sorted = labels.map((label, index) => ({
+                    label,
+                    value: data[index],
+                    distancia: distancia[index] || 0
+                }))
+                    .sort((a, b) => b.value - a.value);
 
-            const sortedLabels = sorted.map(d => d.label);
-            const sortedValues = sorted.map(d => d.value);
-            const sortedDistancia = sorted.map(d => d.distancia);
+                const sortedLabels = sorted.map(d => d.label);
+                const sortedValues = sorted.map(d => d.value);
+                const sortedDistancia = sorted.map(d => d.distancia);
 
-            // Criar gradientes dinâmicos para cada barra
-            const ctx = canvas.getContext('2d');
+                // Criar gradientes dinâmicos para cada barra
+                const ctx = canvas.getContext('2d');
 
-            const gradients = sortedValues.map((val, idx) => {
-                const gradient = ctx.createLinearGradient(0, 0, 0, 400);
-                if (idx === 0) {
-                    // Primeira barra (maior custo) - Gradiente azul
-                    gradient.addColorStop(0, '#3b82f6');
-                    gradient.addColorStop(1, '#2563eb');
-                } else if (idx === 1) {
-                    // Segunda barra - Gradiente laranja
-                    gradient.addColorStop(0, '#f59e0b');
-                    gradient.addColorStop(1, '#d97706');
-                } else if (idx === 2) {
-                    // Terceira barra - Gradiente verde
-                    gradient.addColorStop(0, '#2dd4ac');
-                    gradient.addColorStop(1, '#1aa179');
-                } else {
-                    // Demais barras - Gradiente roxo
-                    gradient.addColorStop(0, '#a855f7');
-                    gradient.addColorStop(1, '#7e22ce');
-                }
-                return gradient;
-            });
+                const gradients = sortedValues.map((val, idx) => {
+                    const gradient = ctx.createLinearGradient(0, 0, 0, 400);
+                    if (idx === 0) {
+                        // Primeira barra (maior custo) - Gradiente azul
+                        gradient.addColorStop(0, '#3b82f6');
+                        gradient.addColorStop(1, '#2563eb');
+                    } else if (idx === 1) {
+                        // Segunda barra - Gradiente laranja
+                        gradient.addColorStop(0, '#f59e0b');
+                        gradient.addColorStop(1, '#d97706');
+                    } else if (idx === 2) {
+                        // Terceira barra - Gradiente verde
+                        gradient.addColorStop(0, '#2dd4ac');
+                        gradient.addColorStop(1, '#1aa179');
+                    } else {
+                        // Demais barras - Gradiente roxo
+                        gradient.addColorStop(0, '#a855f7');
+                        gradient.addColorStop(1, '#7e22ce');
+                    }
+                    return gradient;
+                });
 
-            charts[chartId] = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: sortedLabels,
-                    datasets: [{
-                        label: 'Custo Logístico (R$)',
-                        data: sortedValues,
-                        backgroundColor: gradients,
-                        borderRadius: 8,
-                        borderSkipped: false,
-                        borderColor: 'rgba(255, 255, 255, 0.1)',
-                        borderWidth: 1,
-                        hoverBorderColor: '#fff',
-                        hoverBorderWidth: 2
-                    }]
-                },
-                options: {
-                    indexAxis: 'x',
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            display: false
-                        },
-                        tooltip: {
-                            backgroundColor: 'rgba(0, 0, 0, 0.9)',
-                            padding: 12,
-                            titleFont: { size: 13, weight: 'bold' },
-                            bodyFont: { size: 12 },
-                            borderColor: '#3b82f6',
-                            borderWidth: 1.5,
-                            cornerRadius: 6,
-                            callbacks: {
-                                label: function (context) {
-                                    const value = context.parsed.y;
-                                    const percentage = ((value / sortedValues.reduce((a, b) => a + b, 0)) * 100).toFixed(1);
-                                    const dist = sortedDistancia[context.dataIndex];
-                                    return [
-                                        'R$ ' + value.toLocaleString('pt-BR', { minimumFractionDigits: 0 }),
-                                        percentage + '% do custo total',
-                                        'Distância: ' + dist.toFixed(0) + ' km'
-                                    ];
-                                },
-                                afterLabel: function (context) {
-                                    if (context.dataIndex === 0) {
-                                        return '⚠️ Maior custo logístico (' + ((sortedValues[0] / sortedValues.reduce((a, b) => a + b, 0)) * 100).toFixed(0) + '%)';
+                charts[chartId] = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: sortedLabels,
+                        datasets: [{
+                            label: 'Custo Logístico (R$)',
+                            data: sortedValues,
+                            backgroundColor: gradients,
+                            borderRadius: 8,
+                            borderSkipped: false,
+                            borderColor: 'rgba(255, 255, 255, 0.1)',
+                            borderWidth: 1,
+                            hoverBorderColor: '#fff',
+                            hoverBorderWidth: 2
+                        }]
+                    },
+                    options: {
+                        indexAxis: 'x',
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                display: false
+                            },
+                            tooltip: {
+                                backgroundColor: 'rgba(0, 0, 0, 0.9)',
+                                padding: 12,
+                                titleFont: { size: 13, weight: 'bold' },
+                                bodyFont: { size: 12 },
+                                borderColor: '#3b82f6',
+                                borderWidth: 1.5,
+                                cornerRadius: 6,
+                                callbacks: {
+                                    label: function (context) {
+                                        const value = context.parsed.y;
+                                        const percentage = ((value / sortedValues.reduce((a, b) => a + b, 0)) * 100).toFixed(1);
+                                        const dist = sortedDistancia[context.dataIndex];
+                                        return [
+                                            'R$ ' + value.toLocaleString('pt-BR', { minimumFractionDigits: 0 }),
+                                            percentage + '% do custo total',
+                                            'Distância: ' + dist.toFixed(0) + ' km'
+                                        ];
+                                    },
+                                    afterLabel: function (context) {
+                                        if (context.dataIndex === 0) {
+                                            return '⚠️ Maior custo logístico (' + ((sortedValues[0] / sortedValues.reduce((a, b) => a + b, 0)) * 100).toFixed(0) + '%)';
+                                        }
                                     }
                                 }
                             }
-                        }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            ticks: {
-                                color: '#94a3b8',
-                                font: { size: 11, weight: '500' },
-                                callback: function (value) {
-                                    return 'R$ ' + value.toLocaleString('pt-BR');
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                ticks: {
+                                    color: '#94a3b8',
+                                    font: { size: 11, weight: '500' },
+                                    callback: function (value) {
+                                        return 'R$ ' + value.toLocaleString('pt-BR');
+                                    }
+                                },
+                                grid: {
+                                    color: 'rgba(58, 69, 86, 0.15)',
+                                    drawBorder: false,
+                                    lineWidth: 1
                                 }
                             },
-                            grid: {
-                                color: 'rgba(58, 69, 86, 0.15)',
-                                drawBorder: false,
-                                lineWidth: 1
-                            }
-                        },
-                        x: {
-                            ticks: {
-                                color: '#94a3b8',
-                                font: { size: 11, weight: '500' }
-                            },
-                            grid: {
-                                display: false,
-                                drawBorder: false
+                            x: {
+                                ticks: {
+                                    color: '#94a3b8',
+                                    font: { size: 11, weight: '500' }
+                                },
+                                grid: {
+                                    display: false,
+                                    drawBorder: false
+                                }
                             }
                         }
                     }
-                }
-            });
-            console.log('✓ Gráfico de barras criado com sucesso:', chartId);
-        } catch (error) {
-            console.error('❌ Erro ao criar gráfico de barras:', error);
-        }
+                });
+                console.log('✓ Gráfico de barras criado com sucesso:', chartId);
+            } catch (error) {
+                console.error('❌ Erro ao criar gráfico de barras:', error);
+            }
         }
 
         function createScatterChart(chartId, datasets) {
