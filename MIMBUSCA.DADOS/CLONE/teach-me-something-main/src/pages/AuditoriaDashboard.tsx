@@ -455,7 +455,7 @@ export default function AuditoriaDashboard() {
 
   // (hojeQueryStr removido — classificação temporal delegada ao banco via bucket_temporal)
 
-  // Query única via view_painel_auditoria com auditorias em batches (views nao suportam embedded relations)
+  // Query única via view_painel_auditoria com auditorias em batches simples (sem joins que causam 400)
   const { data: agendamentosPendentes, isLoading, error: queryError } = useQuery({
     queryKey: ['painel-auditoria-view'],
     queryFn: async () => {
@@ -472,7 +472,7 @@ export default function AuditoriaDashboard() {
 
       const ids = viewData.map((a: any) => a.id);
 
-      // 2. Buscar auditorias em batches de 100 (evita URL muito longa → erro 400)
+      // 2. Buscar auditorias em batches de 100 - select simples sem joins
       const BATCH = 100;
       const batches: string[][] = [];
       for (let i = 0; i < ids.length; i += BATCH) batches.push(ids.slice(i, i + BATCH));
@@ -481,7 +481,7 @@ export default function AuditoriaDashboard() {
         batches.map(batch =>
           supabase
             .from('auditorias_agendamentos')
-            .select('*, auditor:users!auditor_id(nome), closer:users!closer_id(nome)')
+            .select('*')
             .in('agendamento_id', batch)
             .order('created_at', { ascending: false })
         )
