@@ -455,48 +455,32 @@ export default function AuditoriaDashboard() {
 
   // (hojeQueryStr removido — classificação temporal delegada ao banco via bucket_temporal)
 
-  // Query única via view_painel_auditoria (sem limite de rows, bucket_temporal pelo banco)
+  // Query única via view_painel_auditoria com auditorias via embedded relation
   const { data: agendamentosPendentes, isLoading, error: queryError } = useQuery({
     queryKey: ['painel-auditoria-view'],
     queryFn: async () => {
-      console.log('🔍 Buscando agendamentos via view_painel_auditoria...');
+      console.log('Buscando agendamentos via view_painel_auditoria...');
 
-      // 1. Buscar agendamentos da view (inclui agender_nome e bucket_temporal)
-      const { data: viewData, error: viewError } = await supabase
+      const { data, error } = await supabase
         .from('view_painel_auditoria')
-        .select('*')
-        .order('data_reuniao', { ascending: true, nullsFirst: false });
+        .select(`
+          *,
+          auditorias_agendamentos(
+            *,
+            auditor:users!auditor_id(nome),
+            closer:users!closer_id(nome)
+          )
+        `)
+        .order('data_reuniao', { ascending: true });
 
-      if (viewError) { console.error('❌ Erro view_painel_auditoria:', viewError); throw viewError; }
-      if (!viewData || viewData.length === 0) return [] as any[];
+      if (error) { console.error('Erro view_painel_auditoria:', error); throw error; }
 
-      const ids = viewData.map((a: any) => a.id);
-
-      // 2. Buscar auditorias dos agendamentos encontrados
-      const { data: auditorias, error: audError } = await supabase
-        .from('auditorias_agendamentos')
-        .select('*, auditor:users!auditor_id(nome), closer:users!closer_id(nome)')
-        .in('agendamento_id', ids)
-        .order('created_at', { ascending: false });
-
-      if (audError) console.error('⚠️ Erro ao buscar auditorias:', audError);
-
-      // 3. Enriquecer cada agendamento com suas auditorias
-      const auditoriasPorAgendamento: Record<string, any[]> = {};
-      (auditorias || []).forEach((aud: any) => {
-        if (!auditoriasPorAgendamento[aud.agendamento_id]) {
-          auditoriasPorAgendamento[aud.agendamento_id] = [];
-        }
-        auditoriasPorAgendamento[aud.agendamento_id].push(aud);
-      });
-
-      const resultado = viewData.map((a: any) => ({
+      const resultado = (data || []).map((a: any) => ({
         ...a,
-        agender: { nome: a.agender_nome },
-        auditorias_agendamentos: auditoriasPorAgendamento[a.id] || []
+        agender: { nome: a.agender_nome }
       }));
 
-      console.log('✅ Total de agendamentos na view:', resultado.length);
+      console.log('Agendamentos via view:', resultado.length);
       return resultado as any[];
     },
     staleTime: 30000,
