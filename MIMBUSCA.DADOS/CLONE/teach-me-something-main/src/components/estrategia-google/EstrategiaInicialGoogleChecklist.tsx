@@ -369,8 +369,8 @@ export function EstrategiaInicialGoogleChecklist({
                       <div
                         key={item.id}
                         className={`flex items-start gap-3 p-3 rounded-lg border transition-colors ${concluido ? 'bg-green-50 border-green-200' :
-                            devolvido ? 'bg-orange-50 border-orange-200' :
-                              'bg-muted/30 border-border'
+                          devolvido ? 'bg-orange-50 border-orange-200' :
+                            'bg-muted/30 border-border'
                           }`}
                       >
                         <Checkbox
@@ -486,8 +486,8 @@ export function EstrategiaInicialGoogleChecklist({
           <AlertDialogHeader>
             <AlertDialogTitle>Enviar para Supervisor</AlertDialogTitle>
             <AlertDialogDescription>
-              Ao confirmar, a estratégia será enviada para validação do supervisor Google.
-              <span className="font-semibold text-foreground"> O campo de observações é obrigatório.</span>
+              Ao confirmar, a estrategia sera enviada para validacao do supervisor Google.
+              O campo de observacoes e obrigatorio.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <div className="py-4 space-y-2">
