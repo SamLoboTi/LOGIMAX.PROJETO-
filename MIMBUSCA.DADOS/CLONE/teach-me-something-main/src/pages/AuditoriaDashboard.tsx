@@ -455,29 +455,50 @@ export default function AuditoriaDashboard() {
 
   // (hojeQueryStr removido — classificação temporal delegada ao banco via bucket_temporal)
 
-  // Query única via view_painel_auditoria com auditorias via embedded relation
+  // Query única via view_painel_auditoria com auditorias em batches (views nao suportam embedded relations)
   const { data: agendamentosPendentes, isLoading, error: queryError } = useQuery({
     queryKey: ['painel-auditoria-view'],
     queryFn: async () => {
       console.log('Buscando agendamentos via view_painel_auditoria...');
 
-      const { data, error } = await supabase
+      // 1. Buscar todos os agendamentos da view
+      const { data: viewData, error: viewError } = await supabase
         .from('view_painel_auditoria')
-        .select(`
-          *,
-          auditorias_agendamentos(
-            *,
-            auditor:users!auditor_id(nome),
-            closer:users!closer_id(nome)
-          )
-        `)
+        .select('*')
         .order('data_reuniao', { ascending: true });
 
-      if (error) { console.error('Erro view_painel_auditoria:', error); throw error; }
+      if (viewError) { console.error('Erro view_painel_auditoria:', viewError); throw viewError; }
+      if (!viewData || viewData.length === 0) return [] as any[];
 
-      const resultado = (data || []).map((a: any) => ({
+      const ids = viewData.map((a: any) => a.id);
+
+      // 2. Buscar auditorias em batches de 100 (evita URL muito longa → erro 400)
+      const BATCH = 100;
+      const batches: string[][] = [];
+      for (let i = 0; i < ids.length; i += BATCH) batches.push(ids.slice(i, i + BATCH));
+
+      const batchResults = await Promise.all(
+        batches.map(batch =>
+          supabase
+            .from('auditorias_agendamentos')
+            .select('*, auditor:users!auditor_id(nome), closer:users!closer_id(nome)')
+            .in('agendamento_id', batch)
+            .order('created_at', { ascending: false })
+        )
+      );
+
+      const auditoriasPorAgendamento: Record<string, any[]> = {};
+      batchResults.forEach(({ data: aud }) => {
+        (aud || []).forEach((a: any) => {
+          if (!auditoriasPorAgendamento[a.agendamento_id]) auditoriasPorAgendamento[a.agendamento_id] = [];
+          auditoriasPorAgendamento[a.agendamento_id].push(a);
+        });
+      });
+
+      const resultado = viewData.map((a: any) => ({
         ...a,
-        agender: { nome: a.agender_nome }
+        agender: { nome: a.agender_nome },
+        auditorias_agendamentos: auditoriasPorAgendamento[a.id] || []
       }));
 
       console.log('Agendamentos via view:', resultado.length);
