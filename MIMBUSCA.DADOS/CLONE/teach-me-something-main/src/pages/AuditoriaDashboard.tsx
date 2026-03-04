@@ -455,13 +455,13 @@ export default function AuditoriaDashboard() {
 
   // (hojeQueryStr removido — classificação temporal delegada ao banco via bucket_temporal)
 
-  // Query única via view_painel_auditoria com auditorias em batches simples (sem joins que causam 400)
+  // Query única via view_painel_auditoria + auditorias em batches de 100
   const { data: agendamentosPendentes, isLoading, error: queryError } = useQuery({
     queryKey: ['painel-auditoria-view'],
     queryFn: async () => {
       console.log('Buscando agendamentos via view_painel_auditoria...');
 
-      // 1. Buscar todos os agendamentos da view
+      // 1. Buscar todos os agendamentos da view (sem limite, com bucket_temporal)
       const { data: viewData, error: viewError } = await supabase
         .from('view_painel_auditoria')
         .select('*')
@@ -472,7 +472,7 @@ export default function AuditoriaDashboard() {
 
       const ids = viewData.map((a: any) => a.id);
 
-      // 2. Buscar auditorias em batches de 100 - select simples sem joins
+      // 2. Auditorias em batches de 100 para nao estourar URL
       const BATCH = 100;
       const batches: string[][] = [];
       for (let i = 0; i < ids.length; i += BATCH) batches.push(ids.slice(i, i + BATCH));
@@ -481,9 +481,8 @@ export default function AuditoriaDashboard() {
         batches.map(batch =>
           supabase
             .from('auditorias_agendamentos')
-            .select('*')
+            .select('*, auditor:users!auditor_id(nome), closer:users!closer_id(nome)')
             .in('agendamento_id', batch)
-            .order('created_at', { ascending: false })
         )
       );
 
